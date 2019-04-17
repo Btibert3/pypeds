@@ -11,22 +11,18 @@ def zip_parser(url=None, survey=None):
     # setup the tmp path and file name
     path = "/tmp/"
     file = survey + ".zip"
-
+    survey_lower = survey.lower()
     # get the data
     results = requests.get(url)
     with open(path + file, 'wb') as f:
         f.write(results.content)
-
     # extract the files to the path
     file = zipfile.ZipFile(path + file)
     file.extractall(path=path)
-
     # list the csv files for the surveys, most likely get one , but may get to with _rv for revised
-    files = glob.glob(path + "*csv*")
-
+    files = glob.glob(path + "*"+survey_lower+"*")
     # return the files
     return(files)
-
 
 
 # build a valid ipeds survey url - return a dict with a survey key and url for download
