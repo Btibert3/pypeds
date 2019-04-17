@@ -13,4 +13,5 @@ setup(name='pypeds',
       include_package_data=True,
       install_requires=['pandas',
                         'matplotlib',
-                        'seaborn'])
+                        'seaborn',
+                        'requests'])
