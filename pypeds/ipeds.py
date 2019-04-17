@@ -6,9 +6,10 @@ import zipfile
 import glob
 
 
-# zip file factory
+# zip file factory - returns a pandas dataframe
 def zip_parser(url=None, survey=None):
     # setup the tmp path and file name
+    # thanks to https://stackoverflow.com/questions/55718917/download-zip-file-locally-to-tempfile-extract-files-to-tempfile-and-list-the-f/55719124#55719124
     path = "/tmp/"
     file = survey + ".zip"
     survey_lower = survey.lower()
@@ -27,8 +28,11 @@ def zip_parser(url=None, survey=None):
         raw_file = raw_file[0] # just in case, take first
     else:
         raw_file = files
-    # return the file name path
+    # return
     return(raw_file)
+
+
+
 
 
 # build a valid ipeds survey url - return a dict with a survey key and url for download
