@@ -6,3 +6,8 @@ This is a python package aiming to analyze IPEDS and other education datasets us
 ## Install and Test Notes
 
 -  use clean python 3.7 environment, just python (conda create -n test-pypeds python=3.7) to test the setup and install with `pip install .`
+
+
+## TODO
+
+- go back on older surveys farther than standard naming syntax (hd is older than 2002)
