@@ -40,3 +40,15 @@ def get_hd(year):
     URL = "https://nces.ed.gov/ipeds/datacenter/data/{}.zip".format(SURVEY)
     # return the bits as a dictionary for use later
     return({'url': URL, 'survey': SURVEY})
+
+
+def get_ic(year):
+    # assert that year is a int and length 1
+    assert isinstance(year, int), "year is not an integer"
+    assert year >= 2002 and year <= 2017, "year must be >=2002 and < 2017"
+    # build the SURVEY id
+    SURVEY = 'IC' + str(year)
+    # build the url
+    URL = "https://nces.ed.gov/ipeds/datacenter/data/{}.zip".format(SURVEY)
+    # return the bits as a dictionary for use later
+    return({'url': URL, 'survey': SURVEY})
