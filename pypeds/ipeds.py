@@ -32,7 +32,15 @@ def zip_parser(url=None, survey=None):
     return(raw_file)
 
 
-
+def read_survey(path):
+    # assumes a path, presumably from zip_parser
+    try:
+        survey_file = pd.read_csv(path)
+    except:
+        survey_file = pd.DataFrame({'path':path})
+    # column names to lower - helps later and assumes a survey varname is historically unique
+    survey_file.columns = survey_file.columns.str.lower()
+    return(survey_file)
 
 
 # build a valid ipeds survey url - return a dict with a survey key and url for download
