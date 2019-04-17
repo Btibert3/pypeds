@@ -31,15 +31,20 @@ def zip_parser(url=None, survey=None):
     # return
     return(raw_file)
 
+## TODO:  add year to read survey and survey name (hd, 2017, separately)
 
 def read_survey(path):
+    if isinstance(path, list):
+        path = path[0]
     # assumes a path, presumably from zip_parser
     try:
-        survey_file = pd.read_csv(path)
+        ## encoding option needed for h2017, at least, wasnt needed for IC2013
+        survey_file = pd.read_csv(path, encoding='ISO-8859-1')
     except:
         survey_file = pd.DataFrame({'path':path})
     # column names to lower - helps later and assumes a survey varname is historically unique
     survey_file.columns = survey_file.columns.str.lower()
+    # add the survey
     return(survey_file)
 
 
