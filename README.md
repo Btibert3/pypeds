@@ -10,4 +10,5 @@ This is a python package aiming to analyze IPEDS and other education datasets us
 
 ## TODO
 
-- go back on older surveys farther than standard naming syntax (hd is older than 2002)
+- [] example code to loop and build file, may need a function first
+- [] go back on older surveys farther than standard naming syntax (hd is older than 2002)
