@@ -25,11 +25,11 @@ def zip_parser(url=None, survey=None):
     # isolate the file name
     if len(files) > 1:
         raw_file = [s for s in files if 'rv' in s]
-        raw_file = raw_file[0] # just in case, take first
+        raw_file = str(raw_file[0]) # just in case, take first
     else:
-        raw_file = files
-    # return
-    return(raw_file)
+        raw_file = str(files[0])
+    # return a string
+    return(str(raw_file))
 
 ## TODO:  add year to read survey and survey name (hd, 2017, separately)
 
