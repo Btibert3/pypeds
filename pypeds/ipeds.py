@@ -71,3 +71,28 @@ def get_ic(year):
     URL = "https://nces.ed.gov/ipeds/datacenter/data/{}.zip".format(SURVEY)
     # return the bits as a dictionary for use later
     return({'url': URL, 'survey': SURVEY})
+    
+def hd(years = None):
+    # returns a dataframe of 1 or more survey collections
+    # will always use the revised file _rv, if the file has it
+    assert isinstance(years, list), "year is not a list of integers"
+    # init a dataframe to append things to
+    hd_df = pd.DataFrame({'pypeds_init': [True]})
+    for year in years:
+        year_info = get_hd(year)
+        year_fpath = zip_parser(url=year_info['url'], survey=year_info['survey'])
+        tmp_df = read_survey(year_fpath)
+        tmp_df.columns = tmp_df.columns.str.lower()
+        tmp_df['survey_year'] = int(year)
+        hd_df = hd_df.append(tmp_df, ignore_index=True, sort=False)
+        # print("finished hd for year {}".format(str(year)))
+    # finish up
+    # ignore pandas SettingWithCopyWarning, basically
+    pd.options.mode.chained_assignment = None
+    hd_df_final = hd_df.loc[hd_df.pypeds_init != True, ]
+    hd_df_final.drop(columns=['pypeds_init'], inplace=True)
+    return(hd_df_final)
+
+
+# another function
+
