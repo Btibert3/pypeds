@@ -74,6 +74,8 @@ plt.show()
 
 ```
 
+![]("figs/wiche-hs-grad-forecast.png")
+
 ### Competition Graphs (network relationships)
 
 Load a competition graph with some fun metadata to think about:
