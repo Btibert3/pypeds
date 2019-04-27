@@ -14,7 +14,10 @@ def zip_parser(url=None, survey=None):
     file = survey + ".zip"
     survey_lower = survey.lower()
     # get the data
-    results = requests.get(url)
+    try:
+      results = requests.get(url)
+    except:
+      pass
     with open(path + file, 'wb') as f:
         f.write(results.content)
     # extract the files to the path
@@ -83,6 +86,19 @@ def get_adm(year):
     URL = "https://nces.ed.gov/ipeds/datacenter/data/{}.zip".format(SURVEY)
     # return the bits as a dictionary for use later
     return({'url': URL, 'survey': SURVEY})
+
+
+def get_sfa(year):
+    # assert that year is a int and length 1
+    assert isinstance(year, int), "year is not an integer"
+    assert year >= 2002 and year <= 2017, "year must be >=2002 and < 2017"
+    # build the SURVEY id
+    sfa_year = str(year - 1)[2:] + str(year)[2:]
+    SURVEY = 'SFA' + str(sfa_year)
+    # build the url
+    URL = "https://nces.ed.gov/ipeds/datacenter/data/{}.zip".format(SURVEY)
+    # return the bits as a dictionary for use later
+    return({'url': URL, 'survey': SURVEY})
     
     
 ###### utilities to crawl and return a big dataset for the survey
@@ -99,6 +115,7 @@ def hd(years = None):
         tmp_df = read_survey(year_fpath)
         tmp_df.columns = tmp_df.columns.str.lower()
         tmp_df['survey_year'] = int(year)
+        tmp_df['fall_year'] = int(year)
         hd_df = hd_df.append(tmp_df, ignore_index=True, sort=False)
         # print("finished hd for year {}".format(str(year)))
     # finish up
@@ -122,6 +139,7 @@ def ic(years = None):
         tmp_df = read_survey(year_fpath)
         tmp_df.columns = tmp_df.columns.str.lower()
         tmp_df['survey_year'] = int(year)
+        tmp_df['fall_year'] = int(year)
         ic_df = ic_df.append(tmp_df, ignore_index=True, sort=False)
         # check the year to get the admission data for 2014 and later
         if year >= 2014:
@@ -130,6 +148,7 @@ def ic(years = None):
           tmp_df = read_survey(year_fpath)
           tmp_df.columns = tmp_df.columns.str.lower()
           tmp_df['survey_year'] = int(year)
+          tmp_df['fall_year'] = int(year)
           adm_df = adm_df.append(tmp_df, ignore_index=True, sort=False)
     
     # finish up
@@ -142,6 +161,27 @@ def ic(years = None):
     df = pd.merge(ic_df_final, adm_df_final, how="left", on=['unitid', 'survey_year'], suffixes=('_ic', '_adm'))
     return(df)
 
+def sfa(years = None):
+    # returns a dataframe of 1 or more survey collections
+    # will always use the revised file _rv, if the file has it
+    assert isinstance(years, list), "year is not a list of integers"
+    # init a dataframe to append things to
+    sfa_df = pd.DataFrame({'pypeds_init': [True]})
+    for year in years:
+        year_info = get_sfa(year)
+        year_fpath = zip_parser(url=year_info['url'], survey=year_info['survey'])
+        tmp_df = read_survey(year_fpath)
+        tmp_df.columns = tmp_df.columns.str.lower()
+        tmp_df['survey_year'] = int(year)
+        tmp_df['fall_year'] = int(year-1)
+        sfa_df = sfa_df.append(tmp_df, ignore_index=True, sort=False)
+        # print("finished hd for year {}".format(str(year)))
+    # finish up
+    # ignore pandas SettingWithCopyWarning, basically
+    pd.options.mode.chained_assignment = None
+    sfa_df_final = sfa_df.loc[sfa_df.pypeds_init != True, ]
+    sfa_df_final.drop(columns=['pypeds_init'], inplace=True)
+    return(sfa_df_final)
 
 # another function
 

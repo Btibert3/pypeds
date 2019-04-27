@@ -10,6 +10,8 @@ This is a python package aiming to analyze IPEDS and other education datasets us
 
 ## Basic Usage
 
+The `years` argument is based on the survey year shown on the IPEDS website.  When the datasets are built, add both the survey year and the fall year.  For example, the survey SFA (Student Financial Aid) for the survey year `2017` is reporting on data for the 1617 academic year, so I include `fall_year` with a value of 2016 in this case.  I do both to keep it simple relative to the reporting year, but also identify the academic year the data applies to.
+
 ```
 from pypeds import ipeds
 
