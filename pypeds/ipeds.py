@@ -99,6 +99,17 @@ def get_sfa(year):
     URL = "https://nces.ed.gov/ipeds/datacenter/data/{}.zip".format(SURVEY)
     # return the bits as a dictionary for use later
     return({'url': URL, 'survey': SURVEY})
+
+def get_efc(year):
+    # assert that year is a int and length 1
+    assert isinstance(year, int), "year is not an integer"
+    assert year >= 2002 and year <= 2017, "year must be >=2002 and < 2017"
+    # build the SURVEY id
+    SURVEY = 'EF' + str(year) + "C"
+    # build the url
+    URL = "https://nces.ed.gov/ipeds/datacenter/data/{}.zip".format(SURVEY)
+    # return the bits as a dictionary for use later
+    return({'url': URL, 'survey': SURVEY})
     
     
 ###### utilities to crawl and return a big dataset for the survey
@@ -183,5 +194,26 @@ def sfa(years = None):
     sfa_df_final.drop(columns=['pypeds_init'], inplace=True)
     return(sfa_df_final)
 
-# another function
+def efc(years = None):
+    # returns a dataframe of 1 or more survey collections
+    # will always use the revised file _rv, if the file has it
+    assert isinstance(years, list), "year is not a list of integers"
+    # init a dataframe to append things to
+    efc_df = pd.DataFrame({'pypeds_init': [True]})
+    for year in years:
+        year_info = get_efc(year)
+        year_fpath = zip_parser(url=year_info['url'], survey=year_info['survey'])
+        tmp_df = read_survey(year_fpath)
+        tmp_df.columns = tmp_df.columns.str.lower()
+        tmp_df['survey_year'] = int(year)
+        tmp_df['fall_year'] = int(year)
+        efc_df = efc_df.append(tmp_df, ignore_index=True, sort=False)
+        # print("finished hd for year {}".format(str(year)))
+    # finish up
+    # ignore pandas SettingWithCopyWarning, basically
+    pd.options.mode.chained_assignment = None
+    efc_df_final = efc_df.loc[efc_df.pypeds_init != True, ]
+    efc_df_final.drop(columns=['pypeds_init'], inplace=True)
+    return(efc_df_final)
+
 

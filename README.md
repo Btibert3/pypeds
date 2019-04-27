@@ -31,7 +31,8 @@ hd_df.survey_year.value_counts()
 
 - HD: Directory Info
 - IC: Institutional Characteristics, which also merges on the ADM survey which started in 2014
-- SFA: S
+- SFA: Student Financial Aid
+- EF_C: Residence and Migration of First-Time Freshmen
 
 ## Additional datasets
 
@@ -55,4 +56,5 @@ Currently you can use:
 ## TODO
 
 - [x] example code to loop and build file, may need a function first
+- [x] add WICHE dataset
 - [] go back on older surveys farther than standard naming syntax (hd is older than 2002)
