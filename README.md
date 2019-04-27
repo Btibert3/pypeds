@@ -74,7 +74,7 @@ plt.show()
 
 ```
 
-![]("https://monosnap.com/file/oWQLbsjgdVnZl9zgzYIedQsjKIPvcX")
+<img src="https://monosnap.com/image/oWQLbsjgdVnZl9zgzYIedQsjKIPvcX.png">
 
 ### Competition Graphs (network relationships)
 
