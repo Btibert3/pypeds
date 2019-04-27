@@ -11,11 +11,14 @@ This is a python package aiming to analyze IPEDS and other education datasets us
 ## Basic Usage
 
 ```
+from pypeds import ipeds
+
 # generate a list of survey years
 YEARS = list(range(2014, 2018, 1))
 
 # build a database (pandas dataframe) of the most current (revised) surveys for each year
-hd_df = hd(years=YEARS)
+# this takes a few moments as it grabbing data from the web
+hd_df = ipeds.hd(years=YEARS)
 
 # how many rows within each year from our singular dataset
 hd_df.survey_year.value_counts()
