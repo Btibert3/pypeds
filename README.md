@@ -25,6 +25,17 @@ hd_df.survey_year.value_counts()
 
 ```
 
+### Surveys currently supported:
+
+- HD: Directory Info
+- IC: Institutional Characteristics, which also merges on the ADM survey which started in 2014
+- SFA: S
+
+## Additional datasets
+
+This package will also periodically add datasets that one might use when studying and
+analyzing data in higher ed.  
+
 Load a competition graph with some fun metadata to think about:
 
 ```
@@ -33,7 +44,6 @@ x = data.comp_graph1()
 type(x)
 x.keys()
 ```
-
 
 Currently you can use:
 

@@ -48,6 +48,8 @@ def read_survey(path):
     return(survey_file)
 
 
+###### utilities to build url data
+
 # build a valid ipeds survey url - return a dict with a survey key and url for download
 def get_hd(year):
     # assert that year is a int and length 1
@@ -60,7 +62,6 @@ def get_hd(year):
     # return the bits as a dictionary for use later
     return({'url': URL, 'survey': SURVEY})
 
-
 def get_ic(year):
     # assert that year is a int and length 1
     assert isinstance(year, int), "year is not an integer"
@@ -71,6 +72,20 @@ def get_ic(year):
     URL = "https://nces.ed.gov/ipeds/datacenter/data/{}.zip".format(SURVEY)
     # return the bits as a dictionary for use later
     return({'url': URL, 'survey': SURVEY})
+
+def get_adm(year):
+    # assert that year is a int and length 1
+    assert isinstance(year, int), "year is not an integer"
+    assert year >= 2014 and year <= 2017, "year must be >=2002 and < 2017"
+    # build the SURVEY id
+    SURVEY = 'ADM' + str(year)
+    # build the url
+    URL = "https://nces.ed.gov/ipeds/datacenter/data/{}.zip".format(SURVEY)
+    # return the bits as a dictionary for use later
+    return({'url': URL, 'survey': SURVEY})
+    
+    
+###### utilities to crawl and return a big dataset for the survey
     
 def hd(years = None):
     # returns a dataframe of 1 or more survey collections
@@ -97,8 +112,10 @@ def ic(years = None):
     # returns a dataframe of 1 or more survey collections
     # will always use the revised file _rv, if the file has it
     assert isinstance(years, list), "year is not a list of integers"
-    # init a dataframe to append things to
+    # init dataframes to append things to
     ic_df = pd.DataFrame({'pypeds_init': [True]})
+    adm_df = pd.DataFrame({'pypeds_init': [True]})
+    # loop for ic and conditional check for adm
     for year in years:
         year_info = get_ic(year)
         year_fpath = zip_parser(url=year_info['url'], survey=year_info['survey'])
@@ -106,13 +123,24 @@ def ic(years = None):
         tmp_df.columns = tmp_df.columns.str.lower()
         tmp_df['survey_year'] = int(year)
         ic_df = ic_df.append(tmp_df, ignore_index=True, sort=False)
-        # print("finished hd for year {}".format(str(year)))
+        # check the year to get the admission data for 2014 and later
+        if year >= 2014:
+          year_info = get_adm(year)
+          year_fpath = zip_parser(url=year_info['url'], survey=year_info['survey'])
+          tmp_df = read_survey(year_fpath)
+          tmp_df.columns = tmp_df.columns.str.lower()
+          tmp_df['survey_year'] = int(year)
+          adm_df = adm_df.append(tmp_df, ignore_index=True, sort=False)
+    
     # finish up
-    # ignore pandas SettingWithCopyWarning, basically
+    # ignore pandas SettingWithCopyWarning,
     pd.options.mode.chained_assignment = None
     ic_df_final = ic_df.loc[ic_df.pypeds_init != True, ]
     ic_df_final.drop(columns=['pypeds_init'], inplace=True)
-    return(ic_df_final)
+    adm_df_final = adm_df.loc[adm_df.pypeds_init != True, ]
+    adm_df_final.drop(columns=['pypeds_init'], inplace=True)
+    df = pd.merge(ic_df_final, adm_df_final, how="left", on=['unitid', 'survey_year'], suffixes=('_ic', '_adm'))
+    return(df)
 
 
 # another function
