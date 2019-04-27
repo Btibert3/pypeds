@@ -74,7 +74,7 @@ plt.show()
 
 ```
 
-![]("figs/wiche-hs-grad-forecast.png")
+![]("https://monosnap.com/file/oWQLbsjgdVnZl9zgzYIedQsjKIPvcX")
 
 ### Competition Graphs (network relationships)
 
