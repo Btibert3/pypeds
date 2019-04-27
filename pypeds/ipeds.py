@@ -93,9 +93,26 @@ def hd(years = None):
     hd_df_final.drop(columns=['pypeds_init'], inplace=True)
     return(hd_df_final)
 
-
-
-
+def ic(years = None):
+    # returns a dataframe of 1 or more survey collections
+    # will always use the revised file _rv, if the file has it
+    assert isinstance(years, list), "year is not a list of integers"
+    # init a dataframe to append things to
+    ic_df = pd.DataFrame({'pypeds_init': [True]})
+    for year in years:
+        year_info = get_ic(year)
+        year_fpath = zip_parser(url=year_info['url'], survey=year_info['survey'])
+        tmp_df = read_survey(year_fpath)
+        tmp_df.columns = tmp_df.columns.str.lower()
+        tmp_df['survey_year'] = int(year)
+        ic_df = ic_df.append(tmp_df, ignore_index=True, sort=False)
+        # print("finished hd for year {}".format(str(year)))
+    # finish up
+    # ignore pandas SettingWithCopyWarning, basically
+    pd.options.mode.chained_assignment = None
+    ic_df_final = ic_df.loc[ic_df.pypeds_init != True, ]
+    ic_df_final.drop(columns=['pypeds_init'], inplace=True)
+    return(ic_df_final)
 
 
 # another function
