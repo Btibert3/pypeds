@@ -33,6 +33,7 @@ hd_df.survey_year.value_counts()
 - IC: Institutional Characteristics, which also merges on the ADM survey which started in 2014
 - SFA: Student Financial Aid
 - EF_C: Residence and Migration of First-Time Freshmen
+- IC_AY: Charges for Academic Year Programs
 
 ## Additional datasets
 
