@@ -22,6 +22,21 @@ hd_df.survey_year.value_counts()
 
 ```
 
+Load a competition graph with some fun metadata to think about:
+
+```
+from pypeds import data
+x = data.comp_graph1()
+type(x)
+x.keys()
+```
+
+
+Currently you can use:
+
+- `comp_graph1()`
+- `comp_graph2()`
+
 ## TODO
 
 - [x] example code to loop and build file, may need a function first
