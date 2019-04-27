@@ -40,10 +40,46 @@ hd_df.survey_year.value_counts()
 This package will also periodically add datasets that one might use when studying and
 analyzing data in higher ed.  
 
+### WICHE High School Projections
+
+First, you might want to look at the [WICHE projections for High School Graduates](https://knocking.wiche.edu/data).
+
+```
+# import the datasets module
+from pypeds import datasets
+
+# download the wiche dataset
+wiche = datasets.wiche()   
+
+# first few rows
+wiche.head()
+```
+
+You will notice that the data are not wide, but long.  This is by design, and it allows us to reshape and aggregate as desired.
+
+For example, plot the actual and projected total high school graduates in the dataset.
+
+```
+# isolate total grads, but still for each state and year
+all_grads = wiche.loc[wiche.demo=='grand_total', ]
+
+# group by the year and aggregate (sum) of grads by year
+grad_totals = all_grads.groupby("year", as_index=False).sum()
+
+# generate the line plot
+import seaborn as sns
+import matplotlib.pyplot as plt
+sns.lineplot(x='year', y='grads', data=grad_totals)
+plt.show()
+
+```
+
+### Competition Graphs (network relationships)
+
 Load a competition graph with some fun metadata to think about:
 
 ```
-from pypeds import data
+from pypeds import datasets
 x = data.comp_graph1()
 type(x)
 x.keys()

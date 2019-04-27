@@ -1,10 +1,6 @@
 import pickle
 import pandas as pd
 
-# This doesnt work, what am I not doing
-# review scikit as a reference
-# https://github.com/scikit-learn/scikit-learn/blob/master/sklearn/datasets/base.py
-
 def comp_graph1():
   # returns a dict of dataframes
   edges_url = "https://raw.githubusercontent.com/Btibert3/datasets/master/he-competitor-graphs/site1-links.csv"
@@ -23,4 +19,10 @@ def comp_graph2():
   mission = pd.read_csv(mission_url)
   comp2 = dict(edges=edges, mission=mission)
   return(comp2)
+
+
+def wiche():
+  url = "https://raw.githubusercontent.com/Btibert3/datasets/master/wiche-hs-grads/wiche-hs-grads.csv"
+  wiche_df = pd.read_csv(url)
+  return(wiche_df)
 
