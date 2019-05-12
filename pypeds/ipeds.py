@@ -148,7 +148,7 @@ def hd(years = None):
 def ic(years = None):
     # returns a dataframe of 1 or more survey collections
     # will always use the revised file _rv, if the file has it
-    assert isinstance(years, list), "year is not a list of integers"
+        assert isinstance(years, list), "year is not a list of integers"
     # init dataframes to append things to
     ic_df = pd.DataFrame({'pypeds_init': [True]})
     adm_df = pd.DataFrame({'pypeds_init': [True]})
