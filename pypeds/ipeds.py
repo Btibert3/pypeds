@@ -248,6 +248,49 @@ def icay(years = None):
     return(icay_df_final)
     
 
+class IC(object):
+    """docstring"""
+    
+    # init
+    def __init__(self, years=[2017]):
+        """Constructor"""
+        self.years = years
+        
+    # testing
+    def get_test(self):
+        for year in self.years:
+            print(year)
+
+
+    # method to get the data and return a dataframe
+    def get(self):
+        # setup the df
+        init_df = pd.DataFrame({'pypeds_init': [True]})
+        for year in self.years:
+            # assert that year is a int and length 1
+            assert isinstance(year, int), "year is not an integer"
+            assert year >= 2002 and year <= 2017, "year must be >=2002 and < 2017"
+            # build the SURVEY id
+            SURVEY = 'IC' + str(year)
+            # build the url
+            URL = "https://nces.ed.gov/ipeds/datacenter/data/{}.zip".format(SURVEY)
+            # return the bits as a dictionary for use later
+            year_info = {'url': URL, 'survey': SURVEY}
+            #year_info = get_efc(year)
+            year_fpath = zip_parser(url=year_info['url'], survey=year_info['survey'])
+            tmp_df = read_survey(year_fpath)
+            tmp_df.columns = tmp_df.columns.str.lower()
+            tmp_df['survey_year'] = int(year)
+            tmp_df['fall_year'] = int(year)
+            init_df = init_df.append(tmp_df, ignore_index=True, sort=False)
+            # print("finished hd for year {}".format(str(year)))
+        # finish up
+        # ignore pandas SettingWithCopyWarning, basically
+        pd.options.mode.chained_assignment = None
+        init_df = init_df.loc[init_df.pypeds_init != True, ]
+        init_df.drop(columns=['pypeds_init'], inplace=True)
+        return(init_df)
+    
 
 
 
