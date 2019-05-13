@@ -96,6 +96,6 @@ Currently you can use:
 
 - [x] example code to loop and build file, may need a function first
 - [x] add WICHE dataset
-- [] review and consider classes for each survey
-- [] add altair for viz
+- [x] review and consider classes for each survey (keep as functions for now)
+- [x] add altair for viz
 - [] go back on older surveys farther than standard naming syntax (hd is older than 2002)
