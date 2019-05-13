@@ -98,5 +98,10 @@ Currently you can use:
 - [x] add WICHE dataset
 - [x] classes are now more pythonic
 - [x] add altair for viz
-- [] decide on classes and if so, feature parity & update READMe
+- [] for classes move up survey reference to set early and test years 
+- [] decide on classes and if so, feature parity
+- [] add doc strings
+- [] pypeds or emsci as packagename, which could open up equiv R package if necessary
+- [] update README
+- [] post package for initial release
 - [] go back on older surveys farther than standard naming syntax (hd is older than 2002)

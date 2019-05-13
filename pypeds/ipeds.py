@@ -259,6 +259,55 @@ class IC(object):
 
     # method to get the data and return a dataframe
     def extract(self):
+        # returns a dataframe of 1 or more survey collections
+        # will always use the revised file _rv, if the file has it
+        # assert isinstance(years, list), "year is not a list of integers"
+        # init dataframes to append things to
+        ic_df = pd.DataFrame({'pypeds_init': [True]})
+        #adm_df = pd.DataFrame({'pypeds_init': [True]})
+        # loop for ic and conditional check for adm
+        for year in self.years:
+            year_info = get_ic(year)
+            year_fpath = zip_parser(url=year_info['url'], survey=year_info['survey'])
+            tmp_df = read_survey(year_fpath)
+            tmp_df.columns = tmp_df.columns.str.lower()
+            tmp_df['survey_year'] = int(year)
+            tmp_df['fall_year'] = int(year)
+            ic_df = ic_df.append(tmp_df, ignore_index=True, sort=False)
+            # check the year to get the admission data for 2014 and later
+            if year >= 2014:
+              year_info = get_adm(year)
+              year_fpath = zip_parser(url=year_info['url'], survey=year_info['survey'])
+              tmp_df = read_survey(year_fpath)
+              tmp_df.columns = tmp_df.columns.str.lower()
+              tmp_df['survey_year'] = int(year)
+              tmp_df['fall_year'] = int(year)
+              ic_df = ic_df.append(tmp_df, ignore_index=True, sort=False)
+
+        # finish up
+        # ignore pandas SettingWithCopyWarning,
+        pd.options.mode.chained_assignment = None
+        ic_df = ic_df.loc[ic_df.pypeds_init != True, ]
+        ic_df.drop(columns=['pypeds_init'], inplace=True)
+        self.df = self.df.append(ic_df, ignore_index = True)
+
+    # method to return the data
+    def load(self):
+        return(self.df)
+
+
+
+class HD(object):
+    """docstring"""
+
+    # init
+    def __init__(self, years=[2017]):
+        """Constructor"""
+        self.years = years
+        self.df = pd.DataFrame()
+
+    # method to get the data and return a dataframe
+    def extract(self):
         # setup the df
         init_df = pd.DataFrame({'pypeds_init': [True]})
         for year in self.years:
@@ -266,7 +315,7 @@ class IC(object):
             assert isinstance(year, int), "year is not an integer"
             assert year >= 2002 and year <= 2017, "year must be >=2002 and < 2017"
             # build the SURVEY id
-            SURVEY = 'IC' + str(year)
+            SURVEY = 'HD' + str(year)
             # build the url
             URL = "https://nces.ed.gov/ipeds/datacenter/data/{}.zip".format(SURVEY)
             # return the bits as a dictionary for use later
@@ -290,3 +339,47 @@ class IC(object):
     # method to return the data
     def load(self):
         return(self.df)
+
+#
+# class SFA(object):
+#     """docstring"""
+#
+#     # init
+#     def __init__(self, years=[2017]):
+#         """Constructor"""
+#         self.years = years
+#         self.df = pd.DataFrame()
+#
+#     # method to get the data and return a dataframe
+#     def extract(self):
+#         # setup the df
+#         init_df = pd.DataFrame({'pypeds_init': [True]})
+#         for year in self.years:
+#             # assert that year is a int and length 1
+#             assert isinstance(year, int), "year is not an integer"
+#             assert year >= 2002 and year <= 2017, "year must be >=2002 and < 2017"
+#             # build the SURVEY id
+#             SURVEY = 'SFA' + str(year)
+#             # build the url
+#             URL = "https://nces.ed.gov/ipeds/datacenter/data/{}.zip".format(SURVEY)
+#             # return the bits as a dictionary for use later
+#             year_info = {'url': URL, 'survey': SURVEY}
+#             #year_info = get_efc(year)
+#             year_fpath = zip_parser(url=year_info['url'], survey=year_info['survey'])
+#             tmp_df = read_survey(year_fpath)
+#             tmp_df.columns = tmp_df.columns.str.lower()
+#             tmp_df['survey_year'] = int(year)
+#             tmp_df['fall_year'] = int(year)
+#             init_df = init_df.append(tmp_df, ignore_index=True, sort=False)
+#             # print("finished hd for year {}".format(str(year)))
+#         # finish up
+#         # ignore pandas SettingWithCopyWarning, basically
+#         pd.options.mode.chained_assignment = None
+#         init_df = init_df.loc[init_df.pypeds_init != True, ]
+#         init_df.drop(columns=['pypeds_init'], inplace=True)
+#         #return(init_df)
+#         self.df = self.df.append(init_df, ignore_index = True)
+#
+#     # method to return the data
+#     def load(self):
+#         return(self.df)
