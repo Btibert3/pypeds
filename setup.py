@@ -12,6 +12,6 @@ setup(name='pypeds',
       zip_safe=False,
       include_package_data=True,
       install_requires=['pandas',
-                        'matplotlib',
-                        'seaborn',
-                        'requests'])
+                        'requests',
+                        'altair',
+                        'jupyterlab'])
