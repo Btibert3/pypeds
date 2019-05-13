@@ -257,12 +257,6 @@ class IC(object):
         self.years = years
         self.df = pd.DataFrame()
 
-    # testing
-    # def _testyears(self):
-    #     for year in self.years:
-    #         print(year)
-
-
     # method to get the data and return a dataframe
     def extract(self):
         # setup the df
