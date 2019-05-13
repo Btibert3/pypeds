@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name='pypeds',
-      version='0.1.0',
+      version='0.1.1',
       python_requires='>=3.7',
       description='Python package to work with IPEDS and other higher education datasets.',
       url='https://brocktibert.com/',
