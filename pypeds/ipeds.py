@@ -255,15 +255,16 @@ class IC(object):
     def __init__(self, years=[2017]):
         """Constructor"""
         self.years = years
+        self.df = pd.DataFrame()
 
     # testing
-    def get_test(self):
-        for year in self.years:
-            print(year)
+    # def _testyears(self):
+    #     for year in self.years:
+    #         print(year)
 
 
     # method to get the data and return a dataframe
-    def get(self):
+    def extract(self):
         # setup the df
         init_df = pd.DataFrame({'pypeds_init': [True]})
         for year in self.years:
@@ -289,4 +290,9 @@ class IC(object):
         pd.options.mode.chained_assignment = None
         init_df = init_df.loc[init_df.pypeds_init != True, ]
         init_df.drop(columns=['pypeds_init'], inplace=True)
-        return(init_df)
+        #return(init_df)
+        self.df = self.df.append(init_df, ignore_index = True)
+
+    # method to return the data
+    def load(self):
+        return(self.df)

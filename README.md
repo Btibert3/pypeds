@@ -96,6 +96,7 @@ Currently you can use:
 
 - [x] example code to loop and build file, may need a function first
 - [x] add WICHE dataset
-- [x] review and consider classes for each survey (keep as functions for now)
+- [x] classes are now more pythonic
 - [x] add altair for viz
+- [] decide on classes and if so, feature parity & update READMe
 - [] go back on older surveys farther than standard naming syntax (hd is older than 2002)
