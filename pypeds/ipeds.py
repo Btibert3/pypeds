@@ -384,3 +384,38 @@ class SFA(object):
     # method to return the data
     def load(self):
         return(self.df)
+
+
+
+class EFC(object):
+    """docstring"""
+
+    # init
+    def __init__(self, years=[2017]):
+        """Constructor"""
+        self.years = years
+        self.df = pd.DataFrame()
+
+    # method to get the data and return a dataframe
+    def extract(self):
+        # setup the df
+        init_df = pd.DataFrame({'pypeds_init': [True]})
+        for year in self.years:
+            year_info = get_efc(year)
+            year_fpath = zip_parser(url=year_info['url'], survey=year_info['survey'])
+            tmp_df = read_survey(year_fpath)
+            tmp_df.columns = tmp_df.columns.str.lower()
+            tmp_df['survey_year'] = int(year)
+            tmp_df['fall_year'] = int(year)
+            init_df = init_df.append(tmp_df, ignore_index=True, sort=False)
+        # finish up
+        # ignore pandas SettingWithCopyWarning, basically
+        pd.options.mode.chained_assignment = None
+        init_df = init_df.loc[init_df.pypeds_init != True, ]
+        init_df.drop(columns=['pypeds_init'], inplace=True)
+        #return(init_df)
+        self.df = self.df.append(init_df, ignore_index = True)
+
+    # method to return the data
+    def load(self):
+        return(self.df)
