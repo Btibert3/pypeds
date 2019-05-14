@@ -4,16 +4,18 @@ import os
 import requests
 import zipfile
 import glob
+import time
 
 
 # zip file factory - returns a pandas dataframe
 def zip_parser(url=None, survey=None):
     # setup the tmp path and file name
     # thanks to https://stackoverflow.com/questions/55718917/download-zip-file-locally-to-tempfile-extract-files-to-tempfile-and-list-the-f/55719124#55719124
-    path = "/tmp/"
+    path = "/tmp/" + str(int(time.time())) + "/"  # hacky way to make unique path to extract time
     file = survey + ".zip"
     survey_lower = survey.lower()
     # get the data
+    os.mkdir(path)
     try:
       results = requests.get(url)
     except:
@@ -31,7 +33,7 @@ def zip_parser(url=None, survey=None):
         raw_file = str(raw_file[0]) # just in case, take first
     else:
         raw_file = str(files[0])
-    # return a string
+    # return a string 
     return(str(raw_file))
 
 def read_survey(path):
@@ -43,6 +45,8 @@ def read_survey(path):
         survey_file = pd.read_csv(path, encoding='ISO-8859-1')
     except:
         survey_file = pd.DataFrame({'path':path})
+    # remove the file
+    os.remove(path)
     # column names to lower - helps later and assumes a survey varname is historically unique
     survey_file.columns = survey_file.columns.str.lower()
     # add the survey
@@ -63,6 +67,7 @@ def get_hd(year):
     # return the bits as a dictionary for use later
     return({'url': URL, 'survey': SURVEY})
 
+
 def get_ic(year):
     # assert that year is a int and length 1
     assert isinstance(year, int), "year is not an integer"
@@ -74,10 +79,11 @@ def get_ic(year):
     # return the bits as a dictionary for use later
     return({'url': URL, 'survey': SURVEY})
 
+
 def get_adm(year):
     # assert that year is a int and length 1
     assert isinstance(year, int), "year is not an integer"
-    assert year >= 2014 and year <= 2017, "year must be >=2002 and < 2017"
+    assert year >= 2014 and year <= 2017, "year must be >=2014 and < 2017"
     # build the SURVEY id
     SURVEY = 'ADM' + str(year)
     # build the url
@@ -98,6 +104,7 @@ def get_sfa(year):
     # return the bits as a dictionary for use later
     return({'url': URL, 'survey': SURVEY})
 
+
 def get_efc(year):
     # assert that year is a int and length 1
     assert isinstance(year, int), "year is not an integer"
@@ -108,6 +115,7 @@ def get_efc(year):
     URL = "https://nces.ed.gov/ipeds/datacenter/data/{}.zip".format(SURVEY)
     # return the bits as a dictionary for use later
     return({'url': URL, 'survey': SURVEY})
+
 
 def get_icay(year):
     # assert that year is a int and length 1
@@ -267,6 +275,8 @@ class IC(object):
         #adm_df = pd.DataFrame({'pypeds_init': [True]})
         # loop for ic and conditional check for adm
         for year in self.years:
+          if year < 2014:
+            # process the old files
             year_info = get_ic(year)
             year_fpath = zip_parser(url=year_info['url'], survey=year_info['survey'])
             tmp_df = read_survey(year_fpath)
@@ -274,15 +284,15 @@ class IC(object):
             tmp_df['survey_year'] = int(year)
             tmp_df['fall_year'] = int(year)
             ic_df = ic_df.append(tmp_df, ignore_index=True, sort=False)
-            # check the year to get the admission data for 2014 and later
-            if year >= 2014:
-              year_info = get_adm(year)
-              year_fpath = zip_parser(url=year_info['url'], survey=year_info['survey'])
-              tmp_df = read_survey(year_fpath)
-              tmp_df.columns = tmp_df.columns.str.lower()
-              tmp_df['survey_year'] = int(year)
-              tmp_df['fall_year'] = int(year)
-              ic_df = ic_df.append(tmp_df, ignore_index=True, sort=False)
+          # check the year to get the admission data for 2014 and later
+          if year >= 2014:
+            year_info = get_adm(year)
+            year_fpath = zip_parser(url=year_info['url'], survey=year_info['survey'])
+            tmp_df = read_survey(year_fpath)
+            tmp_df.columns = tmp_df.columns.str.lower()
+            tmp_df['survey_year'] = int(year)
+            tmp_df['fall_year'] = int(year)
+            ic_df = ic_df.append(tmp_df, ignore_index=True, sort=False)
 
         # finish up
         # ignore pandas SettingWithCopyWarning,
