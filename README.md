@@ -2,6 +2,8 @@
 
 This is a python package aiming to analyze IPEDS and other education datasets using the data science tools available within python.  Dare I say, enrollment science tools?
 
+> WARNING:  Very young project and prototyping the API for future possibilities with scikit learn and other concepts along the ETL / EDA / Modeling pipeline of APIs
+
 
 ## Install and Test Notes
 
@@ -101,7 +103,7 @@ Currently you can use:
 - [] for classes move up survey reference to set early and test years
 - [] decide on classes and if so, feature parity
 - [] add assertions on code like prior
-- [] add doc strings 
+- [] add doc strings
 - [] pypeds or emsci as packagename, which could open up equiv R package if necessary
 - [] update README
 - [] post package for initial release
