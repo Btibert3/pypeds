@@ -1,5 +1,7 @@
-# pypeds  <img src="logo/pypeds_hexSticker.png" width = "175" height = "200" align="right" /> 
+# pypeds  <img src="logo/pypeds_hexSticker.png" width = "175" height = "200" align="right" />
 
+
+# About
 This is a python package aiming to analyze IPEDS and other education datasets using the data science tools available within python.  Dare I say, enrollment science tools?
 
 > WARNING:  Very young project and prototyping the API for future possibilities with scikit learn and other concepts along the ETL / EDA / Modeling pipeline of APIs
@@ -7,16 +9,15 @@ This is a python package aiming to analyze IPEDS and other education datasets us
 
 ## Install and Test Notes
 
--  use clean python 3.7 environment, which you can create simply with `conda create -n pypeds python=3.7` 
--  to test the setup and install with `pip install .` 
+-  use clean python 3.6+ environment, which you can create simply with `conda create -n pypeds python=3.7`
+-  to test the setup and install with `pip install .`
 -  once you have activated the environment with `conda activate pypeds`
 
+Or, if you do not want to worry about all of that, you can review [this Google Colab Notebook](https://colab.research.google.com/drive/1YxnfdZyr1JD9EQlbf32HN9bpXiitAlaM) which provides an installation section.  You can replicate this process anytime you want code/analyze data using Google's fantastic notebook coding environment.
 
 ## Basic Usage
 
 The `years` argument is based on the survey year shown on the IPEDS website.  When the datasets are built, this package adds both the survey year and the fall year (of the academic year) to the datasets.  For example, the survey SFA (Student Financial Aid) for the survey year `2017` is reporting on data for the 1617 academic year, so I include `fall_year` with a value of 2016 in this case.  
-
-I do both to keep it simple relative to the reporting year, but also identify the academic year the data applies to.
 
 Below is a simple session to get the last 2 years of the directory information surveys:
 
@@ -50,10 +51,10 @@ Moreover, this package attempts to remove the friction of data prep as much as p
 
 1. Instantiate the survey of interest with `ipeds.IC()` or `ipeds.HD()`.  The years argument defaults to the current __survey__ (2017) year but can setup with a __list__ of years.  For example, `ipeds.HD(years=[2016,2017])` as well.
 2. Next, we `.extract` the data, which collects 1 or more years of full survey datasets from IPEDS and keeps the data within our survey object.
-3. Optionally, you can `.transform` the data.  This __API yet built__, but will supply functionality to modify the survey data by filtering rows, selecting columns, or deriving new columns using __commonly accepted logic__ in order to establish standard defintions.  Again, the aim is to make things easier.
+3. Optionally, you can `.transform` the data.  This __API yet built__, but will supply functionality to modify the survey data by filtering rows, selecting columns, or deriving new columns using __commonly accepted logic__ in order to establish standard definitions.  Again, the aim is to make things easier.
 4. Lastly, `.load` pulls out the survey datasets as a pandas dataframe, at which point you can analyze, visualize the survey dataset using the full suite of data analytics tools found within python.
 
-This package is under heavy development and as noted at the top, is subject to breaking changes within the API.  However, beyond the ETL verbs, this package will also include various methods for exploration, competitive benchmarking, and data visualizatoin.  While all of this work can be done by the analyst after the `.load` method, the aim is facilitate learning and insight by extracting away the "how" for basic and common questions in the enrollment managent space.
+This package is under heavy development and as noted at the top, is subject to breaking changes within the API.  However, beyond the ETL verbs, this package will also include various methods for exploration, competitive benchmarking, and data visualization.  While all of this work can be done by the analyst after the `.load` method, the aim is facilitate learning and insight by extracting away the "how" for basic and common questions in the enrollment management space.
 
 
 ## Surveys currently supported:
@@ -116,7 +117,7 @@ plt.show()
 
 ### Network Graphs
 
-The package also includes two network datasets explorating the relationships between various entities.
+The package also includes two network datasets exploring the relationships between various entities.
 
 For example, load a competition graph with some fun metadata to think about:
 
@@ -131,24 +132,18 @@ Currently the two network datasets can be loaded via:
 
 - `comp_graph1()`
 - `comp_graph2()`
-- 
+-
 
 ## Future work
 
 - include tooling to help analysts connect to Salesforce or Data Warehouses/Databases
-- tranform methods per survey, common visualization and mapping, and basic machine learning functionality
+- transform methods per survey, common visualization and mapping, and basic machine learning functionality
 
 ## TODO
 
-- [x] example code to loop and build file, may need a function first
-- [x] add WICHE dataset
-- [x] classes are now more pythonic
-- [x] add altair for viz
-- [x] for classes move up survey reference to set early and test years
-- [x] decide on classes and if so, feature parity
-- [x] add assertions on code like prior
+- [] add viz module
 - [] add doc strings
-- [] pypeds or emsci as packagename, which could open up equiv R package if necessary
+- [] consider older surveys
 - [] update README
 - [] post package for initial release
 - [] go back on older surveys farther than standard naming syntax (hd is older than 2002)
