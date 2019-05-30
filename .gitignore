@@ -9,3 +9,5 @@ Pipfile.lock
 .Rproj.user
 .Rhistory
 pypeds.Rproj
+.DS_Store
+
