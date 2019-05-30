@@ -1,5 +1,7 @@
-# pypeds  <img src="logo/pypeds_hexSticker.png" width = "175" height = "200" align="right" /> 
+# pypeds  <img src="logo/pypeds_hexSticker.png" width = "175" height = "200" align="right" />
 
+
+# About
 This is a python package aiming to analyze IPEDS and other education datasets using the data science tools available within python.  Dare I say, enrollment science tools?
 
 > WARNING:  Very young project and prototyping the API for future possibilities with scikit learn and other concepts along the ETL / EDA / Modeling pipeline of APIs
@@ -7,10 +9,11 @@ This is a python package aiming to analyze IPEDS and other education datasets us
 
 ## Install and Test Notes
 
--  use clean python 3.7 environment, which you can create simply with `conda create -n pypeds python=3.7` 
--  to test the setup and install with `pip install .` 
+-  use clean python 3.6+ environment, which you can create simply with `conda create -n pypeds python=3.7`
+-  to test the setup and install with `pip install .`
 -  once you have activated the environment with `conda activate pypeds`
 
+Or, if you do not want to worry about all of that, you can review [this Google Colab Notebook](https://colab.research.google.com/drive/1YxnfdZyr1JD9EQlbf32HN9bpXiitAlaM) which provides an installation section.  You can replicate this process anytime you want code/analyze data using Google's fantastic notebook coding environment.
 
 ## Basic Usage
 
@@ -131,7 +134,7 @@ Currently the two network datasets can be loaded via:
 
 - `comp_graph1()`
 - `comp_graph2()`
-- 
+-
 
 ## Future work
 
