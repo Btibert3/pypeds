@@ -2,7 +2,10 @@ import pickle
 import pandas as pd
 
 def comp_graph1():
-  # returns a dict of dataframes
+  """
+  Returns a dictionary of dataframes that flags "similar" schools and majors offered for graph-based analysis.
+  """
+  
   edges_url = "https://raw.githubusercontent.com/Btibert3/datasets/master/he-competitor-graphs/site1-links.csv"
   majors_url = "https://raw.githubusercontent.com/Btibert3/datasets/master/he-competitor-graphs/site1-majors.csv"
   edges = pd.read_csv(edges_url)
@@ -12,7 +15,10 @@ def comp_graph1():
 
 
 def comp_graph2():
-  # returns a dict of a dataframes
+  """
+  Returns a dictionary of dataframes for graph analysis of school competition and mission statements.
+  """
+  
   edges_url = "https://raw.githubusercontent.com/Btibert3/datasets/master/he-competitor-graphs/site2-edges.csv"
   mission_url = "https://raw.githubusercontent.com/Btibert3/datasets/master/he-competitor-graphs/site2-mission.csv"
   edges = pd.read_csv(edges_url)
@@ -22,6 +28,10 @@ def comp_graph2():
 
 
 def wiche():
+  """
+  Returns a dataframe with the most recent WICHE projections in long format.
+  """
+  
   url = "https://raw.githubusercontent.com/Btibert3/datasets/master/wiche-hs-grads/wiche-hs-grads.csv"
   wiche_df = pd.read_csv(url)
   return(wiche_df)
