@@ -141,6 +141,10 @@ Currently the two network datasets can be loaded via:
 
 ## TODO
 
+college scorecard with input to accept download
+recrawl network datasets and pseudo-cite?
+transform with dplyr like library
+
 - [] add viz module
 - [] add doc strings
 - [] consider older surveys
