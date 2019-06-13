@@ -189,12 +189,18 @@ class HD(object):
 
       return(self.df)
 
-  def transform(self):
+  def transform(self, sector12 = None):
       """
       The transformation method of the data.  Arguments activate the transformation, otherwise they are not performed.
       """
 
-      self.df 
+      if sector12 is not None:
+          tmp = self.def
+          tmp_f = tmp.loc[tmp.sector.isin([1,2]), ]
+          self.df = tmp_f
+
+
+      self.df = self.df
 
 
 
