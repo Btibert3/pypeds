@@ -194,7 +194,7 @@ class HD(object):
       The transformation method of the data.  Arguments activate the transformation, otherwise they are not performed.
       """
 
-      return(self)
+      self.df 
 
 
 
