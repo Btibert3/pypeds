@@ -7,7 +7,7 @@ This is a python package aiming to analyze IPEDS and other education datasets us
 
 ## Install and Test Notes
 
--  use clean python 3.6+ environment, which you can create simply with `conda create -n pypeds python=3.7`
+-  use clean python 3.6+ environment, which you can create simply with `conda create -n pypeds python=3.6`
 -  to test the setup and install with `pip install .`
 -  once you have activated the environment with `conda activate pypeds`
 
