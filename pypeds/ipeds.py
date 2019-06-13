@@ -195,7 +195,7 @@ class HD(object):
       """
 
       if sector12 is not None:
-          tmp = self.def
+          tmp = self.df
           tmp_f = tmp.loc[tmp.sector.isin([1,2]), ]
           self.df = tmp_f
 
