@@ -33,7 +33,7 @@ def zip_parser(url=None, survey=None):
         raw_file = str(raw_file[0]) # just in case, take first
     else:
         raw_file = str(files[0])
-    # return a string 
+    # return a string
     return(str(raw_file))
 
 def read_survey(path):
@@ -130,19 +130,19 @@ def get_icay(year):
 
 
 class IC(object):
-    """ 
-    Educational offerings, organization, services and athletic associations from the Institutional Characteristics survey. 
+    """
+    Educational offerings, organization, services and athletic associations from the Institutional Characteristics survey.
     """
 
     # init
     def __init__(self, years=[2017]):
       """
       The constructor for the IC survey
-      
+
       Parameters:
         years (list): List of ints for the survey year
       """
-      
+
       self.years = years
       self.df = pd.DataFrame()
 
@@ -150,11 +150,11 @@ class IC(object):
     def extract(self):
       """
       Method to pull one or more IC surveys based on the configured object
-      
-      The extract method currently supports back to 2002 and accounts for the application data being broken 
-      out of the IC survey starting in 2014, in which the survey prefix is ADM.  
+
+      The extract method currently supports back to 2002 and accounts for the application data being broken
+      out of the IC survey starting in 2014, in which the survey prefix is ADM.
       """
-      
+
       ic_df = pd.DataFrame({'pypeds_init': [True]})
       adm_df = pd.DataFrame({'pypeds_init': [True]})
       # loop for ic and conditional check for adm
@@ -188,39 +188,46 @@ class IC(object):
       df = pd.merge(ic_df_final, adm_df_final, how="left", on=['unitid', 'survey_year'], suffixes=('_ic', '_adm'))
       self.df = self.df.append(df, ignore_index = True)
 
-    
+
     def load(self):
       """
       The load method returns a pandas dataframe that has been extracted, and optionally, transformed.
       """
-      
+
       return(self.df)
+
+
+    def transform(self, ):
+      """
+      The transformation method of the data.  Arguments activate the transformation, otherwise they are not performed.
+      """
+
 
 
 
 class HD(object):
   """
-  Directory Information from the Institutional Characteristics survey. 
+  Directory Information from the Institutional Characteristics survey.
   """
 
   def __init__(self, years=[2017]):
       """
       The constructor for the HD survey
-      
+
       Parameters:
         years (list): List of ints for the survey year
       """
-      
+
       self.years = years
       self.df = pd.DataFrame()
 
   def extract(self):
     """
     Method to pull one or more IC surveys based on the configured object
-    
+
     The extract method currently supports back to 2002.
     """
-    
+
     init_df = pd.DataFrame({'pypeds_init': [True]})
     for year in self.years:
         # assert that year is a int and length 1
@@ -248,8 +255,8 @@ class HD(object):
     #return(init_df)
     self.df = self.df.append(init_df, ignore_index = True)
 
-    # method to return the data
-    def load(self):
+  # method to return the data
+  def load(self):
       """
       The load method returns a pandas dataframe that has been extracted, and optionally, transformed.
       """
@@ -259,27 +266,27 @@ class HD(object):
 
 class SFA(object):
   """
-  Student financial aid and net price from the Student Financial Aid and Net Price survey. 
+  Student financial aid and net price from the Student Financial Aid and Net Price survey.
   """
-  
+
   def __init__(self, years=[2017]):
     """
     The constructor for the SFA survey
-    
+
     Parameters:
       years (list): List of ints for the survey year
     """
-    
+
     self.years = years
     self.df = pd.DataFrame()
 
   def extract(self):
     """
     Method to pull one or more SFA surveys based on the configured object
-    
-    The extract method currently supports back to 2002  
+
+    The extract method currently supports back to 2002
     """
-  
+
     init_df = pd.DataFrame({'pypeds_init': [True]})
     for year in self.years:
         # assert that year is a int and length 1
@@ -313,23 +320,23 @@ class SFA(object):
       """
       The load method returns a pandas dataframe that has been extracted, and optionally, transformed.
       """
-      
+
       return(self.df)
 
 
 class EFC(object):
   """
-  Residence and migration of first-time freshman from the Fall Enrollment survey. 
+  Residence and migration of first-time freshman from the Fall Enrollment survey.
   """
 
   def __init__(self, years=[2017]):
     """
     The constructor for the EF_C survey
-    
+
     Parameters:
       years (list): List of ints for the survey year
     """
-    
+
     self.years = years
     self.df = pd.DataFrame()
 
@@ -359,23 +366,23 @@ class EFC(object):
     """
     The load method returns a pandas dataframe that has been extracted, and optionally, transformed.
     """
-    
+
     return(self.df)
 
 
 class ICAY(object):
   """
-  Student charges for academic year programs from the Institutional Characteristics survey. 
+  Student charges for academic year programs from the Institutional Characteristics survey.
   """
 
   def __init__(self, years=[2017]):
     """
     The constructor for the IC_AY survey
-    
+
     Parameters:
       years (list): List of ints for the survey year
     """
-    
+
     self.years = years
     self.df = pd.DataFrame()
 
@@ -383,7 +390,7 @@ class ICAY(object):
     """
     Method to pull one or more IC_AY surveys based on the configured object
     """
-    
+
     init_df = pd.DataFrame({'pypeds_init': [True]})
     for year in self.years:
         year_info = get_icay(year)
@@ -405,9 +412,9 @@ class ICAY(object):
     """
     The load method returns a pandas dataframe that has been extracted, and optionally, transformed.
     """
-    
+
     return(self.df)
-        
-        
+
+
 
 ## another class
