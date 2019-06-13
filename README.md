@@ -145,8 +145,8 @@ college scorecard with input to accept download
 recrawl network datasets and pseudo-cite?
 transform with dplyr like library
 
+- [] add dataset for school closings (evernote link but from public Google Spreadhseet)
 - [] add viz module
-- [] add doc strings
 - [] consider older surveys
 - [] update README
 - [] post package for initial release
