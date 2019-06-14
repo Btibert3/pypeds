@@ -189,7 +189,7 @@ class HD(object):
 
       return(self.df)
 
-  def transform(self, fouryear = True, filter_service = True, lower48 = True):
+  def transform(self, fouryear = True, filter_service = None, lower48 = None):
       """
       The transformation method of the data.  Arguments activate the transformation, otherwise they are not performed.
       """
