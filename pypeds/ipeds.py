@@ -189,14 +189,27 @@ class HD(object):
 
       return(self.df)
 
-  def transform(self, fouryear = True):
+  def transform(self, fouryear = True, filter_service = True, lower48 = True):
       """
       The transformation method of the data.  Arguments activate the transformation, otherwise they are not performed.
       """
 
+      # only "traditional" 4-year schools
       if fouryear:
           tmp = self.df
           tmp_f = tmp.loc[(tmp.sector.isin([1,2])) & (tmp.pset4flg == 1), ]
+          self.df = tmp_f
+
+      # remove service schools
+      if filter_service:
+          tmp = self.df
+          tmp_f = tmp.loc[tmp.obereg != 1, ]
+          self.df = tmp_f
+
+      # lower 48 states
+      if lower48:
+          tmp = self.df
+          tmp_f = tmp.loc[tmp.sector.isin(range(1,9)),  ]
           self.df = tmp_f
 
 
