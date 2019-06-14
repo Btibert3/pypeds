@@ -189,11 +189,9 @@ class HD(object):
 
       return(self.df)
 
-  def transform(self, fouryear = False):
+  def transform(self, fouryear = True):
       """
       The transformation method of the data.  Arguments activate the transformation, otherwise they are not performed.
-
-
       """
 
       if fouryear:
