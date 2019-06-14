@@ -4,6 +4,7 @@ import requests
 import zipfile
 import glob
 import time
+from dfply import *
 
 
 # zip file factory - returns a pandas dataframe
@@ -189,7 +190,7 @@ class HD(object):
 
         return (self.df)
 
-    def transform(self, fouryear=None, filter_service=None, lower48=False, foo=True):
+    def transform(self, fouryear=None, filter_service=None, lower48=None, select_cols=None):
         """
         The transformation method of the data.  Arguments activate the transformation, otherwise they are not performed.
         """
@@ -215,6 +216,13 @@ class HD(object):
             tmp_f = tmp.loc[tmp.fips != 2, ]
             tmp_f = tmp.loc[tmp.fips != 12, ]
             tmpdf = tmp_f
+
+        # select columns
+        if isinstance(select_cols, list):
+            if len(select_cols) > 0:
+                tmp = tmpdf
+                tmp_f = tmp >> select(select_cols)
+                tmpdf = tmp_f
 
         self.df = tmpdf
 
