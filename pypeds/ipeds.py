@@ -189,14 +189,16 @@ class HD(object):
 
       return(self.df)
 
-  def transform(self, sector12 = None):
+  def transform(self, fouryear = False):
       """
       The transformation method of the data.  Arguments activate the transformation, otherwise they are not performed.
+
+
       """
 
-      if sector12 is not None:
+      if fouryear:
           tmp = self.df
-          tmp_f = tmp.loc[tmp.sector.isin([1,2]), ]
+          tmp_f = tmp.loc[(tmp.sector.isin([1,2])) & (tmp.pset4flg == 1), ]
           self.df = tmp_f
 
 
