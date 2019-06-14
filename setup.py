@@ -14,4 +14,5 @@ setup(name='pypeds',
       install_requires=['pandas',
                         'requests',
                         'altair',
-                        'dfply'])
+                        'dfply',
+                        'numpy'])
