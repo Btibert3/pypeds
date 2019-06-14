@@ -1,5 +1,4 @@
 import pandas as pd
-import numpy as np
 import os
 import requests
 import zipfile
@@ -54,7 +53,7 @@ def read_survey(path):
     return (survey_file)
 
 
-###### utilities to build url data
+# ================================= utilities to build url data
 
 # build a valid ipeds survey url - return a dict with a survey key and url for download
 def get_hd(year):
@@ -129,6 +128,8 @@ def get_icay(year):
     # return the bits as a dictionary for use later
     return ({'url': URL, 'survey': SURVEY})
 
+
+# ================================= build the classes
 
 class HD(object):
     """
