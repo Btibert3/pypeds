@@ -210,7 +210,9 @@ class HD(object):
         # lower 48 states
         if lower48:
             tmp = tmpdf
-            tmp_f = tmp.loc[tmp.sector.isin(range(1, 9)),]
+            tmp_f = tmp.loc[tmp.fips <= 51,]
+            tmp_f = tmp.loc[tmp.fips != 2,]
+            tmp_f = tmp.loc[tmp.fips != 12,]
             tmpdf = tmp_f
 
         self.df = tmpdf
