@@ -190,7 +190,7 @@ class HD(object):
 
         return (self.df)
 
-    def transform(self, fouryear=None, filter_service=None, lower48=None, select_cols=None):
+    def transform(self, deg4yr=None, service=None, lower_us=None, cols=None):
         """
         The transformation method of the data.  Arguments activate the transformation, otherwise they are not performed.
         """
@@ -198,19 +198,19 @@ class HD(object):
         tmpdf = self.df
 
         # only "traditional" 4-year schools
-        if fouryear:
+        if deg4yr:
             tmp = tmpdf
             tmp_f = tmp.loc[(tmp.sector.isin([1, 2])) & (tmp.pset4flg == 1) & (tmp.deggrant == 1), ]
             tmpdf = tmp_f
 
         # remove service schools
-        if filter_service:
+        if service:
             tmp = tmpdf
-            tmp_f = tmp.loc[tmp.obereg != 1, ]
+            tmp_f = tmp.loc[tmp.obereg != 0, ]
             tmpdf = tmp_f
 
-        # lower 48 states
-        if lower48:
+        # lower 48 states with DC
+        if lower_us:
             tmp = tmpdf
             tmp_f = tmp.loc[tmp.fips <= 51, ]
             tmp_f = tmp.loc[tmp.fips != 2, ]
@@ -218,11 +218,11 @@ class HD(object):
             tmpdf = tmp_f
 
         # select columns
-        if select_cols is not None:
-            assert isinstance(select_cols, list), 'select_cols must be a list'
-            if len(select_cols) > 0:
+        if cols is not None:
+            assert isinstance(cols, list), 'select_cols must be a list'
+            if len(cols) > 0:
                 tmp = tmpdf
-                tmp_f = tmp >> select(select_cols)
+                tmp_f = tmp >> select(cols)
                 tmpdf = tmp_f
 
         self.df = tmpdf
