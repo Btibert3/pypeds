@@ -218,7 +218,8 @@ class HD(object):
             tmpdf = tmp_f
 
         # select columns
-        if isinstance(select_cols, list):
+        if select_cols is not None:
+            assert isinstance(select_cols, list), 'select_cols must be a list'
             if len(select_cols) > 0:
                 tmp = tmpdf
                 tmp_f = tmp >> select(select_cols)
