@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name='pypeds',
-      version='0.1.3',
+      version='0.1.4',
       python_requires='>=3.6',
       description='Python package to work with IPEDS and other higher education datasets.',
       url='https://brocktibert.com/',
@@ -14,4 +14,5 @@ setup(name='pypeds',
       install_requires=['pandas',
                         'requests',
                         'altair',
-                        'dfply'])
+                        'dfply',
+                        'numpy'])

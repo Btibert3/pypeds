@@ -96,3 +96,14 @@ def crosswalk():
     url ="https://docs.google.com/spreadsheets/d/e/2PACX-1vQifjGzZDfaTW01tmr3mp_qQ7Om279Dr1sFuSLXEXhcaOjpN5kXwQs6Mpvl9D11nGiIMrQ-asmsLlsk/pub?gid=713012050&single=true&output=csv"
     x = pd.read_csv(url)
     return(x)
+
+def closings():
+    """
+    Returns a dataframe that is based on a dataset/article from Inside Higher Ed on June 13, 2019
+
+    Source: https://www.insidehighered.com/news/2019/06/13/list-private-colleges-have-closed-recent-years
+    """
+
+    url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTGVWo_yHFEMMcDEk-92EbKNCUKLw32wmyZ0-nkmpadL4Yky_SgHBJOhyKM7uOhHD9nMLRB0s1XqCR6/pub?gid=0&single=true&output=csv"
+    x = pd.read_csv(url)
+    return(x)

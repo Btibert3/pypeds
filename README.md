@@ -1,7 +1,5 @@
 # pypeds  <img src="logo/pypeds_hexSticker.png" width = "175" height = "200" align="right" />
 
-
-# About
 This is a python package aiming to analyze IPEDS and other education datasets using the data science tools available within python.  Dare I say, enrollment science tools?
 
 > WARNING:  Very young project and prototyping the API for future possibilities with scikit learn and other concepts along the ETL / EDA / Modeling pipeline of APIs
@@ -9,7 +7,7 @@ This is a python package aiming to analyze IPEDS and other education datasets us
 
 ## Install and Test Notes
 
--  use clean python 3.6+ environment, which you can create simply with `conda create -n pypeds python=3.7`
+-  use clean python 3.6+ environment, which you can create simply with `conda create -n pypeds python=3.6`
 -  to test the setup and install with `pip install .`
 -  once you have activated the environment with `conda activate pypeds`
 
