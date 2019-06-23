@@ -360,7 +360,7 @@ class IC(object):
         # return the data
         self.df = tmpdf
 
-
+# TODO: transform for below
 
 class SFA(object):
     """
