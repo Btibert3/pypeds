@@ -61,7 +61,9 @@ This package is under heavy development and as noted at the top, is subject to b
 - IC: Institutional Characteristics, which also merges on the ADM survey which started in 2014 [IC]
 - SFA: Student Financial Aid [SFA]
 - EF_C: Residence and Migration of First-Time Freshmen [EFC]
+- EF_D: Total entering class, retention rates, and student-to-faculty ratio [EFD]
 - IC_AY: Charges for Academic Year Programs [ICAY]
+- OM: Award and enrollment data at four, six and eight years of entering degree/certificate-seeking undergraduate cohorts [OM]
 
 The class names are in the brackets.  For example, the `EF_C` survey can be instantiated using `ipeds.EFC()`.
 
@@ -143,8 +145,8 @@ college scorecard with input to accept download
 recrawl network datasets and pseudo-cite?
 transform with dplyr like library
 
+- [] add dataset for school closings (evernote link but from public Google Spreadhseet)
 - [] add viz module
-- [] add doc strings
 - [] consider older surveys
 - [] update README
 - [] post package for initial release
