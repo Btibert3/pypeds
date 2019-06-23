@@ -15,8 +15,8 @@ def zip_parser(url=None, survey=None):
     # path = "/tmp/pypeds/" + str(int(time.time())) + "/"  # hacky way to make unique path to extract time
     _today = datetime.datetime.today().strftime('%Y%m%d')
     survey_lower = survey.lower()
-    path = "/tmp/" + str(_today) + str(survey_lower) + "/"  # hacky way to make unique path to extract date and survey
-    file = survey_lower + ".zip"
+    path = "/tmp/" + str(_today) + str(survey) + "/"  # hacky way to make unique path to extract date and survey
+    file = survey + ".zip"
     
     # naive way to do cacheing - if the path for today exists, dont do anything, if it doesnt, get the data
     if not os.path.exists(path + file):
