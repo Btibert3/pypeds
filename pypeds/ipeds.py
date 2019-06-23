@@ -335,13 +335,13 @@ class IC(object):
         if admit_rate:
             tmp = tmpdf
             tmp['admit_rate'] = tmp['admssn'] / tmp['applcn']
-            tmpdf = tmp_f
+            tmpdf = tmp
         
         # calc yield rate
         if yield_rate:
             tmp = tmpdf
             tmp['admit_rate'] = tmp['admssn'] / tmp['applcn']
-            tmpdf = tmp_f
+            tmpdf = tmp
 
         # select columns
         if cols is not None:
