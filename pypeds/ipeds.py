@@ -340,7 +340,7 @@ class IC(object):
         # calc yield rate
         if yield_rate:
             tmp = tmpdf
-            tmp['admit_rate'] = tmp['admssn'] / tmp['applcn']
+            tmp['yield_rate'] = tmp['enrlt'] / tmp['admssn']
             tmpdf = tmp
 
         # select columns
