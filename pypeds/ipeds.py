@@ -4,6 +4,7 @@ import requests
 import zipfile
 import glob
 import time
+import datetime
 from dfply import *
 
 
@@ -11,17 +12,23 @@ from dfply import *
 def zip_parser(url=None, survey=None):
     # setup the tmp path and file name
     # thanks to https://stackoverflow.com/questions/55718917/download-zip-file-locally-to-tempfile-extract-files-to-tempfile-and-list-the-f/55719124#55719124
-    path = "/tmp/" + str(int(time.time())) + "/"  # hacky way to make unique path to extract time
-    file = survey + ".zip"
+    # path = "/tmp/pypeds/" + str(int(time.time())) + "/"  # hacky way to make unique path to extract time
+    _today = datetime.datetime.today().strftime('%Y%m%d')
     survey_lower = survey.lower()
-    # get the data
-    os.mkdir(path)
-    try:
-        results = requests.get(url)
-    except:
-        pass
-    with open(path + file, 'wb') as f:
-        f.write(results.content)
+    path = "/tmp/" + str(_today) + str(survey_lower) + "/"  # hacky way to make unique path to extract date and survey
+    file = survey_lower + ".zip"
+    
+    # naive way to do cacheing - if the path for today exists, dont do anything, if it doesnt, get the data
+    if not os.path.exists(path + file):
+        # get the data
+        os.mkdir(path)
+        try:
+            results = requests.get(url)
+        except:
+            pass
+        with open(path + file, 'wb') as f:
+            f.write(results.content)
+
     # extract the files to the path
     file = zipfile.ZipFile(path + file)
     file.extractall(path=path)
@@ -219,7 +226,7 @@ class HD(object):
 
         # select columns
         if cols is not None:
-            assert isinstance(cols, list), 'select_cols must be a list'
+            assert isinstance(cols, list), 'cols must be a list'
             if len(cols) > 0:
                 tmp = tmpdf
                 tmp_f = tmp >> select(cols)
