@@ -324,7 +324,7 @@ class IC(object):
 
         return (self.df)
 
-    def transform(self, admit_rate=None, yield_rate=None, cols=None):
+    def transform(self, admit_rate=None, yield_rate=None, app_data=None, cols=None):
         """
         The transformation method of the data.  Arguments activate the transformation, otherwise they are not performed.
         """
@@ -342,6 +342,12 @@ class IC(object):
             tmp = tmpdf
             tmp['yield_rate'] = tmp['enrlt'] / tmp['admssn']
             tmpdf = tmp
+        
+        # keep those with adm survey data not missing
+        if app_data:
+            tmp = tmpdf
+            tmp_f = tmp.dropna(subset=['applcn'], inplace=False)
+            tmpdf = tmp_f
 
         # select columns
         if cols is not None:
