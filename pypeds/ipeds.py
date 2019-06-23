@@ -226,7 +226,7 @@ class HD(object):
 
         tmpdf = self.df
 
-        # only "traditional" 4-year schools
+        # degree granting non profit private 4yr and public 4 yr
         if deg4yr:
             tmp = tmpdf
             tmp_f = tmp.loc[(tmp.sector.isin([1, 2])) & (tmp.pset4flg == 1) & (tmp.deggrant == 1), ]
@@ -254,6 +254,7 @@ class HD(object):
                 tmp_f = tmp >> select(cols)
                 tmpdf = tmp_f
 
+        # return the data
         self.df = tmpdf
 
 
@@ -323,10 +324,36 @@ class IC(object):
 
         return (self.df)
 
-    def transform(self, ):
+    def transform(self, admit_rate=None, yield_rate=None, cols=None):
         """
         The transformation method of the data.  Arguments activate the transformation, otherwise they are not performed.
         """
+
+        tmpdf = self.df
+
+        # calc admit rate
+        if admit_rate:
+            tmp = tmpdf
+            tmp['admit_rate'] = tmp['admssn'] / tmp['applcn']
+            tmpdf = tmp_f
+        
+        # calc yield rate
+        if yield_rate:
+            tmp = tmpdf
+            tmp['admit_rate'] = tmp['admssn'] / tmp['applcn']
+            tmpdf = tmp_f
+
+        # select columns
+        if cols is not None:
+            assert isinstance(cols, list), 'cols must be a list'
+            if len(cols) > 0:
+                tmp = tmpdf
+                tmp_f = tmp >> select(cols)
+                tmpdf = tmp_f
+        
+        # return the data
+        self.df = tmpdf
+
 
 
 class SFA(object):
