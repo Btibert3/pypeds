@@ -4,6 +4,10 @@ This is a python package aiming to analyze IPEDS and other education datasets us
 
 > WARNING:  Very young project and prototyping the API for future possibilities with scikit learn and other concepts along the ETL / EDA / Modeling pipeline of APIs
 
+## NOTES:
+
+- F18 IPEDS might be released by end of Aug 2019 so review before launch
+
 
 ## Install and Test Notes
 
