@@ -165,6 +165,8 @@ class HD(object):
     """
     Directory Information from the Institutional Characteristics survey.
     Currently supports the years 2002 - 2017.
+
+    Methods are extract, transform, and load.
     """
 
     def __init__(self, years=[2017]):
@@ -225,11 +227,11 @@ class HD(object):
         The transformation methods for the dataset collected.  
         Arguments activate the transformation, otherwise they are not performed.
 
-        Arguments:
-        * deg4yr -- Logical, if True, keep only public/private non profit 4-year that are degree granting
-        * service -- Logical, if True, remove service schools
-        * lower_us -- Logical, if True, keep only the contintental 48 states incl. D.C.
-        * cols -- A list of valid column names to keep, all others will be excluded
+        Parameters:
+            deg4yr (bool): if True, keep only public/private non profit 4-year that are degree granting
+            service (bool): if True, remove service schools
+            lower_us (bool): if True, keep only the contintental 48 states incl. D.C.
+            cols (list): A list of valid column names to keep, all others will be excluded
         """
 
         tmpdf = self.df
@@ -337,6 +339,12 @@ class IC(object):
         """
         The transformation method of the data.  
         Arguments activate the transformation, otherwise they are not performed.
+
+        Parameters:
+            admit_rate (bool): if True, add the admit rate calculation as a column
+            admit_rate (bool): if True, add yield rate calculation as a column
+            app_data (bool): if True, filter out records missing using the column applcn
+            cols (list): A list of valid column names to keep, all others will be excluded
         """
 
         tmpdf = self.df
