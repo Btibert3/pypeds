@@ -432,12 +432,12 @@ class SFA(object):
         self.df = self.df.append(init_df, ignore_index=True)
 
         # method to return the data
-        def load(self):
-            """
-            The load method returns a pandas dataframe that has been extracted, and optionally, transformed.
-            """
+    def load(self):
+        """
+        The load method returns a pandas dataframe that has been extracted, and optionally, transformed.
+        """
 
-            return (self.df)
+        return (self.df)
 
 
 class EFC(object):
