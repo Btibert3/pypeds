@@ -164,6 +164,7 @@ def get_efd(year):
 class HD(object):
     """
     Directory Information from the Institutional Characteristics survey.
+    Currently supports the years 2002 - 2017.
     """
 
     def __init__(self, years=[2017]):
@@ -181,7 +182,7 @@ class HD(object):
         """
         Method to pull one or more IC surveys based on the configured object
 
-        The extract method currently supports back to 2002.
+        The extract method currently supports back to 2002 and up to 2017.
         """
 
         init_df = pd.DataFrame({'pypeds_init': [True]})
@@ -221,7 +222,14 @@ class HD(object):
 
     def transform(self, deg4yr=None, service=None, lower_us=None, cols=None):
         """
-        The transformation method of the data.  Arguments activate the transformation, otherwise they are not performed.
+        The transformation methods for the dataset collected.  
+        Arguments activate the transformation, otherwise they are not performed.
+
+        Arguments:
+        * deg4yr -- Logical, if True, keep only public/private non profit 4-year that are degree granting
+        * service -- Logical, if True, remove service schools
+        * lower_us -- Logical, if True, keep only the contintental 48 states incl. D.C.
+        * cols -- A list of valid column names to keep, all others will be excluded
         """
 
         tmpdf = self.df
@@ -248,7 +256,7 @@ class HD(object):
 
         # select columns
         if cols is not None:
-            assert isinstance(cols, list), 'cols must be a list'
+            assert isinstance(cols, list), 'the argument cols must be a list'
             if len(cols) > 0:
                 tmp = tmpdf
                 tmp_f = tmp >> select(cols)
@@ -261,6 +269,7 @@ class HD(object):
 class IC(object):
     """
     Educational offerings, organization, services and athletic associations from the Institutional Characteristics survey.
+    Currently support the years 2002 to 2017.
     """
 
     # init
@@ -326,7 +335,8 @@ class IC(object):
 
     def transform(self, admit_rate=None, yield_rate=None, app_data=None, cols=None):
         """
-        The transformation method of the data.  Arguments activate the transformation, otherwise they are not performed.
+        The transformation method of the data.  
+        Arguments activate the transformation, otherwise they are not performed.
         """
 
         tmpdf = self.df

@@ -2,11 +2,7 @@
 
 This is a python package aiming to analyze IPEDS and other education datasets using the data science tools available within python.  Dare I say, enrollment science tools?
 
-> WARNING:  Very young project and prototyping the API for future possibilities with scikit learn and other concepts along the ETL / EDA / Modeling pipeline of APIs
-
-## NOTES:
-
-- F18 IPEDS might be released by end of Aug 2019 so review before launch
+> WARNING:  This is a very young project with exploration around the API and the toolkits included.
 
 
 ## Install and Test Notes
