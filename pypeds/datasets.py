@@ -27,6 +27,18 @@ def comp_graph2():
     return(comp2)
 
 
+def comp_graph3():
+    """
+    Returns a dictionary of a single 
+    """
+
+    edges_url = "https://raw.githubusercontent.com/Btibert3/datasets/master/he-competitor-graphs/competition.csv"
+    edges = pd.read_csv(edges_url)
+    return(edges)
+
+
+
+
 def wiche():
     """
     Returns a dataframe with the most recent WICHE projections in long format.
