@@ -343,7 +343,7 @@ class IC(object):
         Parameters:
             admit_rate (bool): if True, add the admit rate calculation as a column
             admit_rate (bool): if True, add yield rate calculation as a column
-            app_data (bool): if True, filter out records missing using the column applcn
+            app_data (bool): if True, filter out records missing using the column applcn`
             cols (list): A list of valid column names to keep, all others will be excluded
         """
 
@@ -377,6 +377,8 @@ class IC(object):
         
         # return the data
         self.df = tmpdf
+
+
 
 # TODO: transform for below
 
@@ -438,6 +440,31 @@ class SFA(object):
         """
 
         return (self.df)
+
+    def transform(self, admit_rate=None, yield_rate=None, app_data=None, cols=None):
+        """
+        The transformation method of the data.  
+        Arguments activate the transformation, otherwise they are not performed.
+
+        Parameters:
+            admit_rate (bool): if True, add the admit rate calculation as a column
+            admit_rate (bool): if True, add yield rate calculation as a column
+            app_data (bool): if True, filter out records missing using the column applcn
+            cols (list): A list of valid column names to keep, all others will be excluded
+        """
+        
+        tmpdf = self.df
+
+        ## SFA transform functions
+
+
+
+
+        # return the data
+        self.df = tmpdf
+
+
+
 
 
 class EFC(object):
