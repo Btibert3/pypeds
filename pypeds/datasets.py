@@ -29,7 +29,11 @@ def comp_graph2():
 
 def comp_graph3():
     """
-    Returns a dictionary of a single 
+    Returns a dataframe which represents the "Similar Colleges" for each profile page from a popular College Search site.
+    The crawl represents the edges betweeen two institutions, the rank of the edge, and the year the data was 
+    collected.
+    The data were collected in April 2016 and August of 2019, and can be used as a directed graph to study the
+    "structure" of how colleges in the U.S. compete, and more broadly, for various machine learning tasks.
     """
 
     edges_url = "https://raw.githubusercontent.com/Btibert3/datasets/master/he-competitor-graphs/competition.csv"
