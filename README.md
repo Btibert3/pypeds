@@ -5,6 +5,18 @@ This is a python package aiming to analyze IPEDS and other education datasets us
 > WARNING:  This is a very young project with exploration around the API and the toolkits included.
 
 
+# TODO:
+
+- ensure all methods have (rational) etl functions
+- check docs
+- check install from git clone
+- run tests
+- example colab notebooks
+- review for release
+- li post
+
+
+
 ## Install and Test Notes
 
 -  use clean python 3.6+ environment, which you can create simply with `conda create -n pypeds python=3.6`
