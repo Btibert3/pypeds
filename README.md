@@ -13,6 +13,7 @@ This is a python package aiming to analyze IPEDS and other education datasets us
 - run tests
 - example colab notebooks
 - review for release
+- bundle via flit or some other tool
 - li post
 
 
