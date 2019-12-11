@@ -9,6 +9,7 @@ This is a python package aiming to analyze IPEDS and other education datasets us
 
 - ensure all methods have (rational) etl functions
 - check docs
+- 2nd level functions (call them recipes) which build on top of lower level api?
 - check install from git clone
 - run tests
 - example colab notebooks
