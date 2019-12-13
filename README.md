@@ -8,7 +8,6 @@ This is a python package aiming to analyze IPEDS and other education datasets us
 # TODO:
 
 - add updates for what is currently available
-- build a dataset for state/fips/region(s)
 - add region transform function to migration to append data on regions
 - ensure all methods have (rational) etl functions
 - check docs

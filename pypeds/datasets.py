@@ -133,4 +133,5 @@ def region_xwalk():
 
     url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ62ZENWQnUf2XnRs7hiVn7XhXhuCdZdeEOK2-BgkhppEI_A0IMepafWx9vaenOdhQptz5HIwxq3ZAM/pub?gid=0&single=true&output=csv"
     x = pd.read_csv(url)
+    x.columns = x.columns.str.lower()
     return(x)
