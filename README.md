@@ -7,10 +7,14 @@ This is a python package aiming to analyze IPEDS and other education datasets us
 
 # TODO:
 
+- add updates for what is currently available
+- build a dataset for state/fips/region(s)
+- add region transform function to migration to append data on regions
 - ensure all methods have (rational) etl functions
 - check docs
 - 2nd level functions (call them recipes) which build on top of lower level api?
 - check install from git clone
+- add https://studentaid.ed.gov/sa/about/data-center/school/hcm to datasets
 - run tests
 - example colab notebooks
 - review for release

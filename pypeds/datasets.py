@@ -123,3 +123,14 @@ def closings():
     url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTGVWo_yHFEMMcDEk-92EbKNCUKLw32wmyZ0-nkmpadL4Yky_SgHBJOhyKM7uOhHD9nMLRB0s1XqCR6/pub?gid=0&single=true&output=csv"
     x = pd.read_csv(url)
     return(x)
+
+def region_xwalk():
+    """
+    Returns a dataframe that can be used to map states and regions
+
+    Source: https://www.insidehighered.com/news/2019/06/13/list-private-colleges-have-closed-recent-years
+    """
+
+    url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ62ZENWQnUf2XnRs7hiVn7XhXhuCdZdeEOK2-BgkhppEI_A0IMepafWx9vaenOdhQptz5HIwxq3ZAM/pub?gid=0&single=true&output=csv"
+    x = pd.read_csv(url)
+    return(x)
