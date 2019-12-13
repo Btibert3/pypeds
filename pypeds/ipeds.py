@@ -1,3 +1,4 @@
+# lower level features to collect ipeds survey datasets
 import pandas as pd
 import os
 import requests
@@ -7,6 +8,8 @@ import time
 import datetime
 from dfply import *
 
+
+# ================================= core features
 
 # zip file factory - returns a pandas dataframe
 def zip_parser(url=None, survey=None):
@@ -67,7 +70,7 @@ def read_survey(path):
 def get_hd(year):
     # assert that year is a int and length 1
     assert isinstance(year, int), "year is not an integer"
-    assert year >= 2002 and year <= 2017, "year must be >=2002 and < 2017"
+    assert year >= 2002 and year <= 2018, "year must be >=2002 and < 2018"
     # build the SURVEY id
     SURVEY = 'HD' + str(year)
     # build the url
@@ -79,7 +82,7 @@ def get_hd(year):
 def get_ic(year):
     # assert that year is a int and length 1
     assert isinstance(year, int), "year is not an integer"
-    assert year >= 2002 and year <= 2017, "year must be >=2002 and < 2017"
+    assert year >= 2002 and year <= 2018, "year must be >=2002 and < 2018"
     # build the SURVEY id
     SURVEY = 'IC' + str(year)
     # build the url
@@ -91,7 +94,7 @@ def get_ic(year):
 def get_adm(year):
     # assert that year is a int and length 1
     assert isinstance(year, int), "year is not an integer"
-    assert year >= 2014 and year <= 2017, "year must be >=2014 and < 2017"
+    assert year >= 2014 and year <= 2018, "year must be >=2014 and < 2018"
     # build the SURVEY id
     SURVEY = 'ADM' + str(year)
     # build the url
@@ -103,7 +106,7 @@ def get_adm(year):
 def get_sfa(year):
     # assert that year is a int and length 1
     assert isinstance(year, int), "year is not an integer"
-    assert year >= 2002 and year <= 2017, "year must be >=2002 and < 2017"
+    assert year >= 2002 and year <= 2018, "year must be >=2002 and < 2018"
     # build the SURVEY id
     sfa_year = str(year - 1)[2:] + str(year)[2:]
     SURVEY = 'SFA' + str(sfa_year)
@@ -116,7 +119,7 @@ def get_sfa(year):
 def get_efc(year):
     # assert that year is a int and length 1
     assert isinstance(year, int), "year is not an integer"
-    assert year >= 2002 and year <= 2017, "year must be >=2002 and < 2017"
+    assert year >= 2002 and year <= 2018, "year must be >=2002 and < 2018"
     # build the SURVEY id
     SURVEY = 'EF' + str(year) + "C"
     # build the url
@@ -128,7 +131,7 @@ def get_efc(year):
 def get_icay(year):
     # assert that year is a int and length 1
     assert isinstance(year, int), "year is not an integer"
-    assert year >= 2002 and year <= 2017, "year must be >=2002 and < 2017"
+    assert year >= 2002 and year <= 2018, "year must be >=2002 and < 2018"
     # build the SURVEY id
     SURVEY = 'IC' + str(year) + "_AY"
     # build the url
@@ -139,7 +142,7 @@ def get_icay(year):
 def get_om(year):
     # assert that year is a int and length 1
     assert isinstance(year, int), "year is not an integer"
-    assert year >= 2002 and year <= 2017, "year must be >=2002 and < 2017"
+    assert year >= 2002 and year <= 2018, "year must be >=2002 and < 2018"
     # build the SURVEY id
     SURVEY = 'OM' + str(year) 
     # build the url
@@ -150,7 +153,7 @@ def get_om(year):
 def get_efd(year):
     # assert that year is a int and length 1
     assert isinstance(year, int), "year is not an integer"
-    assert year >= 2002 and year <= 2017, "year must be >=2002 and < 2017"
+    assert year >= 2002 and year <= 2018, "year must be >=2002 and < 2018"
     # build the SURVEY id
     SURVEY = 'EF' + str(year)  + "D"
     # build the url
