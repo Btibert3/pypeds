@@ -460,9 +460,6 @@ class SFA(object):
 
         ## SFA transform functions
 
-
-
-
         # return the data
         self.df = tmpdf
 
@@ -514,6 +511,28 @@ class EFC(object):
         """
 
         return (self.df)
+
+    def transform(self, cols=None):
+        """
+        The transformation method of the data.  
+        Arguments activate the transformation, otherwise they are not performed.
+
+        Parameters:
+            cols (list): a list of the columsn to be kept, column names in quotes
+        """
+
+        tmpdf = self.df
+
+        # select columns
+        if cols is not None:
+            assert isinstance(cols, list), 'cols must be a list'
+            if len(cols) > 0:
+                tmp = tmpdf
+                tmp_f = tmp >> select(cols)
+                tmpdf = tmp_f
+        
+        # return the data
+        self.df = tmpdf
 
 
 class ICAY(object):
