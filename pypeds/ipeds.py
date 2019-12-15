@@ -167,7 +167,7 @@ def get_efd(year):
 class HD(object):
     """
     Directory Information from the Institutional Characteristics survey.
-    Currently supports the years 2002 - 2017.
+    Currently supports the years 2002 - 2018.
 
     Methods are extract, transform, and load.
     """
@@ -194,7 +194,7 @@ class HD(object):
         for year in self.years:
             # assert that year is a int and length 1
             assert isinstance(year, int), "year is not an integer"
-            assert year >= 2002 and year <= 2017, "year must be >=2002 and < 2017"
+            assert year >= 2002 and year <= 2018, "year must be >=2002 and < 2018"
             # build the SURVEY id
             SURVEY = 'HD' + str(year)
             # build the url
@@ -274,11 +274,11 @@ class HD(object):
 class IC(object):
     """
     Educational offerings, organization, services and athletic associations from the Institutional Characteristics survey.
-    Currently support the years 2002 to 2017.
+    Currently support the years 2002 to 2018.
     """
 
     # init
-    def __init__(self, years=[2017]):
+    def __init__(self, years=[2018]):
         """
         The constructor for the IC survey
 
@@ -444,15 +444,12 @@ class SFA(object):
 
         return (self.df)
 
-    def transform(self, admit_rate=None, yield_rate=None, app_data=None, cols=None):
+    def transform(self, cols=None):
         """
         The transformation method of the data.  
         Arguments activate the transformation, otherwise they are not performed.
 
         Parameters:
-            admit_rate (bool): if True, add the admit rate calculation as a column
-            admit_rate (bool): if True, add yield rate calculation as a column
-            app_data (bool): if True, filter out records missing using the column applcn
             cols (list): A list of valid column names to keep, all others will be excluded
         """
         
@@ -512,7 +509,7 @@ class EFC(object):
 
         return (self.df)
 
-    def transform(self, cols=None):
+    def transform(self, state = None, line = None, cols=None):
         """
         The transformation method of the data.  
         Arguments activate the transformation, otherwise they are not performed.
@@ -522,6 +519,24 @@ class EFC(object):
         """
 
         tmpdf = self.df
+        
+        # filter rows by efcstate
+        if state is not None:
+            assert isinstance(state, list), 'state must a list'
+            if len(state) > 0:
+                tmp = tmpdf
+                tmp_f = tmp.loc[tmp.efcstate.isin(state)]
+                tmpdf = tmp_f
+
+
+        # filter rows by line
+        if line is not None:
+            assert isinstance(line, list), 'line must a list'
+            if len(line) > 0:
+                tmp = tmpdf
+                tmp_f = tmp.loc[tmp.line.isin(line)]
+                tmpdf = tmp_f
+        
 
         # select columns
         if cols is not None:
