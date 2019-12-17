@@ -168,3 +168,7 @@ transform with dplyr like library
 - [] update README
 - [] post package for initial release
 - [] go back on older surveys farther than standard naming syntax (hd is older than 2002)
+
+## Resources:
+
+![](https://surveys.nces.ed.gov/ipeds/VisImpSpecView.aspx?id=33&show=all&instid=508)
