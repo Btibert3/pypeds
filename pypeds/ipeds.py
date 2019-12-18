@@ -454,7 +454,15 @@ class SFA(object):
         
         tmpdf = self.df
 
-        ## SFA transform functions
+        # select columns
+        # TODO: conditionally check for net price columns
+        #       either as a separate filter or specific variable names
+        if cols is not None:
+            assert isinstance(cols, list), 'cols must be a list'
+            if len(cols) > 0:
+                tmp = tmpdf
+                tmp_f = tmp >> select(cols)
+                tmpdf = tmp_f
 
         # return the data
         self.df = tmpdf

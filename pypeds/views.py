@@ -7,19 +7,19 @@ from pypeds import datasets
 
 #================================================== migration dataset
 ## the migration data, with school and residence region data appended
-def view_migration(years=[2018],
-                   efc_line = list(range(1,99)),
-                   efc_cols = ['unitid', 'fall_year', 'line', 'efres02 '],
-                   hd_deg4yr = True,
-                   hd_service = True,
-                   hd_lower48 = None,
-                   hd_cols = ['unitid', 'fall_year', 'instnm', 'fips', 'obereg', 'sector', 'latitude', 'longitud']):
+def migration(years=[2018], 
+              efc_line = list(range(1,99)),
+              efc_cols = ['unitid', 'fall_year', 'line', 'efres02 '],
+              hd_deg4yr = True,
+              hd_service = True,
+              hd_lower48 = None,
+              hd_cols = ['unitid', 'fall_year', 'instnm', 'fips', 'obereg', 'sector', 'latitude', 'longitud'] ):
   """
   Build a migration dataset, with common data mappings using the lower
   level API.
 
   Parameters:
-      years (list): a list of integers for the years to include for the migration data
+      years (list): a list of integers for the survey years to include for the migration data
       efc_line (list): a list of integers representing the values for the line field in efc
       efc_cols (list): a list of valid column names from the efc survey to keep
       hd_deg4yr (bool): boolean (default = True) as to filter to only include degree-granting 4-year institutions
@@ -66,3 +66,49 @@ def view_migration(years=[2018],
 
 #================================================== discounting dataset
 ## the migration data, with school and residence region data appended
+
+## TODO: logic to take survey years and map datasets based on fall
+##       sfa for survey year 18 is 1718 academic year
+
+def tuition_discounting(fall_years = [2017],
+                        hd_deg4yr = True,
+                        hd_service = True,
+                        hd_lower48 = None,
+                        hd_cols = ['unitid', 'fall_year', 'instnm', 'fips', 'carnegie', 'sector', 'latitude', 'longitud'],
+                        sfa_cols =['unitid', 
+                                   'fall_year',  
+                                   'scfa1n', 
+                                   'anyaidn','anyaidp', 
+                                   'igrnt_n', 'igrnt_p', 'igrnt_a', 
+                                   'fgrnt_a', 'sgrnt_a', 'loan_a'] ):
+  """
+  Build a tuition tuition discounting dataset
+
+  Parameters:
+      years (list): a list of integers for the years to include for the migration data
+      hd_deg4yr (bool): boolean (default = True) as to filter to only include degree-granting 4-year institutions
+      hd_service (bool): boolean (default = True) which if True, will remove US service schools
+      hd_lower48 (bool): boolean (default = None) while if True, will only keep lower 48 states
+      hd_cols (list): a list of valid column names for the HD survey.  Only these columns will be returned.
+      sfa_cols (list): a list of valid column names for the SFA survey.  Only these columns will be returned.
+  """ 
+  
+  # the schools
+  i = ipeds.HD(years=fall_years)
+  i.extract()
+  i.transform(deg4yr=hd_deg4yr)
+  i.transform(service=hd_service)
+  i.transform(lower_us=hd_lower48)
+  i.transform(cols=hd_cols)
+  inst = i.load()
+  
+  # the student finaid data
+  s = ipeds.SFA(years=years)
+  s.extract()
+  s.transform(cols=sfa_cols)
+  aid = s.load()
+  
+  
+  
+  
+  
