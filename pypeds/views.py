@@ -103,10 +103,15 @@ def tuition_discounting(fall_years = [2017],
   inst = i.load()
   
   # the student finaid data
-  s = ipeds.SFA(years=years)
+  # add one because the aid for the fall data is released a year later
+  years = list(np.array(fall_years) + 1)
+  s = ipeds.SFA(years=fall_years)
   s.extract()
   s.transform(cols=sfa_cols)
   aid = s.load()
+  
+  # the charges 
+  
   
   
   
