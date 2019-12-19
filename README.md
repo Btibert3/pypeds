@@ -158,6 +158,10 @@ Currently the two network datasets can be loaded via:
 - include tooling to help analysts connect to Salesforce or Data Warehouses/Databases
 - transform methods per survey, common visualization and mapping, and basic machine learning functionality
 
+## Notes
+
+1.  It appears that the mission statement data is not part of the full surveys, _but_ is included in the MS Access version.  Obviously it's less than ideal that the data collected is not included within the full file option, which this package highly leverages.
+
 ## TODO
 
 college scorecard with input to accept download
