@@ -11,7 +11,7 @@ This is a python package aiming to analyze IPEDS and other education datasets us
 - add region transform function to migration to append data on regions
 - ensure all methods have (rational) etl functions
 - check docs
-- 2nd level functions (call them recipes) which build on top of lower level api?
+- update readme for views 
 - check install from git clone
 - add https://studentaid.ed.gov/sa/about/data-center/school/hcm to datasets
 - run tests
@@ -81,6 +81,8 @@ This package is under heavy development and as noted at the top, is subject to b
 - EF_D: Total entering class, retention rates, and student-to-faculty ratio [EFD]
 - IC_AY: Charges for Academic Year Programs [ICAY]
 - OM: Award and enrollment data at four, six and eight years of entering degree/certificate-seeking undergraduate cohorts [OM]
+- FF1: Finance, Public institutions - GASB [FF1]
+- FF2: Private not-for-profit institutions or Public institutions using FASB [FF2]
 
 The class names are in the brackets.  For example, the `EF_C` survey can be instantiated using `ipeds.EFC()`.
 

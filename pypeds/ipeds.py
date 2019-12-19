@@ -160,6 +160,30 @@ def get_efd(year):
     # return the bits as a dictionary for use later
     return ({'url': URL, 'survey': SURVEY})
 
+def get_ff1(year):
+    # assert that year is a int and length 1
+    assert isinstance(year, int), "year is not an integer"
+    assert year >= 2002 and year <= 2018, "year must be >=2002 and < 2018"
+    # build the SURVEY id
+    ff1_year = str(year - 1)[2:] + str(year)[2:]
+    SURVEY = 'F' + str(ff1_year)  + "_F1A"
+    # build the url
+    URL = "https://nces.ed.gov/ipeds/datacenter/data/{}.zip".format(SURVEY)
+    # return the bits as a dictionary for use later
+    return ({'url': URL, 'survey': SURVEY})
+
+def get_ff2(year):
+    # assert that year is a int and length 1
+    assert isinstance(year, int), "year is not an integer"
+    assert year >= 2002 and year <= 2018, "year must be >=2002 and < 2018"
+    # build the SURVEY id
+    ff2_year = str(year - 1)[2:] + str(year)[2:]
+    SURVEY = 'F' + str(ff2_year)  + "_F2"
+    # build the url
+    URL = "https://nces.ed.gov/ipeds/datacenter/data/{}.zip".format(SURVEY)
+    # return the bits as a dictionary for use later
+    return ({'url': URL, 'survey': SURVEY})
+
 
 # ================================= build the classes
 
@@ -409,22 +433,14 @@ class SFA(object):
 
         init_df = pd.DataFrame({'pypeds_init': [True]})
         for year in self.years:
-            # assert that year is a int and length 1
-            # assert isinstance(year, int), "year is not an integer"
-            # assert year >= 2002 and year <= 2017, "year must be >=2002 and < 2017"
-            # build the SURVEY id
-            # SURVEY = 'SFA' + str(year)
-            # build the url
-            # URL = "https://nces.ed.gov/ipeds/datacenter/data/{}.zip".format(SURVEY)
-            # return the bits as a dictionary for use later
-            # year_info = {'url': URL, 'survey': SURVEY}
-            # year_info = get_efc(year)
+            # since we use numpy, convert to int
+            year = int(year)
             year_info = get_sfa(year)
             year_fpath = zip_parser(url=year_info['url'], survey=year_info['survey'])
             tmp_df = read_survey(year_fpath)
             tmp_df.columns = tmp_df.columns.str.lower()
             tmp_df['survey_year'] = int(year)
-            tmp_df['fall_year'] = int(year)
+            tmp_df['fall_year'] = int(year) - 1
             init_df = init_df.append(tmp_df, ignore_index=True, sort=False)
             # print("finished hd for year {}".format(str(year)))
         # finish up
@@ -516,7 +532,7 @@ class EFC(object):
 
         return (self.df)
 
-    def transform(self, state = None, line = None, cols=None):
+    def transform(self, cols=None):
         """
         The transformation method of the data.  
         Arguments activate the transformation, otherwise they are not performed.
@@ -602,9 +618,32 @@ class ICAY(object):
 
         return (self.df)
 
+    def transform(self, cols=None):
+        """
+        The transformation method of the data.  
+        Arguments activate the transformation, otherwise they are not performed.
+
+        Parameters:
+            cols (list): a list of the columsn to be kept, column names in quotes
+        """
+        
+        tmpdf = self.df
+        
+        # filter the columns
+        if cols is not None:
+            assert isinstance(cols, list), 'cols must be a list'
+            if len(cols) > 0:
+                tmp = tmpdf
+                tmp_f = tmp >> select(cols)
+                tmpdf = tmp_f
+        
+        # return the dataset
+        self.df = tmpdf
+        
+
 class OM(object):
     """
-    Student charges for academic year programs from the Institutional Characteristics survey.
+    Award and enrollment data at four, six and eight years of entering degree/certificate-seeking undergraduate cohorts at degree-granting institutions, by Pell status
     """
 
     def __init__(self, years=[2017]):
@@ -649,7 +688,7 @@ class OM(object):
 
 class EFD(object):
     """
-    Student charges for academic year programs from the Institutional Characteristics survey.
+    Total entering class, retention rates, and student-to-faculty ratio
     """
 
     def __init__(self, years=[2017]):
@@ -691,6 +730,145 @@ class EFD(object):
         """
 
         return (self.df)
+
+
+class FF1(object):
+    """
+    Private not-for-profit institutions or Public institutions using FASB:
+    """
+
+    def __init__(self, years=[2018]):
+        """
+        Public institutions - GASB
+
+        Parameters:
+          years (list): List of ints for the survey year
+        """
+
+        self.years = years
+        self.df = pd.DataFrame()
+
+    def extract(self):
+        """
+        Method to pull one or more IC_AY surveys based on the configured object
+        """
+
+        init_df = pd.DataFrame({'pypeds_init': [True]})
+        for year in self.years:
+            year = int(year)
+            year_info = get_ff1(year)
+            year_fpath = zip_parser(url=year_info['url'], survey=year_info['survey'])
+            tmp_df = read_survey(year_fpath)
+            tmp_df.columns = tmp_df.columns.str.lower()
+            tmp_df['survey_year'] = int(year)
+            tmp_df['fall_year'] = int(year) -1
+            init_df = init_df.append(tmp_df, ignore_index=True, sort=False)
+        # finish up
+        # ignore pandas SettingWithCopyWarning, basically
+        pd.options.mode.chained_assignment = None
+        init_df = init_df.loc[init_df.pypeds_init != True,]
+        init_df.drop(columns=['pypeds_init'], inplace=True)
+        # return(init_df)
+        self.df = self.df.append(init_df, ignore_index=True)
+
+    def load(self):
+        """
+        The load method returns a pandas dataframe that has been extracted, and optionally, transformed.
+        """
+
+        return (self.df)
+
+    def transform(self, cols=None):
+        """
+        The transformation method of the data.  
+        Arguments activate the transformation, otherwise they are not performed.
+
+        Parameters:
+            cols (list): a list of the columsn to be kept, column names in quotes
+        """
+        
+        tmpdf = self.df
+        
+        # filter the columns
+        if cols is not None:
+            assert isinstance(cols, list), 'cols must be a list'
+            if len(cols) > 0:
+                tmp = tmpdf
+                tmp_f = tmp >> select(cols)
+                tmpdf = tmp_f
+        
+        # return the dataset
+        self.df = tmpdf
+
+
+class FF2(object):
+    """
+    Private not-for-profit institutions or Public institutions using FASB:
+    """
+
+    def __init__(self, years=[2018]):
+        """
+        Public institutions - GASB
+
+        Parameters:
+          years (list): List of ints for the survey year
+        """
+
+        self.years = years
+        self.df = pd.DataFrame()
+
+    def extract(self):
+        """
+        Method to pull one or more IC_AY surveys based on the configured object
+        """
+
+        init_df = pd.DataFrame({'pypeds_init': [True]})
+        for year in self.years:
+            year = int(year)
+            year_info = get_ff2(year)
+            year_fpath = zip_parser(url=year_info['url'], survey=year_info['survey'])
+            tmp_df = read_survey(year_fpath)
+            tmp_df.columns = tmp_df.columns.str.lower()
+            tmp_df.columns = tmp_df.columns.str.strip()
+            tmp_df['survey_year'] = int(year)
+            tmp_df['fall_year'] = int(year) -1
+            init_df = init_df.append(tmp_df, ignore_index=True, sort=False)
+        # finish up
+        # ignore pandas SettingWithCopyWarning, basically
+        pd.options.mode.chained_assignment = None
+        init_df = init_df.loc[init_df.pypeds_init != True,]
+        init_df.drop(columns=['pypeds_init'], inplace=True)
+        # return(init_df)
+        self.df = self.df.append(init_df, ignore_index=True)
+
+    def load(self):
+        """
+        The load method returns a pandas dataframe that has been extracted, and optionally, transformed.
+        """
+
+        return (self.df)
+
+    def transform(self, cols=None):
+        """
+        The transformation method of the data.  
+        Arguments activate the transformation, otherwise they are not performed.
+
+        Parameters:
+            cols (list): a list of the columsn to be kept, column names in quotes
+        """
+        
+        tmpdf = self.df
+        
+        # filter the columns
+        if cols is not None:
+            assert isinstance(cols, list), 'cols must be a list'
+            if len(cols) > 0:
+                tmp = tmpdf
+                tmp_f = tmp >> select(cols)
+                tmpdf = tmp_f
+        
+        # return the dataset
+        self.df = tmpdf
 
 ## another class
 
