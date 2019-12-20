@@ -948,6 +948,7 @@ class C_A(object):
     def transform(self, 
                   cip_label=True, 
                   award_level=True, 
+                  first_major=True,
                   grand_total=False,
                   level_keep=None,
                   cols=None):
@@ -958,6 +959,7 @@ class C_A(object):
         Parameters:
             cip_label (bool): Add the 2010 cip code labels.  Default is True.
             award_level (bool): Add the labels for the award levels.  Default is True.
+            first_major (bool): If True (default), filter rows where majornum ==  1 for first major
             grand_total (bool): Should the Grand Total cip code be included? Default is False.
             level_keep (list): a list of the award level codes to be kept. Note, this takes the numeric code, not the label.  For help, refer to datasets.award_levels().
             cols (list): a list of the columns to be kept, column names in quotes
@@ -982,6 +984,13 @@ class C_A(object):
             # add the labels onto the dataframe
             tmp = tmpdf
             tmp = pd.merge(left=tmp, right=al, on="awlevel", how="left")
+            # set the update
+            tmpdf = tmp
+
+        # keep only the first major
+        if first_major:
+            tmp = tmpdf
+            tmp = tmp.loc[tmp.awlevel == 1, ]
             # set the update
             tmpdf = tmp
         
