@@ -127,11 +127,36 @@ def closings():
 def region_xwalk():
     """
     Returns a dataframe that can be used to map states and regions
-
-    Source: https://www.insidehighered.com/news/2019/06/13/list-private-colleges-have-closed-recent-years
     """
 
     url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ62ZENWQnUf2XnRs7hiVn7XhXhuCdZdeEOK2-BgkhppEI_A0IMepafWx9vaenOdhQptz5HIwxq3ZAM/pub?gid=0&single=true&output=csv"
     x = pd.read_csv(url)
     x.columns = x.columns.str.lower()
     return(x)
+    
+def cipcodes():
+    """
+    Returns a dataframe of 2010 CIP Codes
+
+    Source: The data dictionary for the Completions A survey
+    """
+
+    url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSjBizdy0EdtUllMJVe0vtq4TIXzsLSR0hnpEyS31-ASx5zjEBkfgLLqOjaHRCtYxqWEVs8eqY0KWJF/pub?gid=0&single=true&output=csv"
+    x = pd.read_csv(url)
+    x.columns = x.columns.str.lower()
+    return(x)
+
+def award_levels():
+    """
+    Returns a dataframe of award levels for the Completions A Survey
+
+    Source: The 2018 survey data dictionary for the Completions A survey
+    """
+
+    url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQVh15c5xErMKdhMea1AIa3jnArpXXlsSY1NSR_laFaYvhlni3C9jP9DKcHkZqNIsAE18zfMPf0qZFu/pub?gid=0&single=true&output=csv"
+    x = pd.read_csv(url)
+    x.columns = x.columns.str.lower()
+    return(x)
+
+
+

@@ -80,9 +80,11 @@ This package is under heavy development and as noted at the top, is subject to b
 - EF_C: Residence and Migration of First-Time Freshmen [EFC]
 - EF_D: Total entering class, retention rates, and student-to-faculty ratio [EFD]
 - IC_AY: Charges for Academic Year Programs [ICAY]
+- C_A: Awards/degrees conferred by program (6-digit CIP code), award level, race/ethnicity, and gender [C_A]
 - OM: Award and enrollment data at four, six and eight years of entering degree/certificate-seeking undergraduate cohorts [OM]
 - FF1: Finance, Public institutions - GASB [FF1]
 - FF2: Private not-for-profit institutions or Public institutions using FASB [FF2]
+
 
 The class names are in the brackets.  For example, the `EF_C` survey can be instantiated using `ipeds.EFC()`.
 
