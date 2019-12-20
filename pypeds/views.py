@@ -145,6 +145,51 @@ def tuition_discounting(fall_years = [2017],
   return(df)
 
 
+#================================================== completions by program
+## a dataframe with school and completions by program data
+def program_completions(years=[2018],
+                        hd_deg4yr = True,
+                        hd_service = False,
+                        hd_lower48 = False,
+                        hd_regions = True,
+                        hd_cols = ['unitid', 'fall_year', 'instnm', 'fips', 
+                                   'carnegie', 'sector', 'latitude', 'longitud'],
+                        degree_code = [5,7]):
+  """
+  Build a dataset of school info and program completions.
+
+  Parameters:
+      years (list): a list of integers for the survey years to include for the migration data
+      hd_deg4yr (bool): boolean (default = True) as to filter to only include degree-granting 4-year institutions
+      hd_service (bool): boolean (default = True) which if True, will remove US service schools
+      hd_lower48 (bool): boolean (default = None) while if True, will only keep lower 48 states
+      hd_cols (list): a list of valid column names for the HD survey.  Only these columns will be returned.
+  """
+  
+  # TODO: review below and step bak
+  
+  # get the inst data
+  i = ipeds.HD(years=years)
+  i.extract()
+  i.transform(deg4yr=hd_deg4yr)
+  i.transform(service=hd_service)
+  i.transform(lower_us=hd_lower48)
+  i.transform(regions=hd_regions)
+  i.transform(cols=hd_cols)
+  inst = i.load()
+
+  # get the awards by program data
+  # NOTE:  not all args are supported 
+  c = ipeds.C_A(years=years)
+  c.extract()
+  c.transform(level_keep=list())
+  
+  # return the data
+  return (df)
+
+
+
+
 #================================================== another view
 ## the description
   
