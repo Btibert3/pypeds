@@ -260,7 +260,12 @@ class HD(object):
 
         return (self.df)
 
-    def transform(self, deg4yr=None, service=None, lower_us=None, cols=None):
+    def transform(self, 
+                  deg4yr=None, 
+                  service=None, 
+                  lower_us=None, 
+                  regions = None, 
+                  cols=None):
         """
         The transformation methods for the dataset collected.  
         Arguments activate the transformation, otherwise they are not performed.
@@ -269,6 +274,7 @@ class HD(object):
             deg4yr (bool): if True, keep only public/private non profit 4-year that are degree granting
             service (bool): if True, remove service schools
             lower_us (bool): if True, keep only the contintental 48 states incl. D.C.
+            regions (bool): if True, add state/region info to the institution
             cols (list): A list of valid column names to keep, all others will be excluded
         """
 
@@ -292,6 +298,15 @@ class HD(object):
             tmp_f = tmp.loc[tmp.fips <= 51, ]
             tmp_f = tmp.loc[tmp.fips != 2, ]
             tmp_f = tmp.loc[tmp.fips != 12, ]
+            tmpdf = tmp_f
+        
+        # add the regions info
+        if regions:
+            r = datasets.region_xwalk()
+            r = r >> select(['fips','name','ipeds_region'])
+            r = r.rename(columns={"name": "state_name"})
+            tmp = tmpdf
+            tmp_f = pd.merge(left=tmp, right=r, on="fips", how="left")
             tmpdf = tmp_f
 
         # select columns
@@ -930,7 +945,12 @@ class C_A(object):
 
         return (self.df)
 
-    def transform(self, cip_label=True, award_level=True, cols=None):
+    def transform(self, 
+                  cip_label=True, 
+                  award_level=True, 
+                  grand_total=False,
+                  level_keep=None,
+                  cols=None):
         """
         The transformation method of the data.  
         Arguments activate the transformation, otherwise they are not performed.
@@ -938,7 +958,9 @@ class C_A(object):
         Parameters:
             cip_label (bool): Add the 2010 cip code labels.  Default is True.
             award_level (bool): Add the labels for the award levels.  Default is True.
-            cols (list): a list of the columsn to be kept, column names in quotes
+            grand_total (bool): Should the Grand Total cip code be included? Default is False.
+            level_keep (list): a list of the award level codes to be kept. Note, this takes the numeric code, not the label.  For help, refer to datasets.award_levels().
+            cols (list): a list of the columns to be kept, column names in quotes
         """
         
         tmpdf = self.df
@@ -962,6 +984,15 @@ class C_A(object):
             tmp = pd.merge(left=tmp, right=al, on="awlevel", how="left")
             # set the update
             tmpdf = tmp
+        
+        # the award levels to keep
+        if level_keep is not None:
+            assert isinstance(level_keep, list), 'level_keep must be a list'
+            if len(level_keep) > 0:
+                tmp = tmpdf
+                a = tmp.awlevel.isin(level_keep)
+                tmp_f = tmp.loc[a, ]
+                tmpdf = tmp_f
             
         # filter the columns
         if cols is not None:
