@@ -165,8 +165,7 @@ def program_completions(years=[2018],
       hd_lower48 (bool): boolean (default = None) while if True, will only keep lower 48 states
       hd_cols (list): a list of valid column names for the HD survey.  Only these columns will be returned.
   """
-  
-  # TODO: review below and step bak
+
   
   # get the inst data
   i = ipeds.HD(years=years)
@@ -183,6 +182,7 @@ def program_completions(years=[2018],
   c = ipeds.C_A(years=years)
   c.extract()
   c.transform(level_keep=list())
+  # TODO: review  above
   
   # return the data
   return (df)
