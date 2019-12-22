@@ -141,6 +141,24 @@ def tuition_discounting(fall_years = [2017],
   df = pd.merge(df, charges, on=['unitid','fall_year'], how="left")
   df = pd.merge(df, fin, on=['unitid','fall_year'], how="left")
   
+  ##### need to change charges 
+  df.chg2ay3 = pd.to_numeric(df['chg2ay3'], errors='coerce')
+  df.chg4ay3 = pd.to_numeric(df['chg4ay3'], errors='coerce')
+  df.chg5ay3 = pd.to_numeric(df['chg5ay3'], errors='coerce')
+  df.chg6ay3 = pd.to_numeric(df['chg6ay3'], errors='coerce')
+  
+  # add the metrics
+  df['discount'] = df.f2c08 / (df.f2c08 + df.f2d01)
+  df['anyaid_pct'] = df.anyaidp / 100
+  df['instaid_pct'] = df.igrnt_p / 100
+  df['net_tuition'] = df.chg2ay3 - df.igrnt_a
+  df['aided_student_disc'] = 1 - (df.net_tuition / df.chg2ay3)
+  df['aid_pct_tuitfee'] = df.igrnt_a / df.chg2ay3
+  df['tuition_disc'] = df.instaid_pct * df.aid_pct_tuitfee
+  # total aid for a student geting the average inst, federal, state, loan
+  df['total_aid'] = df.igrnt_a + df.fgrnt_a + df.sgrnt_a + df.loan_a
+  df['total_charges'] = df.chg2ay3 + df.chg4ay3 + df.chg5ay3 + df.chg6ay3
+  
   # return the dataset
   return(df)
 
