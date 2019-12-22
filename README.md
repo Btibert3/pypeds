@@ -5,23 +5,6 @@ This is a python package aiming to analyze IPEDS and other education datasets us
 > WARNING:  This is a very young project with exploration around the API and the toolkits included.
 
 
-# TODO:
-
-- run tests to confirm 2018 data pulls for all 
-- add region transform function to migration to append data on regions
-- ensure all methods have (rational) etl functions
-- check docs
-- update readme for views 
-- check install from git clone
-- add https://studentaid.ed.gov/sa/about/data-center/school/hcm to datasets
-- run tests
-- example colab notebooks
-- review for release
-- bundle via flit or some other tool
-- li post
-
-
-
 ## Install and Test Notes
 
 -  use clean python 3.6+ environment, which you can create simply with `conda create -n pypeds python=3.6`
@@ -164,18 +147,6 @@ Currently the two network datasets can be loaded via:
 
 1.  It appears that the mission statement data is not part of the full surveys, _but_ is included in the MS Access version.  Obviously it's less than ideal that the data collected is not included within the full file option, which this package highly leverages.
 
-## TODO
-
-college scorecard with input to accept download
-recrawl network datasets and pseudo-cite?
-transform with dplyr like library
-
-- [] add dataset for school closings (evernote link but from public Google Spreadhseet)
-- [] add viz module
-- [] consider older surveys
-- [] update README
-- [] post package for initial release
-- [] go back on older surveys farther than standard naming syntax (hd is older than 2002)
 
 ## Resources:
 

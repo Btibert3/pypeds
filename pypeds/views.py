@@ -180,7 +180,8 @@ def program_completions(years=[2018],
       years (list): a list of integers for the survey years to include for the migration data
       hd_deg4yr (bool): boolean (default = True) as to filter to only include degree-granting 4-year institutions
       hd_service (bool): boolean (default = True) which if True, will remove US service schools
-      hd_lower48 (bool): boolean (default = None) while if True, will only keep lower 48 states
+      hd_lower48 (bool): boolean (default = False) which if True, will only keep lower 48 states
+      hd_regions (bool): boolean (default = True) which if True, will add state and region data at the institutional level
       hd_cols (list): a list of valid column names for the HD survey.  Only these columns will be returned.
   """
 
@@ -199,7 +200,9 @@ def program_completions(years=[2018],
   # NOTE:  not all args are supported 
   c = ipeds.C_A(years=years)
   c.extract()
-  c.transform(level_keep=list())
+  c.transform(level_keep=degree_code)
+  comps = c.load()
+  
   # TODO: review  above
   
   # return the data
