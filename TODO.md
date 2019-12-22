@@ -4,7 +4,7 @@ Needed a better place to organize my thoughts.
 
 
 - [] finish CA view and test
-- [] check discounting and add features/metrics
+- [x] check discounting and add features/metrics
 - [] consider a master view that has metrics flattened (1 row per like cip codes, enrollment by state, etc.)
 - [] check docs
 - [] update README for views and tutorial
