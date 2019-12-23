@@ -165,7 +165,7 @@ def tuition_discounting(fall_years = [2017],
 
 #================================================== completions by program
 ## a dataframe with school and completions by program data
-def program_completions(years=[2018],
+def program_completions(fall_years=[2017],
                         hd_deg4yr = True,
                         hd_service = False,
                         hd_lower48 = False,
@@ -174,7 +174,7 @@ def program_completions(years=[2018],
                                    'carnegie', 'sector', 'latitude', 'longitud'],
                         degree_code = [5,7]):
   """
-  Build a dataset of school info and program completions.
+  Build a dataset of school info and program completions.  
 
   Parameters:
       years (list): a list of integers for the survey years to include for the migration data
@@ -187,7 +187,7 @@ def program_completions(years=[2018],
 
   
   # get the inst data
-  i = ipeds.HD(years=years)
+  i = ipeds.HD(years=fall_years)
   i.extract()
   i.transform(deg4yr=hd_deg4yr)
   i.transform(service=hd_service)
@@ -196,14 +196,18 @@ def program_completions(years=[2018],
   i.transform(cols=hd_cols)
   inst = i.load()
 
-  # get the awards by program data
-  # NOTE:  not all args are supported 
+  # the completions for the academic year are reported a year later
+  years = list(np.array(fall_years) + 1)
   c = ipeds.C_A(years=years)
   c.extract()
+  # TODO: why does below now work?
   c.transform(level_keep=degree_code)
   comps = c.load()
+  #comps =  comps.loc[comps.awlevel.isin(degree_code), ]
   
-  # TODO: review  above
+  # merge the data together
+  # only those that match
+  df = pd.merge(inst, comps, on=['unitid', 'fall_year'], how='inner')
   
   # return the data
   return (df)

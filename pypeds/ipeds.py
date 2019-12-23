@@ -999,9 +999,9 @@ class C_A(object):
             assert isinstance(level_keep, list), 'level_keep must be a list'
             if len(level_keep) > 0:
                 tmp = tmpdf
-                a = tmp.awlevel.isin(level_keep)
-                tmp_f = tmp.loc[a, ]
-                tmpdf = tmp_f
+                tmp_f = tmp.loc[tmp.awlevel.isin(level_keep), ]
+                # set the update
+                tmpdf = tmp
             
         # filter the columns
         if cols is not None:
