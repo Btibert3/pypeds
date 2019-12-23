@@ -200,10 +200,8 @@ def program_completions(fall_years=[2017],
   years = list(np.array(fall_years) + 1)
   c = ipeds.C_A(years=years)
   c.extract()
-  # TODO: why does below now work?
   c.transform(level_keep=degree_code)
   comps = c.load()
-  #comps =  comps.loc[comps.awlevel.isin(degree_code), ]
   
   # merge the data together
   # only those that match

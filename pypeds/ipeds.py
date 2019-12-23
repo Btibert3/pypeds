@@ -990,7 +990,7 @@ class C_A(object):
         # keep only the first major
         if first_major:
             tmp = tmpdf
-            tmp = tmp.loc[tmp.awlevel == 1, ]
+            tmp = tmp.loc[tmp.majornum == 1, ]
             # set the update
             tmpdf = tmp
         
@@ -999,7 +999,7 @@ class C_A(object):
             assert isinstance(level_keep, list), 'level_keep must be a list'
             if len(level_keep) > 0:
                 tmp = tmpdf
-                tmp_f = tmp.loc[tmp.awlevel.isin(level_keep), ]
+                tmp = tmp.loc[tmp.awlevel.isin(level_keep), ]
                 # set the update
                 tmpdf = tmp
             
