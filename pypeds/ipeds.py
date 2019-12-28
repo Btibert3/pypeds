@@ -462,6 +462,7 @@ class SFA(object):
         for year in self.years:
             # since we use numpy, convert to int
             year = int(year)
+            print("Starting " + str(year))
             year_info = get_sfa(year)
             year_fpath = zip_parser(url=year_info['url'], survey=year_info['survey'])
             tmp_df = read_survey(year_fpath)
