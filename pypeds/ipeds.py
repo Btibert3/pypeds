@@ -451,7 +451,7 @@ class SFA(object):
         self.years = years
         self.df = pd.DataFrame()
 
-    def extract(self):
+    def extract(self, status = None):
         """
         Method to pull one or more SFA surveys based on the configured object
 
@@ -462,7 +462,8 @@ class SFA(object):
         for year in self.years:
             # since we use numpy, convert to int
             year = int(year)
-            print("Starting " + str(year))
+            if status:
+                print("Starting " + str(year))
             year_info = get_sfa(year)
             year_fpath = zip_parser(url=year_info['url'], survey=year_info['survey'])
             tmp_df = read_survey(year_fpath)
