@@ -221,8 +221,7 @@ def school_attributes(fall_years=[2017],
                       hd_lower48 = False,
                       hd_regions = True,
                       hd_cols = ['unitid', 'fall_year', 'instnm', 'fips', 
-                                 'carnegie', 'sector', 'latitude', 'longitud'],
-                      ):
+                                 'carnegie', 'sector', 'latitude', 'longitud'] ):
   """
   Build a dataset of school info and program completions.  
 
@@ -235,7 +234,6 @@ def school_attributes(fall_years=[2017],
       hd_cols (list): a list of valid column names for the HD survey.  Only these columns will be returned.
   """  
 
-
   # get the inst data
   i = ipeds.HD(years=fall_years)
   i.extract()
@@ -245,6 +243,12 @@ def school_attributes(fall_years=[2017],
   i.transform(regions=hd_regions)
   i.transform(cols=hd_cols)
   inst = i.load()
+  
+  # get inst characteristcs dataset
+  ic = ipeds.IC(years=fall_years)
+  ic.extract()
+  ic.transform()
+  
 
 
 
