@@ -388,7 +388,7 @@ class IC(object):
 
         return (self.df)
 
-    def transform(self, admit_rate=None, yield_rate=None, app_data=None, cols=None):
+    def transform(self, admit_rate=True, yield_rate=True, app_data=None, cols=None):
         """
         The transformation method of the data.  
         Arguments activate the transformation, otherwise they are not performed.
