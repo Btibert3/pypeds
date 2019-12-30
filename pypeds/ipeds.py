@@ -433,8 +433,6 @@ class IC(object):
 
 
 
-# TODO: transform for below
-
 class SFA(object):
     """
     Student financial aid and net price from the Student Financial Aid and Net Price survey.
