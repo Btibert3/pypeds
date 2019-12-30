@@ -2,7 +2,7 @@
 
 Needed a better place to organize my thoughts.
 
-
+- [] Consider moving to sqlite versions of each survey to avoid appending issues
 - [x] finish CA view and test
 - [x] check discounting and add features/metrics
 - [] [STARTED] consider a master view that has metrics flattened (1 row per like cip codes, enrollment by state, etc.)
