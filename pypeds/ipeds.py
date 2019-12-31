@@ -37,6 +37,7 @@ def zip_parser(url=None, survey=None):
     file.extractall(path=path)
     # list the csv files for the surveys, most likely get one , but may get to with _rv for revised
     files = glob.glob(path + "*" + survey_lower + "*")
+    files = [x.lower() for x in files]
     # isolate the file name
     if len(files) > 1:
         raw_file = [s for s in files if 'rv' in s]
