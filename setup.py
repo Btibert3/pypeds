@@ -15,5 +15,4 @@ setup(name='pypeds',
                         'requests',
                         'altair',
                         'dfply',
-                        'numpy',
-                        'pyarrow'])
+                        'numpy'])
