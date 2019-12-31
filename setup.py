@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name='pypeds',
-      version='0.1.4',
+      version='0.1.5',
       python_requires='>=3.6',
       description='Python package to work with IPEDS and other higher education datasets.',
       url='https://brocktibert.com/',
@@ -15,4 +15,5 @@ setup(name='pypeds',
                         'requests',
                         'altair',
                         'dfply',
-                        'numpy'])
+                        'numpy',
+                        'pyarrow'])
