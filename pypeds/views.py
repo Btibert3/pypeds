@@ -9,11 +9,13 @@ from pypeds import datasets
 ## the migration data, with school and residence region data appended
 def migration(years=[2018], 
               efc_line = list(range(1,99)),
-              efc_cols = ['unitid', 'fall_year', 'line', 'efres02 '],
+              efc_cols = ['unitid', 'fall_year', 'line', 'efres02'],
               hd_deg4yr = True,
               hd_service = True,
               hd_lower48 = None,
-              hd_cols = ['unitid', 'fall_year', 'instnm', 'fips', 'obereg', 'sector', 'latitude', 'longitud'] ):
+              hd_cols = ['unitid', 'fall_year', 'instnm', 
+                         'fips', 'obereg', 'sector', 'latitude', 
+                         'longitud'] ):
   """
   Build a migration dataset, with common data mappings using the lower
   level API.
