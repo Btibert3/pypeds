@@ -381,7 +381,13 @@ class IC(object):
         ic_df_final.drop(columns=['pypeds_init'], inplace=True)
         adm_df_final = adm_df.loc[adm_df.pypeds_init != True,]
         adm_df_final.drop(columns=['pypeds_init'], inplace=True)
-        df = pd.merge(ic_df_final, adm_df_final, how="left", on=['unitid', 'survey_year'], suffixes=('_ic', '_adm'))
+        # df = pd.merge(ic_df_final, adm_df_final, 
+        #               how="left", 
+        #               on=['unitid', 'survey_year'], 
+        #               suffixes=('_ic', '_adm'))
+        df = pd.merge(ic_df_final, adm_df_final,
+                      how="left",
+                      on=['unitid', 'survey_year', 'fall_year'])
         self.df = self.df.append(df, ignore_index=True)
 
     def load(self):
