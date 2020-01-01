@@ -1,4 +1,4 @@
-# test the SFA class
+# test the hd class
 from pypeds import ipeds
 
 

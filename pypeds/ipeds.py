@@ -709,7 +709,7 @@ class OM(object):
             tmp_df.columns = tmp_df.columns.str.lower()
             tmp_df.columns = tmp_df.columns.str.strip()
             tmp_df['survey_year'] = int(year)
-            tmp_df['fall_year'] = int(year)
+            tmp_df['fall_year'] = int(year) - 8
             init_df = init_df.append(tmp_df, ignore_index=True, sort=False)
         # finish up
         # ignore pandas SettingWithCopyWarning, basically

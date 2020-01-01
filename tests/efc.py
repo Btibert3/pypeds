@@ -1,4 +1,4 @@
-# test the SFA class
+# test the efc class
 from pypeds import ipeds
 
 
