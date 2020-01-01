@@ -570,13 +570,15 @@ class EFC(object):
 
         return (self.df)
 
-    def transform(self, cols=None):
+    def transform(self, state=None, line=None, cols=None):
         """
         The transformation method of the data.  
         Arguments activate the transformation, otherwise they are not performed.
 
         Parameters:
-            cols (list): a list of the columsn to be kept, column names in quotes
+            state (list): a list of valid numeric codes, one for each state in the efcstate field
+            line (list): a list of valid numeric codes to filter the line field
+            cols (list): a list of the columns to be kept, column names in quotes
         """
 
         tmpdf = self.df
