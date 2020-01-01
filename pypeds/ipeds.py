@@ -143,7 +143,7 @@ def get_icay(year):
 def get_om(year):
     # assert that year is a int and length 1
     assert isinstance(year, int), "year is not an integer"
-    assert year >= 2002 and year <= 2018, "year must be >=2002 and < 2018"
+    assert year >= 2015 and year <= 2018, "year must be >=2015 and < 2018"
     # build the SURVEY id
     SURVEY = 'OM' + str(year) 
     # build the url
