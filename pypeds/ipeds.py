@@ -37,6 +37,7 @@ def zip_parser(url=None, survey=None):
     file.extractall(path=path)
     # list the csv files for the surveys, most likely get one , but may get to with _rv for revised
     files = glob.glob(path + "*" + survey_lower + "*")
+    files = [x.lower() for x in files]
     # isolate the file name
     if len(files) > 1:
         raw_file = [s for s in files if 'rv' in s]
@@ -142,7 +143,7 @@ def get_icay(year):
 def get_om(year):
     # assert that year is a int and length 1
     assert isinstance(year, int), "year is not an integer"
-    assert year >= 2002 and year <= 2018, "year must be >=2002 and < 2018"
+    assert year >= 2015 and year <= 2018, "year must be >=2015 and < 2018"
     # build the SURVEY id
     SURVEY = 'OM' + str(year) 
     # build the url
@@ -240,6 +241,7 @@ class HD(object):
             year_fpath = zip_parser(url=year_info['url'], survey=year_info['survey'])
             tmp_df = read_survey(year_fpath)
             tmp_df.columns = tmp_df.columns.str.lower()
+            tmp_df.columns = tmp_df.columns.str.strip()
             tmp_df['survey_year'] = int(year)
             tmp_df['fall_year'] = int(year)
             init_df = init_df.append(tmp_df, ignore_index=True, sort=False)
@@ -357,6 +359,7 @@ class IC(object):
             year_fpath = zip_parser(url=year_info['url'], survey=year_info['survey'])
             tmp_df = read_survey(year_fpath)
             tmp_df.columns = tmp_df.columns.str.lower()
+            tmp_df.columns = tmp_df.columns.str.strip()
             tmp_df['survey_year'] = int(year)
             tmp_df['fall_year'] = int(year)
             ic_df = ic_df.append(tmp_df, ignore_index=True, sort=False)
@@ -378,7 +381,13 @@ class IC(object):
         ic_df_final.drop(columns=['pypeds_init'], inplace=True)
         adm_df_final = adm_df.loc[adm_df.pypeds_init != True,]
         adm_df_final.drop(columns=['pypeds_init'], inplace=True)
-        df = pd.merge(ic_df_final, adm_df_final, how="left", on=['unitid', 'survey_year'], suffixes=('_ic', '_adm'))
+        # df = pd.merge(ic_df_final, adm_df_final, 
+        #               how="left", 
+        #               on=['unitid', 'survey_year'], 
+        #               suffixes=('_ic', '_adm'))
+        df = pd.merge(ic_df_final, adm_df_final,
+                      how="left",
+                      on=['unitid', 'survey_year', 'fall_year'])
         self.df = self.df.append(df, ignore_index=True)
 
     def load(self):
@@ -466,6 +475,7 @@ class SFA(object):
             year_fpath = zip_parser(url=year_info['url'], survey=year_info['survey'])
             tmp_df = read_survey(year_fpath)
             tmp_df.columns = tmp_df.columns.str.lower()
+            tmp_df.columns = tmp_df.columns.str.strip()
             tmp_df['survey_year'] = int(year)
             tmp_df['fall_year'] = int(year) - 1
             init_df = init_df.append(tmp_df, ignore_index=True, sort=False)
@@ -541,6 +551,7 @@ class EFC(object):
             year_fpath = zip_parser(url=year_info['url'], survey=year_info['survey'])
             tmp_df = read_survey(year_fpath)
             tmp_df.columns = tmp_df.columns.str.lower()
+            tmp_df.columns = tmp_df.columns.str.strip()
             tmp_df['survey_year'] = int(year)
             tmp_df['fall_year'] = int(year)
             init_df = init_df.append(tmp_df, ignore_index=True, sort=False)
@@ -559,13 +570,15 @@ class EFC(object):
 
         return (self.df)
 
-    def transform(self, cols=None):
+    def transform(self, state=None, line=None, cols=None):
         """
         The transformation method of the data.  
         Arguments activate the transformation, otherwise they are not performed.
 
         Parameters:
-            cols (list): a list of the columsn to be kept, column names in quotes
+            state (list): a list of valid numeric codes, one for each state in the efcstate field
+            line (list): a list of valid numeric codes to filter the line field
+            cols (list): a list of the columns to be kept, column names in quotes
         """
 
         tmpdf = self.df
@@ -627,6 +640,7 @@ class ICAY(object):
             year_fpath = zip_parser(url=year_info['url'], survey=year_info['survey'])
             tmp_df = read_survey(year_fpath)
             tmp_df.columns = tmp_df.columns.str.lower()
+            tmp_df.columns = tmp_df.columns.str.strip()
             tmp_df['survey_year'] = int(year)
             tmp_df['fall_year'] = int(year)
             init_df = init_df.append(tmp_df, ignore_index=True, sort=False)
@@ -695,8 +709,9 @@ class OM(object):
             year_fpath = zip_parser(url=year_info['url'], survey=year_info['survey'])
             tmp_df = read_survey(year_fpath)
             tmp_df.columns = tmp_df.columns.str.lower()
+            tmp_df.columns = tmp_df.columns.str.strip()
             tmp_df['survey_year'] = int(year)
-            tmp_df['fall_year'] = int(year)
+            tmp_df['fall_year'] = int(year) - 8
             init_df = init_df.append(tmp_df, ignore_index=True, sort=False)
         # finish up
         # ignore pandas SettingWithCopyWarning, basically
@@ -740,6 +755,7 @@ class EFD(object):
             year_fpath = zip_parser(url=year_info['url'], survey=year_info['survey'])
             tmp_df = read_survey(year_fpath)
             tmp_df.columns = tmp_df.columns.str.lower()
+            tmp_df.columns = tmp_df.columns.str.strip()
             tmp_df['survey_year'] = int(year)
             tmp_df['fall_year'] = int(year)
             init_df = init_df.append(tmp_df, ignore_index=True, sort=False)
@@ -787,6 +803,7 @@ class FF1(object):
             year_fpath = zip_parser(url=year_info['url'], survey=year_info['survey'])
             tmp_df = read_survey(year_fpath)
             tmp_df.columns = tmp_df.columns.str.lower()
+            tmp_df.columns = tmp_df.columns.str.strip()
             tmp_df['survey_year'] = int(year)
             tmp_df['fall_year'] = int(year) -1
             init_df = init_df.append(tmp_df, ignore_index=True, sort=False)

@@ -2,9 +2,11 @@
 
 Needed a better place to organize my thoughts.
 
-- [] Consider moving to sqlite versions of each survey to avoid appending issues
 - [x] finish CA view and test
 - [x] check discounting and add features/metrics
+- [] add https://stackoverflow.com/a/28287730/155406 for status updates
+- [] tests of base classes
+- 
 - [] [STARTED] consider a master view that has metrics flattened (1 row per like cip codes, enrollment by state, etc.)
 - [] check docs
 - [] update README for views and tutorial
