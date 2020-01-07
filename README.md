@@ -85,8 +85,15 @@ The class names are in the brackets.  For example, the `EF_C` survey can be inst
 
 ## Additional datasets
 
-This package will also periodically add datasets that one might use when studying and
-analyzing data in higher education and enrollment management.  
+This package will also periodically add datasets that one might use when studying and analyzing data in higher education and enrollment management.
+
+Most notably, once importing the `datasets` module, `pypeds` attempts to provide simple access to core education-related datasets.  For example:
+
+- `wiche`  for data, and projections, of high school graduates in the US by state.
+- `scorecard_x` datasets related to the National Scorecard.  There are currenly 4 supported.  Review the documentation for details.
+- In addition to above, there are other datasets to help with mapping code and geographies for easier reporting and visualization.
+
+For example, let's play around with the WICHE projections below.
 
 ### WICHE High School Projections
 
@@ -130,6 +137,7 @@ plt.show()
 ```
 
 <img src="https://monosnap.com/image/oWQLbsjgdVnZl9zgzYIedQsjKIPvcX.png">
+
 
 
 ## Future work
