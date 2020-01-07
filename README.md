@@ -1,4 +1,4 @@
-# pypeds  <img src="logo/pypeds_hexSticker.png" width = "175" height = "200" align="right" />
+# pypeds  <img src="https://github.com/Btibert3/pypeds/raw/master/logo/pypeds_hexSticker.png" width = "175" height = "200" align="right" />
 
 This is a python package aiming to analyze IPEDS and other education datasets using the data science tools available within python.  Dare I say, enrollment science tools?
 
@@ -7,11 +7,23 @@ This is a python package aiming to analyze IPEDS and other education datasets us
 
 ## Install and Test Notes
 
--  use clean python 3.6+ environment, which you can create simply with `conda create -n pypeds python=3.6`
--  to test the setup and install with `pip install .`
--  once you have activated the environment with `conda activate pypeds`
+Installation of `pypeds` is as simple as `pip install pypeds`.  
 
-Or, if you do not want to worry about all of that, you can review [this Google Colab Notebook](https://colab.research.google.com/drive/1YxnfdZyr1JD9EQlbf32HN9bpXiitAlaM) which provides an installation section.  You can replicate this process anytime you want code/analyze data using Google's fantastic notebook coding environment.
+It is highly recommended that you leverage the use of environments when coding in python; at least that is my opinion anyway.  I prefer to use conda for my environment management.  Assuming that you have conda setup properly, this could be as simple as:
+
+```
+conda create -n pypeds python=3.6
+conda activate pypeds
+pip install pypeds
+```
+
+Alternatively, if you want to use the development version of this package, you can review [this Google Colab Notebook](https://colab.research.google.com/drive/1YxnfdZyr1JD9EQlbf32HN9bpXiitAlaM) which provides an installation overview to install from this repository.  You can replicate this process anytime you want code/analyze data using Google's fantastic notebook coding environment.
+
+Last but not least, it's worth stating that you could just as easily install `pypeds` via collab with:
+
+```
+! pip install colab
+```
 
 ## Basic Usage
 
@@ -24,7 +36,7 @@ from pypeds import ipeds
 
 # generate a list of survey years -- this must be a python list
 # YEARS = list(range(2014, 2018, 1))  ## another way to create a range of years
-YEARS = [2016,2017]
+YEARS = [2017,2018]
 
 # instantiate the survey of interest
 hd = ipeds.HD(years=YEARS)
@@ -119,29 +131,13 @@ plt.show()
 
 <img src="https://monosnap.com/image/oWQLbsjgdVnZl9zgzYIedQsjKIPvcX.png">
 
-### Network Graphs
-
-The package also includes two network datasets exploring the relationships between various entities.
-
-For example, load a competition graph with some fun metadata to think about:
-
-```
-from pypeds import datasets
-x = data.comp_graph1()
-type(x)
-x.keys()
-```
-
-Currently the two network datasets can be loaded via:
-
-- `comp_graph1()`
-- `comp_graph2()`
--
 
 ## Future work
 
 - include tooling to help analysts connect to Salesforce or Data Warehouses/Databases
-- transform methods per survey, common visualization and mapping, and basic machine learning functionality
+- submit via pypeds
+- additional higher education datasets
+
 
 ## Notes
 
@@ -150,4 +146,6 @@ Currently the two network datasets can be loaded via:
 
 ## Resources:
 
-![](https://surveys.nces.ed.gov/ipeds/VisImpSpecView.aspx?id=33&show=all&instid=508)
+!()[https://surveys.nces.ed.gov/ipeds/VisImpSpecView.aspx?id=33&show=all&instid=508]
+
+
