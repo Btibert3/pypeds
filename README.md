@@ -36,7 +36,7 @@ from pypeds import ipeds
 
 # generate a list of survey years -- this must be a python list
 # YEARS = list(range(2014, 2018, 1))  ## another way to create a range of years
-YEARS = [2017,2018]
+YEARS = [2016,2017]
 
 # instantiate the survey of interest
 hd = ipeds.HD(years=YEARS)
