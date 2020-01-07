@@ -15,3 +15,4 @@ requires=[
     "numpy"
 ]
 requires-python=">=3.6"
+description-file="README.md"
