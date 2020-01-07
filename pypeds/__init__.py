@@ -3,6 +3,6 @@ from pypeds.datasets import *
 from pypeds.views import *
 
 
-"""An amazing sample package!"""
+"""A python package to help expedite insight generate from publicly available higher education datasets. """
 
 __version__ = '0.1'
