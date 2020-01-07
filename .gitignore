@@ -11,3 +11,4 @@ Pipfile.lock
 pypeds.Rproj
 .DS_Store
 .idea
+test-notebooks/
