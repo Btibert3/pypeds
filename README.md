@@ -155,6 +155,6 @@ plt.show()
 
 ## Resources:
 
-[](https://surveys.nces.ed.gov/ipeds/VisImpSpecView.aspx?id=33&show=all&instid=508)
+[IPEDS survey info](https://surveys.nces.ed.gov/ipeds/VisImpSpecView.aspx?id=33&show=all&instid=508)
 
 
