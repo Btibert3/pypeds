@@ -12,7 +12,8 @@ requires=[
     "pandas",
     "altair",
     "dfply",
-    "numpy"
+    "numpy",
+    "tabpy"
 ]
 requires-python=">=3.6"
 description-file="README.md"
