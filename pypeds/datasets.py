@@ -48,7 +48,7 @@ def wiche():
     Returns a dataframe with the most recent WICHE projections in long format.
     """
 
-    url = "https://raw.githubusercontent.com/Btibert3/datasets/master/wiche-hs-grads/wiche-hs-grads.csv"
+    url = "https://raw.githubusercontent.com/Btibert3/datasets/master/wiche/wiche-ja2020.csv"
     wiche_df = pd.read_csv(url)
     return(wiche_df)
 
