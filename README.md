@@ -22,7 +22,7 @@ Alternatively, if you want to use the development version of this package, you c
 Last but not least, it's worth stating that you could just as easily install `pypeds` via collab with:
 
 ```
-! pip install colab
+!pip install pypeds
 ```
 
 ## Basic Usage
