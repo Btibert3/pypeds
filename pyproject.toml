@@ -13,6 +13,7 @@ requires=[
     "altair",
     "dfply",
     "numpy",
+    "xlrd"
     "pantab"
 ]
 requires-python=">=3.6"
