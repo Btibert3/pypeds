@@ -157,6 +157,33 @@ def award_levels():
     x = pd.read_csv(url)
     x.columns = x.columns.str.lower()
     return(x)
+    
+def cohort_default():
+    """
+    Returns a dataframe of cohort default data.  
+    
+    The U.S. Department of Education releases official cohort default rates once per year. The FY 2016 official cohort default rates were delivered to both domestic and foreign schools on September 23, 2019, electronically via the eCDR process. All schools must enroll in eCDR to receive cohort default rate notification. 
+
+    Source: https://www2.ed.gov/offices/OSFAP/defaultmanagement/cdr.html
+    """
+
+    # avoid errors around ssl cert
+    # https://stackoverflow.com/questions/44629631/while-using-pandas-got-error-urlopen-error-ssl-certificate-verify-failed-cert
+    import ssl
+    ssl._create_default_https_context = ssl._create_unverified_context
+    
+    # get the data
+    url = "https://www2.ed.gov/offices/OSFAP/defaultmanagement/peps300.xlsx"
+    x = pd.read_excel(url)
+    
+    # fix the column names
+    x.columns = x.columns.str.lower()
+    cnames = x.columns
+    cnames = cnames.str.replace("\\n| ", "_", regex=True)
+    x.columns = cnames
+    
+    # return the data
+    return(x)
 
 
 
