@@ -13,8 +13,8 @@ requires=[
     "altair",
     "dfply",
     "numpy",
-    "tabpy",
     "xlrd"
+    "pantab"
 ]
 requires-python=">=3.6"
 description-file="README.md"

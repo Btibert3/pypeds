@@ -22,7 +22,7 @@ Alternatively, if you want to use the development version of this package, you c
 Last but not least, it's worth stating that you could just as easily install `pypeds` via collab with:
 
 ```
-! pip install colab
+!pip install pypeds
 ```
 
 ## Basic Usage
@@ -61,7 +61,7 @@ Moreover, this package attempts to remove the friction of data prep as much as p
 
 1. Instantiate the survey of interest with `ipeds.IC()` or `ipeds.HD()`.  The years argument defaults to the current __survey__ (2017) year but can setup with a __list__ of years.  For example, `ipeds.HD(years=[2016,2017])` as well.
 2. Next, we `.extract` the data, which collects 1 or more years of full survey datasets from IPEDS and keeps the data within our survey object.
-3. Optionally, you can `.transform` the data.  This __API yet built__, but will supply functionality to modify the survey data by filtering rows, selecting columns, or deriving new columns using __commonly accepted logic__ in order to establish standard definitions.  Again, the aim is to make things easier.
+3. Optionally, you can `.transform` the data.  This will supply functionality to modify the survey data by filtering rows, selecting columns, or deriving new columns using __commonly accepted logic__ in order to establish standard definitions.  Again, the aim is to make things easier.
 4. Lastly, `.load` pulls out the survey datasets as a pandas dataframe, at which point you can analyze, visualize the survey dataset using the full suite of data analytics tools found within python.
 
 This package is under heavy development and as noted at the top, is subject to breaking changes within the API.  However, beyond the ETL verbs, this package will also include various methods for exploration, competitive benchmarking, and data visualization.  While all of this work can be done by the analyst after the `.load` method, the aim is facilitate learning and insight by extracting away the "how" for basic and common questions in the enrollment management space.
@@ -145,6 +145,7 @@ plt.show()
 - include tooling to help analysts connect to Salesforce or Data Warehouses/Databases
 - submit via pypeds
 - additional higher education datasets
+- Pull in Wikipedia links and pageview trends
 
 
 ## Notes
@@ -154,6 +155,6 @@ plt.show()
 
 ## Resources:
 
-!()[https://surveys.nces.ed.gov/ipeds/VisImpSpecView.aspx?id=33&show=all&instid=508]
+[IPEDS survey info](https://surveys.nces.ed.gov/ipeds/VisImpSpecView.aspx?id=33&show=all&instid=508)
 
 
