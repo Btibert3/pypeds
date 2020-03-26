@@ -6,8 +6,8 @@ services:
     ports:
       - "8787:8787"
     environment:
-      - USER=btibert
-      - PASSWORD=bodhi
+      - USER=user
+      - PASSWORD=password
     volumes:
       - ./:/home/rstudio/
       
