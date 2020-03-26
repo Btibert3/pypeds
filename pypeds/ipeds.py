@@ -56,7 +56,9 @@ def read_survey(path):
         ## encoding option needed for h2017, at least, wasnt needed for IC2013
         survey_file = pd.read_csv(path, encoding='ISO-8859-1')
     except:
-        survey_file = pd.DataFrame({'path': path})
+        # need to pass in a list to avoid
+        # ValueError: If using all scalar values, you must pass an index
+        survey_file = pd.DataFrame( [{'path': path}] )
     # remove the file
     os.remove(path)
     # column names to lower - helps later and assumes a survey varname is historically unique
