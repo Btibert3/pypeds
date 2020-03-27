@@ -37,10 +37,10 @@ def zip_parser(url=None, survey=None):
     file.extractall(path=path)
     # list the csv files for the surveys, most likely get one , but may get to with _rv for revised
     files = glob.glob(path + "*" + survey_lower + "*")
-    files = [x.lower() for x in files]
+    # files = [x.lower() for x in files]  ## removed for regex search below
     # isolate the file name
     if len(files) > 1:
-        raw_file = [s for s in files if 'rv' in s]
+        raw_file = [s for s in files if re.search('rv|RV', s)] # use regex to search -- 2006 migration
         raw_file = str(raw_file[0])  # just in case, take first
     else:
         raw_file = str(files[0])
