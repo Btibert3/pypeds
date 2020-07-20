@@ -226,14 +226,14 @@ class HD(object):
         """
         Method to pull one or more IC surveys based on the configured object
 
-        The extract method currently supports back to 2002 and up to 2017.
+        The extract method currently supports back to 2002 and up to 2019.
         """
 
         init_df = pd.DataFrame({'pypeds_init': [True]})
         for year in self.years:
             # assert that year is a int and length 1
             assert isinstance(year, int), "year is not an integer"
-            assert year >= 2002 and year <= 2018, "year must be >=2002 and < 2018"
+            assert year >= 2002 and year <= 2019, "year must be >=2002 and < 2019"
             # build the SURVEY id
             SURVEY = 'HD' + str(year)
             # build the url
