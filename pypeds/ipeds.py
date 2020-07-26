@@ -615,8 +615,8 @@ class EFC(object):
         # add the regions info
         if regions:
             r = datasets.region_xwalk()
-            r = r >> select(['fips','name','ipeds_region', 'postal code'])
-            r = r.rename(columns={"fips": "efcstate", 
+            r = r >> select(['ipeds_code','name','ipeds_region', 'postal code'])
+            r = r.rename(columns={"ipeds_code": "efcstate", 
                                   "postal code":"res_abbrev", 
                                   "ipeds_region":"res_region", 
                                   "postal code":"res_zip",
