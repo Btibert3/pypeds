@@ -619,7 +619,8 @@ class EFC(object):
             r = r.rename(columns={"fips": "efcstate", 
                                   "postal code":"res_abbrev", 
                                   "ipeds_region":"res_region", 
-                                  "postal code":"res_zip"})
+                                  "postal code":"res_zip",
+                                  "name":"res_name"})
             r['efcstate'] = r['efcstate'].astype('float64')
             tmp = tmpdf
             tmp_f = pd.merge(left=tmp, right=r, on="efcstate", how="left")
