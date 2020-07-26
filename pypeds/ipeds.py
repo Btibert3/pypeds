@@ -573,7 +573,7 @@ class EFC(object):
 
         return (self.df)
 
-    def transform(self, state=None, line=None, cols=None):
+    def transform(self, state=None, line=None, cols=None, regions=None):
         """
         The transformation method of the data.  
         Arguments activate the transformation, otherwise they are not performed.
@@ -611,6 +611,15 @@ class EFC(object):
                 tmp = tmpdf
                 tmp_f = tmp >> select(cols)
                 tmpdf = tmp_f
+        
+        # add the regions info
+        if regions:
+            r = datasets.region_xwalk()
+            r = r >> select(['fips','name','ipeds_region', 'postal code'])
+            r = r.rename(columns={"name": "efcstate", "postal code":"abbrev"})
+            tmp = tmpdf
+            tmp_f = pd.merge(left=tmp, right=r, on="efcstate", how="left")
+            tmpdf = tmp_f
         
         # return the data
         self.df = tmpdf
