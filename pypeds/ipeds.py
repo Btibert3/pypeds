@@ -617,7 +617,6 @@ class EFC(object):
             r = datasets.region_xwalk()
             r = r >> select(['ipeds_code','name','ipeds_region', 'postal code'])
             r = r.rename(columns={"ipeds_code": "line", 
-                                  "postal code":"res_abbrev", 
                                   "ipeds_region":"res_region", 
                                   "postal code":"res_zip",
                                   "name":"res_name"})

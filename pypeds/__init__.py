@@ -1,6 +1,6 @@
 """A python package to help facilitate the collection and analysis of education-related datasets. """
 
-__version__ = '0.146'
+__version__ = '0.147'
 
 
 from pypeds.ipeds import *
