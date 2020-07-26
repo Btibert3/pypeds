@@ -616,7 +616,10 @@ class EFC(object):
         if regions:
             r = datasets.region_xwalk()
             r = r >> select(['fips','name','ipeds_region', 'postal code'])
-            r = r.rename(columns={"fips": "efcstate", "postal code":"abbrev"})
+            r = r.rename(columns={"fips": "efcstate", 
+                                  "postal code":"res_abbrev", 
+                                  "ipeds_region":"res_region", 
+                                  "postal code":"res_zip"})
             r['efcstate'] = r['efcstate'].astype('float64')
             tmp = tmpdf
             tmp_f = pd.merge(left=tmp, right=r, on="efcstate", how="left")
