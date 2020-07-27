@@ -135,7 +135,7 @@ def get_efc(year):
 def get_icay(year):
     # assert that year is a int and length 1
     assert isinstance(year, int), "year is not an integer"
-    assert year >= 2002 and year <= 2019, "year must be >=2002 and <= 2019"
+    assert year >= 2001 and year <= 2019, "year must be >=2001 and <= 2019"
     # build the SURVEY id
     SURVEY = 'IC' + str(year) + "_AY"
     # build the url
