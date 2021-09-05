@@ -98,7 +98,7 @@ def get_ic(year):
 def get_adm(year):
     # assert that year is a int and length 1
     assert isinstance(year, int), "year is not an integer"
-    assert year >= 2014 and year <= 2018, "year must be >=2014 and <= 2018"
+    assert year >= 2014 and year <= 2020, "year must be >=2014 and <= 2020"
     # build the SURVEY id
     SURVEY = 'ADM' + str(year)
     # build the url
@@ -110,7 +110,7 @@ def get_adm(year):
 def get_sfa(year):
     # assert that year is a int and length 1
     assert isinstance(year, int), "year is not an integer"
-    assert year >= 2002 and year <= 2018, "year must be >=2002 and <= 2018"
+    assert year >= 2002 and year <= 2020, "year must be >=2002 and <= 2020"
     # build the SURVEY id
     sfa_year = str(year - 1)[2:] + str(year)[2:]
     SURVEY = 'SFA' + str(sfa_year)
@@ -123,7 +123,7 @@ def get_sfa(year):
 def get_efc(year):
     # assert that year is a int and length 1
     assert isinstance(year, int), "year is not an integer"
-    assert year >= 2002 and year <= 2018, "year must be >=2002 and <= 2018"
+    assert year >= 2002 and year <= 2020, "year must be >=2002 and <= 2020"
     # build the SURVEY id
     SURVEY = 'EF' + str(year) + "C"
     # build the url
@@ -146,7 +146,7 @@ def get_icay(year):
 def get_om(year):
     # assert that year is a int and length 1
     assert isinstance(year, int), "year is not an integer"
-    assert year >= 2015 and year <= 2018, "year must be >=2015 and <= 2018"
+    assert year >= 2015 and year <= 2020, "year must be >=2015 and <= 2020"
     # build the SURVEY id
     SURVEY = 'OM' + str(year) 
     # build the url
@@ -157,7 +157,7 @@ def get_om(year):
 def get_efd(year):
     # assert that year is a int and length 1
     assert isinstance(year, int), "year is not an integer"
-    assert year >= 2002 and year <= 2018, "year must be >=2002 and <= 2018"
+    assert year >= 2002 and year <= 2020, "year must be >=2002 and <= 2020"
     # build the SURVEY id
     SURVEY = 'EF' + str(year)  + "D"
     # build the url
@@ -168,7 +168,7 @@ def get_efd(year):
 def get_ff1(year):
     # assert that year is a int and length 1
     assert isinstance(year, int), "year is not an integer"
-    assert year >= 2002 and year <= 2018, "year must be >=2002 and <= 2018"
+    assert year >= 2002 and year <= 2020, "year must be >=2002 and <= 2020"
     # build the SURVEY id
     ff1_year = str(year - 1)[2:] + str(year)[2:]
     SURVEY = 'F' + str(ff1_year)  + "_F1A"
@@ -180,7 +180,7 @@ def get_ff1(year):
 def get_ff2(year):
     # assert that year is a int and length 1
     assert isinstance(year, int), "year is not an integer"
-    assert year >= 2002 and year <= 2018, "year must be >=2002 and <= 2018"
+    assert year >= 2002 and year <= 2020, "year must be >=2002 and <= 2020"
     # build the SURVEY id
     ff2_year = str(year - 1)[2:] + str(year)[2:]
     SURVEY = 'F' + str(ff2_year)  + "_F2"
@@ -206,7 +206,7 @@ def get_ca(year):
 class HD(object):
     """
     Directory Information from the Institutional Characteristics survey.
-    Currently supports the years 2002 - 2018.
+    Currently supports the years 2002 - 2020.
 
     Methods are extract, transform, and load.
     """
@@ -329,11 +329,11 @@ class HD(object):
 class IC(object):
     """
     Educational offerings, organization, services and athletic associations from the Institutional Characteristics survey.
-    Currently support the years 2002 to 2018.
+    Currently support the years 2002 to 2020.
     """
 
     # init
-    def __init__(self, years=[2018]):
+    def __init__(self, years=[2020]):
         """
         The constructor for the IC survey
 
@@ -796,7 +796,7 @@ class FF1(object):
     Private not-for-profit institutions or Public institutions using FASB:
     """
 
-    def __init__(self, years=[2018]):
+    def __init__(self, years=[2020]):
         """
         Public institutions - GASB
 
@@ -866,7 +866,7 @@ class FF2(object):
     Private not-for-profit institutions or Public institutions using FASB:
     """
 
-    def __init__(self, years=[2018]):
+    def __init__(self, years=[2020]):
         """
         Public institutions - GASB
 
@@ -936,7 +936,7 @@ class C_A(object):
     Awards/degrees conferred by program (6-digit CIP code), award level, race/ethnicity, and gender
     """
 
-    def __init__(self, years=[2018]):
+    def __init__(self, years=[2020]):
         """
         Public institutions - GASB
 
