@@ -270,6 +270,7 @@ class HD(object):
                   service=None, 
                   lower_us=None, 
                   regions = None, 
+                  sector_labs = None,
                   cols=None):
         """
         The transformation methods for the dataset collected.  
@@ -280,6 +281,7 @@ class HD(object):
             service (bool): if True, remove service schools
             lower_us (bool): if True, keep only the contintental 48 states incl. D.C.
             regions (bool): if True, add state/region info to the institution
+            sector_labs (bool): if True, will add a column containing the sector labels. 
             cols (list): A list of valid column names to keep, all others will be excluded
         """
 
@@ -313,6 +315,27 @@ class HD(object):
             tmp = tmpdf
             tmp_f = pd.merge(left=tmp, right=r, on="fips", how="left")
             tmpdf = tmp_f
+        
+        # sector labels
+        if sector_labs:
+            # the mapping
+            sector_labs = {0:'Administrative Unit', 
+               1:'Public, 4-year or above',
+               2:'Private not-for-profit 4-year or above',
+               3:'Private for-profit 4-year or above',
+               4:'Public, 2-year',
+               5:'Private not-for-profit 2-year',
+               6:'Private for-profit 2-year',
+               7:'Public less-than 2-year',
+               8:'Private not-for-profit less-than 2-year',
+               9:'Private for-profit less-than 2-year',
+               99:'Sector Unknown'}
+            # create a copy of the values into a new column and replace the values
+            tmp = tmpdf
+            tmp['sector_labels'] = tmp.sector 
+            tmp['sector_labels'] = tmp.sector_labels.replace(sector_labs)
+            tmpdf = tmp
+
 
         # select columns
         if cols is not None:
