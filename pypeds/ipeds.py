@@ -74,7 +74,7 @@ def read_survey(path):
 def get_hd(year):
     # assert that year is a int and length 1
     assert isinstance(year, int), "year is not an integer"
-    assert year >= 2002 and year <= 2019, "year must be >=2002 and <= 2019"
+    assert year >= 2002 and year <= 2020, "year must be >=2002 and <= 2020"
     # build the SURVEY id
     SURVEY = 'HD' + str(year)
     # build the url
@@ -86,7 +86,7 @@ def get_hd(year):
 def get_ic(year):
     # assert that year is a int and length 1
     assert isinstance(year, int), "year is not an integer"
-    assert year >= 2002 and year <= 2019, "year must be >=2002 and <= 2019"
+    assert year >= 2002 and year <= 2020, "year must be >=2002 and <= 2020"
     # build the SURVEY id
     SURVEY = 'IC' + str(year)
     # build the url
@@ -135,7 +135,7 @@ def get_efc(year):
 def get_icay(year):
     # assert that year is a int and length 1
     assert isinstance(year, int), "year is not an integer"
-    assert year >= 2001 and year <= 2019, "year must be >=2001 and <= 2019"
+    assert year >= 2001 and year <= 2020, "year must be >=2001 and <= 2020"
     # build the SURVEY id
     SURVEY = 'IC' + str(year) + "_AY"
     # build the url
@@ -192,7 +192,7 @@ def get_ff2(year):
 def get_ca(year):
     # assert that year is a int and length 1
     assert isinstance(year, int), "year is not an integer"
-    assert year >= 2002 and year <= 2019, "year must be >=2002 and <= 2019"
+    assert year >= 2002 and year <= 2020, "year must be >=2002 and <= 2020"
     # build the SURVEY id
     SURVEY = 'C' + str(year)  + "_A"
     # build the url
