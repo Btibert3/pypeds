@@ -36,7 +36,7 @@ from pypeds import ipeds
 
 # generate a list of survey years -- this must be a python list
 # YEARS = list(range(2014, 2018, 1))  ## another way to create a range of years
-YEARS = [2016,2017]
+YEARS = [2019,2020]
 
 # instantiate the survey of interest
 hd = ipeds.HD(years=YEARS)
@@ -50,8 +50,8 @@ df = hd.load()
 # confirm that we have the data we expected
 df.survey_year.value_counts()
 
-2016.0    7521
-2017.0    7153
+2019.0    6559
+2020.0    6440
 
 ```
 
