@@ -53,52 +53,52 @@ def wiche():
     return(wiche_df)
 
 
-def scorecard():
-    """
-    Returns a dataframe of the most recent college scorecard dataset.
+# def scorecard():
+#     """
+#     Returns a dataframe of the most recent college scorecard dataset.
 
-    The Scorecard dataset, not the full dataset.  For the full, use the scorecard_full method.
-    """
+#     The Scorecard dataset, not the full dataset.  For the full, use the scorecard_full method.
+#     """
 
-    url = "https://ed-public-download.app.cloud.gov/downloads/Most-Recent-Cohorts-Scorecard-Elements.csv"
-    x = pd.read_csv(url)
-    return(x)
-
-
-def scorecard_full():
-    """
-    Returns a dataframe of the most recent FULL college scorecard dataset.
-
-    This will take ~ 10 seconds using free online resources, but also asks for a full data download at present.
-    Curently, caching is not used but should be.
-    """
-
-    url = "https://ed-public-download.app.cloud.gov/downloads/Most-Recent-Cohorts-All-Data-Elements.csv"
-    x = pd.read_csv(url)
-    return(x)
+#     url = "https://ed-public-download.app.cloud.gov/downloads/Most-Recent-Cohorts-Scorecard-Elements.csv"
+#     x = pd.read_csv(url)
+#     return(x)
 
 
-def scorecard_nslds():
-    """
-    Returns a dataframe of the most recent cohort for the NSLDS dataset.
+# def scorecard_full():
+#     """
+#     Returns a dataframe of the most recent FULL college scorecard dataset.
 
-    This will take ~ 10 seconds using free online resources, but also asks for a full data download at present.
-    Curently, caching is not used but should be.
-    """
+#     This will take ~ 10 seconds using free online resources, but also asks for a full data download at present.
+#     Curently, caching is not used but should be.
+#     """
 
-    url = "https://ed-public-download.app.cloud.gov/downloads/Most-Recent-Cohorts-NSLDS-Elements.csv"
-    x = pd.read_csv(url)
-    return(x)
+#     url = "https://ed-public-download.app.cloud.gov/downloads/Most-Recent-Cohorts-All-Data-Elements.csv"
+#     x = pd.read_csv(url)
+#     return(x)
 
 
-def scorecard_earnings():
-    """
-    Returns a dataframe of the most recent cohort for post school earnings.
-    """
+# def scorecard_nslds():
+#     """
+#     Returns a dataframe of the most recent cohort for the NSLDS dataset.
 
-    url = "https://ed-public-download.app.cloud.gov/downloads/Most-Recent-Cohorts-Treasury-Elements.csv"
-    x = pd.read_csv(url)
-    return(x)
+#     This will take ~ 10 seconds using free online resources, but also asks for a full data download at present.
+#     Curently, caching is not used but should be.
+#     """
+
+#     url = "https://ed-public-download.app.cloud.gov/downloads/Most-Recent-Cohorts-NSLDS-Elements.csv"
+#     x = pd.read_csv(url)
+#     return(x)
+
+
+# def scorecard_earnings():
+#     """
+#     Returns a dataframe of the most recent cohort for post school earnings.
+#     """
+
+#     url = "https://ed-public-download.app.cloud.gov/downloads/Most-Recent-Cohorts-Treasury-Elements.csv"
+#     x = pd.read_csv(url)
+#     return(x)
 
 
 def crosswalk():
