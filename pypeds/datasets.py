@@ -68,7 +68,7 @@ def scorecard_merged(fname="scorecard", expath="./"):
     # get and save the file
     if not os.path.exists(path + file):
         # get the data
-    os.mkdir(path)
+        os.mkdir(path)
     try:
         results = requests.get(url)
     except:
