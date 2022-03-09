@@ -79,8 +79,8 @@ def scorecard_merged(fname="scorecard", expath="./"):
         print(f"writing file from {URL}")
         f.write(results.content)
     # extract the files to the path
-    file = zipfile.ZipFile(path + file)
     print(f"extracting file at {path + file}")
+    file = zipfile.ZipFile(path + file)
     file.extractall(path=path)
     print("files extracted, getting data dictionary")
     ############################# get the data dictionary
