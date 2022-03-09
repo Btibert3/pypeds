@@ -1,5 +1,10 @@
 import pickle
 import pandas as pd
+import datetime
+import zipfile
+import requests
+import os
+import pantab
 
 def comp_graph1():
     """
@@ -41,8 +46,6 @@ def comp_graph3():
     return(edges)
 
 
-
-
 def wiche():
     """
     Returns a dataframe with the most recent WICHE projections in long format.
@@ -53,52 +56,172 @@ def wiche():
     return(wiche_df)
 
 
-def scorecard():
+def scorecard_merged(fname="scorecard", expath="./"):
     """
-    Returns a dataframe of the most recent college scorecard dataset.
-
-    The Scorecard dataset, not the full dataset.  For the full, use the scorecard_full method.
+    Parse College Scorecard data and return a dict of dataframes and also save out the hyper files for each.
     """
+    _today = datetime.datetime.today().strftime('%Y%m%d')
+    sc_datasets = dict()
+    URL = "https://ed-public-download.app.cloud.gov/downloads/CollegeScorecard_Raw_Data_02072022.zip"
+    path = "/tmp/" + str(_today) + "/"  # hacky way to make unique path to extract date and survey
+    file = fname + ".zip"
+    print(path, file)
+    # get and save the file
+    if not os.path.exists(path + file):
+        # get the data
+        os.mkdir(path)
+    try:
+        print(f"requesting {URL}")
+        results = requests.get(URL)
+    except:
+        pass
+    with open(path + file, 'wb') as f:
+        print(f"writing file from {URL}")
+        f.write(results.content)
+    # extract the files to the path
+    print(f"extracting file at {path + file}")
+    file = zipfile.ZipFile(path + file)
+    file.extractall(path=path)
+    print("files extracted, getting data dictionary")
+    ############################# get the data dictionary
+    DD_URL = "https://data.ed.gov/dataset/9dc70e6b-8426-4d71-b9d5-70ce6094a3f4/resource/658b5b83-ac9f-4e41-913e-9ba9411d7967/download/collegescorecarddatadictionary_02072022.xlsx"
+    dd = pd.read_excel(DD_URL, sheet_name="Institution_Data_Dictionary")
+    print(f"data dictionary imported")
+    ############################# merged file
+    # read in the merged file
+    FNAME = "MERGED2019_20_PP.csv"
+    fpath = path + FNAME
+    print(f"reading in merged file at {fpath}")
+    df = pd.read_csv(fpath, low_memory=False)
+    # keep just the valid columns
+    print("columns for numeric datatypes")
+    COLS = ['VARIABLE NAME', 'API data type']
+    dd_vals = dd.loc[:, COLS]
+    # keep all valid values
+    dd_vals = dd_vals.dropna()
+    # cleanup column names
+    dd_vals.columns = dd_vals.columns.str.lower().str.replace(' ', '_')
+    # flag the columns that will be changed to floats (just to be safe)
+    ROWS = dd_vals.api_data_type.isin(['float','integer','long'])
+    dd_nums = dd_vals.loc[ROWS,:]
+    NUM_COLS = dd_nums['variable_name'].to_list()
+    NUM_COLS = [COL for COL in NUM_COLS if COL in list(df.columns)]
+    print("for numeric columns, changing the datatype to numeric in the dataframe")
+    # .astype on df gave me fits, and this was suprisingly faster
+    for COL in NUM_COLS:
+        try:
+            df[COL] = df[COL].astype('float64')
+            # print(f"changed {COL}")
+        except:
+            pass
+    print("writing the merged file")
+    merged = df.copy()
+    # write the file and append to a dictionary to store the dataframes
+    EXPORT = expath + "merged.hyper"
+    pantab.frame_to_hyper(merged, EXPORT, table="merged")
+    sc_datasets['merged'] = merged
+    print("merged file logged.  Moving onto next")
+    ############################# cohort all
+    # most recent - all
+    FNAME = "Most-Recent-Cohorts-All-Data-Elements.csv"
+    fpath = path + FNAME
+    print(f"getting next file {fpath}")
+    df = pd.read_csv(fpath, low_memory=False)
+    # use same as above
+    NUM_COLS = dd_nums['variable_name'].to_list()
+    NUM_COLS = [COL for COL in NUM_COLS if COL in list(df.columns)]
+    for COL in NUM_COLS:
+        try:
+            df[COL] = df[COL].astype('float64')
+        except:
+            pass
+    print(f"writing the most recent files")
+    merged = df.copy()
+    # write the file and append to a dictionary to store the dataframes
+    EXPORT = expath + "mostrecent-all.hyper"
+    pantab.frame_to_hyper(merged, EXPORT, table="mrall")
+    sc_datasets['recent_all'] = merged
+    print("files saved, moving onto next.")
+    ############################# cohort field of study
+    # most recent - all
+    FNAME = "Most-Recent-Cohorts-Field-of-Study.csv"
+    fpath = path + FNAME
+    print(f"reading in file at {fpath}")
+    df = pd.read_csv(fpath, low_memory=False)
+    # use same as above
+    NUM_COLS = dd_nums['variable_name'].to_list()
+    NUM_COLS = [COL for COL in NUM_COLS if COL in list(df.columns)]
+    for COL in NUM_COLS:
+        try:
+            df[COL] = df[COL].astype('float64')
+        except:
+            pass
+    print("writing the files...")
+    merged = df.copy()
+    # write the file and append to a dictionary to store the dataframes
+    EXPORT = expath + "mostrecent-fieldstudy.hyper"
+    pantab.frame_to_hyper(merged, EXPORT, table="mrfieldstudy")
+    sc_datasets['recent_field_study'] = merged
+    
+    print("files written and exporting a dict of DataFrames")
+    return sc_datasets
 
-    url = "https://ed-public-download.app.cloud.gov/downloads/Most-Recent-Cohorts-Scorecard-Elements.csv"
-    x = pd.read_csv(url)
-    return(x)
 
 
-def scorecard_full():
-    """
-    Returns a dataframe of the most recent FULL college scorecard dataset.
-
-    This will take ~ 10 seconds using free online resources, but also asks for a full data download at present.
-    Curently, caching is not used but should be.
-    """
-
-    url = "https://ed-public-download.app.cloud.gov/downloads/Most-Recent-Cohorts-All-Data-Elements.csv"
-    x = pd.read_csv(url)
-    return(x)
 
 
-def scorecard_nslds():
-    """
-    Returns a dataframe of the most recent cohort for the NSLDS dataset.
-
-    This will take ~ 10 seconds using free online resources, but also asks for a full data download at present.
-    Curently, caching is not used but should be.
-    """
-
-    url = "https://ed-public-download.app.cloud.gov/downloads/Most-Recent-Cohorts-NSLDS-Elements.csv"
-    x = pd.read_csv(url)
-    return(x)
 
 
-def scorecard_earnings():
-    """
-    Returns a dataframe of the most recent cohort for post school earnings.
-    """
 
-    url = "https://ed-public-download.app.cloud.gov/downloads/Most-Recent-Cohorts-Treasury-Elements.csv"
-    x = pd.read_csv(url)
-    return(x)
+
+
+
+# def scorecard():
+#     """
+#     Returns a dataframe of the most recent college scorecard dataset.
+
+#     The Scorecard dataset, not the full dataset.  For the full, use the scorecard_full method.
+#     """
+
+#     url = "https://ed-public-download.app.cloud.gov/downloads/Most-Recent-Cohorts-Scorecard-Elements.csv"
+#     x = pd.read_csv(url)
+#     return(x)
+
+
+# def scorecard_full():
+#     """
+#     Returns a dataframe of the most recent FULL college scorecard dataset.
+
+#     This will take ~ 10 seconds using free online resources, but also asks for a full data download at present.
+#     Curently, caching is not used but should be.
+#     """
+
+#     url = "https://ed-public-download.app.cloud.gov/downloads/Most-Recent-Cohorts-All-Data-Elements.csv"
+#     x = pd.read_csv(url)
+#     return(x)
+
+
+# def scorecard_nslds():
+#     """
+#     Returns a dataframe of the most recent cohort for the NSLDS dataset.
+
+#     This will take ~ 10 seconds using free online resources, but also asks for a full data download at present.
+#     Curently, caching is not used but should be.
+#     """
+
+#     url = "https://ed-public-download.app.cloud.gov/downloads/Most-Recent-Cohorts-NSLDS-Elements.csv"
+#     x = pd.read_csv(url)
+#     return(x)
+
+
+# def scorecard_earnings():
+#     """
+#     Returns a dataframe of the most recent cohort for post school earnings.
+#     """
+
+#     url = "https://ed-public-download.app.cloud.gov/downloads/Most-Recent-Cohorts-Treasury-Elements.csv"
+#     x = pd.read_csv(url)
+#     return(x)
 
 
 def crosswalk():
