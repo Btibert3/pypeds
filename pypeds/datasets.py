@@ -63,7 +63,7 @@ def scorecard_merged(fname="scorecard", expath="./"):
     _today = datetime.datetime.today().strftime('%Y%m%d')
     sc_datasets = dict()
     URL = "https://ed-public-download.app.cloud.gov/downloads/CollegeScorecard_Raw_Data_02072022.zip"
-    path = "/tmp/" + str(_today) + URL + "/"  # hacky way to make unique path to extract date and survey
+    path = "/tmp/" + str(_today) + "/"  # hacky way to make unique path to extract date and survey
     file = fname + ".zip"
     # get and save the file
     if not os.path.exists(path + file):
