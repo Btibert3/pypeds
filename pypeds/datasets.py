@@ -85,7 +85,7 @@ def scorecard_merged(fname="scorecard", expath="./"):
     # read in the merged file
     FNAME = "MERGED2019_20_PP.csv"
     fpath = path + FNAME
-    df = pd.read_csv(FNAME, low_memory=False)
+    df = pd.read_csv(fpath, low_memory=False)
     # keep just the valid columns
     COLS = ['VARIABLE NAME', 'API data type']
     dd_vals = dd.loc[:, COLS]
@@ -114,7 +114,7 @@ def scorecard_merged(fname="scorecard", expath="./"):
     # most recent - all
     FNAME = "Most-Recent-Cohorts-All-Data-Elements.csv"
     fpath = path + FNAME
-    df = pd.read_csv(FNAME, low_memory=False)
+    df = pd.read_csv(fpath, low_memory=False)
     # use same as above
     NUM_COLS = dd_nums['variable_name'].to_list()
     NUM_COLS = [COL for COL in NUM_COLS if COL in list(df.columns)]
@@ -132,7 +132,7 @@ def scorecard_merged(fname="scorecard", expath="./"):
     # most recent - all
     FNAME = "Most-Recent-Cohorts-Field-of-Study.csv"
     fpath = path + FNAME
-    df = pd.read_csv(FNAME, low_memory=False)
+    df = pd.read_csv(fpath, low_memory=False)
     # use same as above
     NUM_COLS = dd_nums['variable_name'].to_list()
     NUM_COLS = [COL for COL in NUM_COLS if COL in list(df.columns)]
