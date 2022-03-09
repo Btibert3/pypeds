@@ -70,7 +70,7 @@ def scorecard_merged(fname="scorecard", expath="./"):
         # get the data
         os.mkdir(path)
     try:
-        results = requests.get(url)
+        results = requests.get(URL)
     except:
         pass
     with open(path + file, 'wb') as f:
