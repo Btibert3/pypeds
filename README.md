@@ -107,36 +107,40 @@ from pypeds import datasets
 wiche = datasets.wiche()   
 
 # first few rows
-wiche.head()
+wiche.head(1).T
 
-   year  status    state         demo    grads
-0  2000  actual  Alabama  grand_total  41316.0
-1  2001  actual  Alabama  grand_total  40127.0
-2  2002  actual  Alabama  grand_total  41412.0
-3  2003  actual  Alabama  grand_total  41729.0
-4  2004  actual  Alabama  grand_total  42644.0
+                                                    0
+stabbr                                             _M
+schoolyear                                    2000-01
+raceethnicity           American Indian/Alaska Native
+gradelevel                                    Grade 1
+schoolsector                           Public Schools
+projection                            Reported/Actual
+students                                         5106
+statename                                     Midwest
+region_wiche                                  Midwest
+region_census_division                            NaN
+region_census                                     NaN
+
+
 ```
 
 You will notice that the data are not wide, but long.  This is by design, and it allows us to reshape and aggregate as desired.
 
-For example, plot the  `actual` and `projected` (the status column) total high school graduates (the demo column) in the dataset.
+For example, plot the  `actual` and `projected` (the projection column) total high school graduates (gradelevel and raceethnicity columns) in the dataset.
 
 ```
 # isolate total grads, but still for each state and year
-all_grads = wiche.loc[wiche.demo=='grand_total', ]
+all_grads = wiche.loc[(wiche.gradelevel=='Graduates') & (wiche.raceethnicity=='Total') & (wiche.statename == 'United States') & (wiche.schoolsector == 'Grand Total Public & Private'), : ]
 
-# group by the year and aggregate (sum) of grads by year
-grad_totals = all_grads.groupby("year", as_index=False).sum()
+# you will notice that we have to filter the dataset to get total US high school grads, but it highlights the resolution of the data!
 
 # generate the line plot
-import seaborn as sns
-import matplotlib.pyplot as plt
-sns.lineplot(x='year', y='grads', data=grad_totals)
-plt.show()
+all_grads.plot(x="schoolyear", y="students", kind="line")
 
 ```
 
-<img src="https://monosnap.com/image/oWQLbsjgdVnZl9zgzYIedQsjKIPvcX.png">
+<img src="https://snipboard.io/x1ZOU4.jpg">
 
 
 
