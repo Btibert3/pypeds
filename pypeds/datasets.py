@@ -52,7 +52,7 @@ def wiche():
     """
 
     url = "https://raw.githubusercontent.com/Btibert3/datasets/master/wiche/wiche-march-2022.csv"
-    wiche_df = pd.read_csv(url)
+    wiche_df = pd.read_csv(url, low_memory=False)
     return(wiche_df)
 
 
