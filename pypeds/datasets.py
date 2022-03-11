@@ -53,6 +53,7 @@ def wiche():
 
     url = "https://raw.githubusercontent.com/Btibert3/datasets/master/wiche/wiche-march-2022.csv"
     wiche_df = pd.read_csv(url, low_memory=False)
+    wiche_df['students'] = pd.to_numeric(wiche_df['students'], errors="coerce")
     return(wiche_df)
 
 
