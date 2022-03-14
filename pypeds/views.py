@@ -214,13 +214,53 @@ def program_completions(fall_years=[2017],
   return (df)
 
 
+#================================================== wiche views - national grads
+def wiche_nat_grads():
+  """Returns a filtered view of Wiche:  US national gradatuates - Aggregated.
+
+  Returns:
+      _type_: _description_
+  """
+  wiche = datasets.wiche()
+  all_grads = wiche.loc[(wiche.gradelevel=='Graduates') & (wiche.raceethnicity=='Total') & (wiche.statename == 'United States') & (wiche.schoolsector == 'Grand Total Public & Private'), : ]
+  # return the dataset
+  return all_grads
+
+
+#================================================== wiche views - state level grads
+def wiche_state_grads():
+    """Returns a filtered view of Wiche:  US national gradatuates - Aggregated.
+
+    Returns:
+        _type_: _description_
+    """
+    wiche = datasets.wiche()
+    state_grads = wiche.loc[(wiche.gradelevel=='Graduates') & (wiche.raceethnicity=='Total') & (wiche.schoolsector == 'Grand Total Public & Private'), : ]
+    # return the dataset
+    return state_grads
 
 
 #================================================== another view
-## the description
-  
-  
-  
+## migration data and wiche to forecast enrollment
+
+def wiche_forecast(unitids=None, pred_year = None, weights = [.1,.3,.6], hd_year=2020):
+      
+      
+      # years 
+      years = list(range(2002, 2020, 2))
+      states = datasets.
+
+      ws = wiche_state_grads()
+      
+      # get the migration data
+        m = ipeds.EFC(years=years)
+        m.extract()
+        m = m.load()
+    
+      return True
+
+
+
   
   
   

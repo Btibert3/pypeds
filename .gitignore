@@ -12,3 +12,5 @@ pypeds.Rproj
 .DS_Store
 .idea
 test-notebooks/
+pypeds/__init__.pyc
+pypeds/ipeds.pyc
