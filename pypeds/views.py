@@ -248,14 +248,13 @@ def wiche_forecast(unitids=None, pred_year = None, weights = [.1,.3,.6], hd_year
       
       # years 
       years = list(range(2002, 2020, 2))
-      states = datasets.
 
       ws = wiche_state_grads()
       
       # get the migration data
-        m = ipeds.EFC(years=years)
-        m.extract()
-        m = m.load()
+      m = ipeds.EFC(years=years)
+      m.extract()
+      m = m.load()
     
       return True
 
