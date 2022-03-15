@@ -3,6 +3,7 @@ import pandas as pd
 from dfply import *
 from pypeds import ipeds
 from pypeds import datasets
+from pybrock.utils import states
 
 
 #================================================== migration dataset
@@ -236,6 +237,10 @@ def wiche_state_grads():
     """
     wiche = datasets.wiche()
     state_grads = wiche.loc[(wiche.gradelevel=='Graduates') & (wiche.raceethnicity=='Total') & (wiche.schoolsector == 'Grand Total Public & Private'), : ]
+    # associate the reporting year to fall
+    state_grads['fall'] = state_grads['schoolyear'].str.split("-")
+    state_grads['fall'] = state_grads['fall'].apply(lambda x: x[0]).astype('int')
+    state_grads = state_grads[['fall', 'statename', 'students']]
     # return the dataset
     return state_grads
 
@@ -243,20 +248,44 @@ def wiche_state_grads():
 #================================================== another view
 ## migration data and wiche to forecast enrollment
 
-def wiche_forecast(unitids=None, pred_year = None, weights = [.1,.3,.6], hd_year=2020):
-      
-      
-      # years 
-      years = list(range(2002, 2020, 2))
+def wiche_forecast(unitids=None, pred_year = None, weights = [.1,.3,.6]):
 
-      ws = wiche_state_grads()
-      
-      # get the migration data
-      m = ipeds.EFC(years=years)
-      m.extract()
-      m = m.load()
-    
-      return True
+    # years 
+    years = list(range(2020-8, 2020, 2))
+    # wiche states
+    ws = wiche_state_grads()
+    ws = ws.loc[ws.fall.isin(years)]
+    # keep just the states and not aggregated regions
+    statenames = list(states())
+    ws = ws.loc[ws.statename.isin(statenames), :]
+    # get the migration data
+    efc_line = list(range(1,99))
+    efc_cols = ['unitid', 'fall_year', 'line', 'efres02']
+    m = ipeds.EFC(years=years)
+    m.extract()
+    m.transform(line=efc_line)
+    m.transform(cols=efc_cols)
+    mig = m.load()
+    mig['efres02'] = pd.to_numeric(mig['efres02'], errors="coerce")
+    mig['efres02'] = mig['efres02'].fillna(0)
+    # the region dataset to map states and fips
+    r = datasets.region_xwalk()
+    r = r[['ipeds_code', 'name']]
+    # append the state name to the migration data
+    mig = mig.merge(r, left_on="line", right_on="ipeds_code", how="left")
+    # flag to determine if state is in whiche
+    mig['flag'] = mig.name.isin(ws.statename)
+    # TODO:
+    # two datasets are mig/ws
+    # change migration fallyear to int
+    # pivot the datasts (migration flag=T, migration flag=F, wiche with years as columns)
+    # migration flag = False, just weighted average of grand total by school across the years
+    # calcualte enrollment share of mig / whiche flag = T
+    # weighted average above for each school (index) state/year
+    # apply school state weighted average to latest year and sum up
+
+
+    return ...
 
 
 
