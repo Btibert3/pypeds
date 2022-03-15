@@ -14,7 +14,8 @@ requires=[
     "dfply",
     "numpy",
     "xlrd",
-    "pantab"
+    "pantab",
+    "pybrock"
 ]
 requires-python=">=3.6"
 description-file="README.md"
