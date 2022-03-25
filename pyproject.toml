@@ -14,7 +14,8 @@ requires=[
     "dfply",
     "numpy",
     "xlrd",
-    "pantab"
+    "pantab>=2.1.0",
+    "tableauhyperapi==0.0.14401"
 ]
 requires-python=">=3.6"
 description-file="README.md"
