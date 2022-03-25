@@ -45,6 +45,27 @@ def comp_graph3():
     edges = pd.read_csv(edges_url)
     return(edges)
 
+def comparison_groups(filter_cols = True):
+    """Get the comparison groups data which are self-reported "competitors", in a way.... kinda.
+
+    Args:
+        filter_cols (bool, optional): If `True`, keep cleanup the file just for the core info. Defaults to True.
+
+    Returns:
+        pd.DataFrame: The comparison groups for a school, and one that can be considered a graph, with from = reporting institution, to=the comparison institution (e.g. competitor)
+    """
+    groups_url = "https://raw.githubusercontent.com/Btibert3/datasets/master/ipeds-comparison-groups.csv"
+    groups = pd.read_csv(groups_url)
+    groups['survey_year'] = 2020
+    groups['fall_year'] = 2020
+    if filter_cols:
+        groups = groups[['unitid', 'cgunitid', 'fall_year']]
+        groups.columns = ['from', 'to', 'fall']
+    return groups
+
+
+
+
 
 def wiche():
     """
@@ -55,6 +76,7 @@ def wiche():
     wiche_df = pd.read_csv(url, low_memory=False)
     wiche_df['students'] = pd.to_numeric(wiche_df['students'], errors="coerce")
     return(wiche_df)
+
 
 
 def scorecard_merged(fname="scorecard", expath="./"):
