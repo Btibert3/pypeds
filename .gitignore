@@ -13,3 +13,4 @@ pypeds.Rproj
 .idea
 test-notebooks/
 *.pyc
+tmp/
