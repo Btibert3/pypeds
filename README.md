@@ -90,7 +90,6 @@ This package will also periodically add datasets that one might use when studyin
 Most notably, once importing the `datasets` module, `pypeds` attempts to provide simple access to core education-related datasets.  For example:
 
 - `wiche`  for data, and projections, of high school graduates in the US by state.
-- `scorecard_merged` datasets related to the National Scorecard.
 - In addition to above, there are other datasets to help with mapping code and geographies for easier reporting and visualization.
 
 For example, let's play around with the WICHE projections below.
