@@ -6,6 +6,7 @@ build-backend = "flit_core.buildapi"
 module = "pypeds"
 author = "Brock Tibert"
 author-email = "btibert3@gmail.com"
+maintainer = "theletterjeff"
 home-page = "https://github.com/Btibert3/pypeds"
 requires=[
     "requests",
