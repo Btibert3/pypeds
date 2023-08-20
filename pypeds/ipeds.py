@@ -237,7 +237,7 @@ class HD(object):
         for year in self.years:
             # assert that year is a int and length 1
             assert isinstance(year, int), "year is not an integer"
-            assert year >= 2002 and year <= 2021, "year must be >=2002 and < 2021"
+            assert year >= 2002 and year <= 2021, "year must be >=2002 and <= 2021"
             # build the SURVEY id
             SURVEY = 'HD' + str(year)
             # build the url
