@@ -78,7 +78,7 @@ def read_survey(path):
 def get_hd(year):
     # assert that year is a int and length 1
     assert isinstance(year, int), "year is not an integer"
-    assert year >= 2002 and year <= 2020, "year must be >=2002 and <= 2020"
+    assert year >= 2002 and year <= 2021, "year must be >=2002 and <= 2021"
     # build the SURVEY id
     SURVEY = 'HD' + str(year)
     # build the url
@@ -90,7 +90,7 @@ def get_hd(year):
 def get_ic(year):
     # assert that year is a int and length 1
     assert isinstance(year, int), "year is not an integer"
-    assert year >= 2002 and year <= 2020, "year must be >=2002 and <= 2020"
+    assert year >= 2002 and year <= 2021, "year must be >=2002 and <= 2021"
     # build the SURVEY id
     SURVEY = 'IC' + str(year)
     # build the url
