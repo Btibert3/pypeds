@@ -78,7 +78,7 @@ def read_survey(path):
 def get_hd(year):
     # assert that year is a int and length 1
     assert isinstance(year, int), "year is not an integer"
-    assert year >= 2002 and year <= 2020, "year must be >=2002 and <= 2020"
+    assert year >= 2002 and year <= 2021, "year must be >=2002 and <= 2021"
     # build the SURVEY id
     SURVEY = 'HD' + str(year)
     # build the url
@@ -90,7 +90,7 @@ def get_hd(year):
 def get_ic(year):
     # assert that year is a int and length 1
     assert isinstance(year, int), "year is not an integer"
-    assert year >= 2002 and year <= 2020, "year must be >=2002 and <= 2020"
+    assert year >= 2002 and year <= 2021, "year must be >=2002 and <= 2021"
     # build the SURVEY id
     SURVEY = 'IC' + str(year)
     # build the url
@@ -230,14 +230,14 @@ class HD(object):
         """
         Method to pull one or more IC surveys based on the configured object
 
-        The extract method currently supports back to 2002 and up to 2020.
+        The extract method currently supports back to 2002 and up to 2021.
         """
 
         init_df = pd.DataFrame({'pypeds_init': [True]})
         for year in self.years:
             # assert that year is a int and length 1
             assert isinstance(year, int), "year is not an integer"
-            assert year >= 2002 and year <= 2020, "year must be >=2002 and < 2020"
+            assert year >= 2002 and year <= 2021, "year must be >=2002 and <= 2021"
             # build the SURVEY id
             SURVEY = 'HD' + str(year)
             # build the url
@@ -356,7 +356,7 @@ class HD(object):
 class IC(object):
     """
     Educational offerings, organization, services and athletic associations from the Institutional Characteristics survey.
-    Currently support the years 2002 to 2020.
+    Currently support the years 2002 to 2021.
     """
 
     # init
