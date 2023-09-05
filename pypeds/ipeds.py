@@ -238,6 +238,27 @@ def get_ca(year):
     # return the bits as a dictionary for use later
     return ({'url': URL, 'survey': SURVEY})
 
+def get_dep(year):
+    # Function to fetch completions survey data for distance education programs
+    assert isinstance(year, int), "year is not an integer"
+    assert year >= 2002, "year must be >=2002"
+    # build the SURVEY id
+    SURVEY = 'C' + str(year)  + "DEP"
+    # build the url
+    URL = "https://nces.ed.gov/ipeds/datacenter/data/{}.zip".format(SURVEY)
+    # return the bits as a dictionary for use later
+    return ({'url': URL, 'survey': SURVEY})
+
+def get_cip(year):
+    # Function to fetch Excel file from https://nces.ed.gov/ipeds/use-the-data/download-access-database for use in the C_CIP class to construct a master CIP dataframe
+    assert isinstance(year, int), "year is not an integer"
+    assert year >= 2002, "year must be >=2002"
+    # build the SURVEY id with the abbreviated year
+    SURVEY = 'IPEDS' + str(year) + str(year+1)[-2:] + 'Tablesdoc'
+    # build the url
+    URL = "https://nces.ed.gov/ipeds/tablefiles/tableDocs/{}.xlsx".format(SURVEY)
+    # return the bits as a dictionary for use later
+    return {'url': URL, 'survey': SURVEY}
 
 # ================================= build the classes
 
@@ -1109,7 +1130,161 @@ class C_A(object):
         self.df = tmpdf
 
 
-## another class
+class C_DEP(object):
+    """
+    Manages the extraction and transformation of DEP-related data (awards/degrees conferred)
+    based on survey year. The class maintains an internal DataFrame to store the extracted data.
+    """
 
+    def __init__(self, years=[2020]):
+        """
+        Initializes the C_DEP object with optional survey years.
+        
+        Parameters:
+            years (list, optional): List of integers specifying the survey years to be considered. Default is [2020].
+        """
+        self.years = years
+        self.df = pd.DataFrame()
+
+    def extract(self):
+        """
+        Method to extract DEP-related surveys for the configured survey years.
+        Appends the extracted data to the internal DataFrame.
+        """
+        init_df = pd.DataFrame({'pypeds_init': [True]})
+        for year in self.years:
+            year = int(year)
+            year_info = get_dep(year)
+            year_fpath = zip_parser(url=year_info['url'], survey=year_info['survey'])
+            tmp_df = read_survey(year_fpath)
+            tmp_df.columns = tmp_df.columns.str.lower()
+            tmp_df.columns = tmp_df.columns.str.strip()
+            tmp_df['survey_year'] = int(year)
+            tmp_df['fall_year'] = int(year) -1
+            init_df = pd.concat([init_df, tmp_df], ignore_index=True, sort=False)
+        # finish up
+        # ignore pandas SettingWithCopyWarning, basically
+        pd.options.mode.chained_assignment = None
+        init_df = init_df.loc[init_df.pypeds_init != True,]
+        init_df.drop(columns=['pypeds_init'], inplace=True)
+        # return(init_df)
+        self.df = pd.concat([self.df, init_df], ignore_index=True)
+
+    def load(self):
+        """
+        The load method returns the internal DataFrame containing the extracted data.
+        
+        Returns:
+            pd.DataFrame: Extracted DEP-related data in a DataFrame.
+        """
+        return self.df
+
+    def transform(self, cip_label=True, cols=None):
+        """
+        Method to perform optional transformations on the internal DataFrame. 
+        Activated transformations are performed in-place.
+
+        Parameters:
+            cip_label (bool, optional): Whether to add the 2010 CIP code labels. Default is True.
+            cols (list, optional): A list of column names to be kept. Column names should be strings.
+
+        Returns:
+            None: Transforms the internal DataFrame in-place.
+        """
+        tmpdf = self.df
+        
+        # add the CIP code labels
+        if cip_label:
+            # get the cip code crosswalk
+            cips = datasets.cipcodes()
+            # add the cip codes
+            tmp = tmpdf
+            tmp = pd.merge(left=tmp, right=cips, on="cipcode", how="left")
+            # set the update
+            tmpdf = tmp
+
+        # filter the columns
+        if cols is not None:
+            assert isinstance(cols, list), 'cols must be a list'
+            if len(cols) > 0:
+                tmp = tmpdf
+                tmp_f = tmp >> select(cols)
+                tmpdf = tmp_f
+        
+        # return the dataset
+        self.df = tmpdf
+
+
+class C_CIP(object):
+    """
+    Manages the extraction and transformation of CIP-related data based on 
+    survey year. The class maintains an internal DataFrame to store the extracted data.
+    """
+
+    def __init__(self, years=[2020]):
+        """
+        Initializes the C_CIP object with optional survey years.
+
+        Parameters:
+            years (list, optional): List of integers specifying the survey years to be considered. Default is [2020].
+        """
+        self.years = years
+        self.df = pd.DataFrame()
+
+    def extract(self):
+        """
+        Method to pull one or more CIP-related surveys based on the configured object's survey years.
+        It will append the extracted data to the internal DataFrame.
+        """
+        init_df = pd.DataFrame({'pypeds_init': [True]})
+        for year in self.years:
+            year_info = get_cip(year)
+            year_fpath = xlsx_parser(url=year_info['url'], survey=year_info['survey'])
+
+            # Get all the sheet names in the Excel file
+            xls = pd.ExcelFile(year_fpath)
+            available_sheets = xls.sheet_names
+
+            # Create a dictionary with lowercase sheet names as keys and the original sheet names as values
+            lowercase_to_original = {sheet.lower(): sheet for sheet in available_sheets}
+
+            # Assuming you want the 'valuesets' sheet
+            desired_sheet_name = 'valuesets' + str(year)[-2:]
+            if desired_sheet_name not in lowercase_to_original:
+                raise ValueError(f"Sheet {desired_sheet_name} not found in {year_fpath}. Available sheets: {', '.join(available_sheets)}")
+
+            # Read from the correct sheet using the original sheet name
+            tmp_df = pd.read_excel(year_fpath, sheet_name=lowercase_to_original[desired_sheet_name])
+            tmp_df.columns = tmp_df.columns.str.lower()
+            tmp_df.columns = tmp_df.columns.str.strip()
+
+            # Filter based on the criteria you provided
+            desired_columns = ['tablename','varname','codevalue', 'valuelabel']
+            desired_tablenames = ['C' + str(year)  + "_A"]
+            #, 'C' + str(year)  + "DEP"]
+            filtered_df = tmp_df[(tmp_df['tablename'].isin(desired_tablenames)) & (tmp_df['varname'] == 'CIPCODE')]
+            filtered_df = filtered_df[desired_columns]
+
+            # Add the survey year and fall year
+            filtered_df['survey_year'] = int(year)
+            filtered_df['fall_year'] = int(year) - 1
+
+            # Append to the initialized dataframe
+            init_df = pd.concat([init_df, filtered_df], ignore_index=True, sort=False)
+
+        pd.options.mode.chained_assignment = None
+        init_df = init_df.loc[init_df.pypeds_init != True, ]
+        init_df.drop(columns=['pypeds_init'], inplace=True)
+        self.df = pd.concat([self.df, init_df], ignore_index=True)
+
+
+    def load(self):
+        """
+        The load method returns the internal DataFrame that has been extracted.
+        
+        Returns:
+            pd.DataFrame: Extracted data in a DataFrame.
+        """
+        return self.df
 
 
