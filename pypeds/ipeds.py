@@ -7,6 +7,7 @@ import glob
 import re
 import time
 import datetime
+import openpyxl
 from dfply import *
 from pypeds import datasets
 
@@ -52,6 +53,39 @@ def zip_parser(url=None, survey=None):
     # return a string
     return (str(raw_file))
 
+# Excel parser
+def xlsx_parser(url=None, survey=None):
+    """
+    Downloads an Excel file from a given URL and saves it to a specific location
+    formed by combining the current date and survey name. If the file already exists,
+    it won't download it again.
+
+    Parameters:
+        url (str, optional): The URL from where to download the Excel file.
+        survey (str, optional): The name of the survey to associate with the downloaded file.
+
+    Returns:
+        str: The full path to the saved Excel file.
+    """
+    _today = datetime.datetime.today().strftime('%Y%m%d')
+    survey_lower = survey.lower()
+    tmp_path = os.path.join(os.getcwd(), "tmp")
+    path = os.path.join(tmp_path, str(_today) + str(survey_lower), '')
+    file = survey + ".xlsx"
+
+    if not os.path.exists(tmp_path):
+        os.mkdir(tmp_path)
+    if not os.path.exists(path):
+        os.mkdir(path)
+    if not os.path.exists(path + file):
+        try:
+            results = requests.get(url)
+            with open(path + file, 'wb') as f:
+                f.write(results.content)
+        except:
+            pass
+
+    return str(path + file)
 
 def read_survey(path):
     if isinstance(path, list):
