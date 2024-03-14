@@ -112,7 +112,7 @@ def read_survey(path):
 def get_hd(year):
     # assert that year is a int and length 1
     assert isinstance(year, int), "year is not an integer"
-    assert year >= 2002 and year <= 2021, "year must be >=2002 and <= 2021"
+    assert year >= 2002 and year <= 2022, "year must be >=2002 and <= 2022"
     # build the SURVEY id
     SURVEY = 'HD' + str(year)
     # build the url
@@ -124,7 +124,7 @@ def get_hd(year):
 def get_ic(year):
     # assert that year is a int and length 1
     assert isinstance(year, int), "year is not an integer"
-    assert year >= 2002 and year <= 2021, "year must be >=2002 and <= 2021"
+    assert year >= 2002 and year <= 2022, "year must be >=2002 and <= 2022"
     # build the SURVEY id
     SURVEY = 'IC' + str(year)
     # build the url
@@ -136,7 +136,7 @@ def get_ic(year):
 def get_adm(year):
     # assert that year is a int and length 1
     assert isinstance(year, int), "year is not an integer"
-    assert year >= 2014 and year <= 2020, "year must be >=2014 and <= 2020"
+    assert year >= 2014 and year <= 2022, "year must be >=2014 and <= 2022"
     # build the SURVEY id
     SURVEY = 'ADM' + str(year)
     # build the url
@@ -148,7 +148,7 @@ def get_adm(year):
 def get_sfa(year):
     # assert that year is a int and length 1
     assert isinstance(year, int), "year is not an integer"
-    assert year >= 2002 and year <= 2020, "year must be >=2002 and <= 2020"
+    assert year >= 2002 and year <= 2022, "year must be >=2002 and <= 2022"
     # build the SURVEY id
     sfa_year = str(year - 1)[2:] + str(year)[2:]
     SURVEY = 'SFA' + str(sfa_year)
@@ -161,7 +161,7 @@ def get_sfa(year):
 def get_efc(year):
     # assert that year is a int and length 1
     assert isinstance(year, int), "year is not an integer"
-    assert year >= 2002 and year <= 2020, "year must be >=2002 and <= 2020"
+    assert year >= 2002 and year <= 2022, "year must be >=2002 and <= 2022"
     # build the SURVEY id
     SURVEY = 'EF' + str(year) + "C"
     # build the url
@@ -173,7 +173,7 @@ def get_efc(year):
 def get_icay(year):
     # assert that year is a int and length 1
     assert isinstance(year, int), "year is not an integer"
-    assert year >= 2001 and year <= 2020, "year must be >=2001 and <= 2020"
+    assert year >= 2001 and year <= 2022, "year must be >=2001 and <= 2022"
     # build the SURVEY id
     SURVEY = 'IC' + str(year) + "_AY"
     # build the url
@@ -184,7 +184,7 @@ def get_icay(year):
 def get_om(year):
     # assert that year is a int and length 1
     assert isinstance(year, int), "year is not an integer"
-    assert year >= 2015 and year <= 2020, "year must be >=2015 and <= 2020"
+    assert year >= 2015 and year <= 2022, "year must be >=2015 and <= 2022"
     # build the SURVEY id
     SURVEY = 'OM' + str(year) 
     # build the url
@@ -195,7 +195,7 @@ def get_om(year):
 def get_efd(year):
     # assert that year is a int and length 1
     assert isinstance(year, int), "year is not an integer"
-    assert year >= 2002 and year <= 2020, "year must be >=2002 and <= 2020"
+    assert year >= 2002 and year <= 2022, "year must be >=2002 and <= 2022"
     # build the SURVEY id
     SURVEY = 'EF' + str(year)  + "D"
     # build the url
@@ -206,7 +206,7 @@ def get_efd(year):
 def get_ff1(year):
     # assert that year is a int and length 1
     assert isinstance(year, int), "year is not an integer"
-    assert year >= 2002 and year <= 2020, "year must be >=2002 and <= 2020"
+    assert year >= 2002 and year <= 2022, "year must be >=2002 and <= 2022"
     # build the SURVEY id
     ff1_year = str(year - 1)[2:] + str(year)[2:]
     SURVEY = 'F' + str(ff1_year)  + "_F1A"
@@ -218,7 +218,7 @@ def get_ff1(year):
 def get_ff2(year):
     # assert that year is a int and length 1
     assert isinstance(year, int), "year is not an integer"
-    assert year >= 2002 and year <= 2020, "year must be >=2002 and <= 2020"
+    assert year >= 2002 and year <= 2022, "year must be >=2002 and <= 2022"
     # build the SURVEY id
     ff2_year = str(year - 1)[2:] + str(year)[2:]
     SURVEY = 'F' + str(ff2_year)  + "_F2"
@@ -230,7 +230,7 @@ def get_ff2(year):
 def get_ca(year):
     # assert that year is a int and length 1
     assert isinstance(year, int), "year is not an integer"
-    assert year >= 2002 and year <= 2020, "year must be >=2002 and <= 2020"
+    assert year >= 2002 and year <= 2022, "year must be >=2002 and <= 2022"
     # build the SURVEY id
     SURVEY = 'C' + str(year)  + "_A"
     # build the url
@@ -241,7 +241,7 @@ def get_ca(year):
 def get_dep(year):
     # Function to fetch completions survey data for distance education programs
     assert isinstance(year, int), "year is not an integer"
-    assert year >= 2002, "year must be >=2002"
+    assert year >= 2002 and year <= 2022, "year must be >=2002 and <= 2022"
     # build the SURVEY id
     SURVEY = 'C' + str(year)  + "DEP"
     # build the url
@@ -265,12 +265,12 @@ def get_cip(year):
 class HD(object):
     """
     Directory Information from the Institutional Characteristics survey.
-    Currently supports the years 2002 - 2020.
+    Currently supports the years 2002 - 2022.
 
     Methods are extract, transform, and load.
     """
 
-    def __init__(self, years=[2020]):
+    def __init__(self, years=[2022]):
         """
         The constructor for the HD survey
 
@@ -292,7 +292,7 @@ class HD(object):
         for year in self.years:
             # assert that year is a int and length 1
             assert isinstance(year, int), "year is not an integer"
-            assert year >= 2002 and year <= 2021, "year must be >=2002 and <= 2021"
+            assert year >= 2002 and year <= 2022, "year must be >=2002 and <= 2022"
             # build the SURVEY id
             SURVEY = 'HD' + str(year)
             # build the url
@@ -411,11 +411,11 @@ class HD(object):
 class IC(object):
     """
     Educational offerings, organization, services and athletic associations from the Institutional Characteristics survey.
-    Currently support the years 2002 to 2021.
+    Currently support the years 2002 to 2022.
     """
 
     # init
-    def __init__(self, years=[2020]):
+    def __init__(self, years=[2022]):
         """
         The constructor for the IC survey
 
@@ -532,7 +532,7 @@ class SFA(object):
     Student financial aid and net price from the Student Financial Aid and Net Price survey.
     """
 
-    def __init__(self, years=[2017]):
+    def __init__(self, years=[2021]):
         """
         The constructor for the SFA survey
 
@@ -614,7 +614,7 @@ class EFC(object):
     Residence and migration of first-time freshman from the Fall Enrollment survey.
     """
 
-    def __init__(self, years=[2017]):
+    def __init__(self, years=[2022]):
         """
         The constructor for the EF_C survey
 
@@ -716,7 +716,7 @@ class ICAY(object):
     Student charges for academic year programs from the Institutional Characteristics survey.
     """
 
-    def __init__(self, years=[2017]):
+    def __init__(self, years=[2022]):
         """
         The constructor for the IC_AY survey
 
@@ -785,7 +785,7 @@ class OM(object):
     Award and enrollment data at four, six and eight years of entering degree/certificate-seeking undergraduate cohorts at degree-granting institutions, by Pell status
     """
 
-    def __init__(self, years=[2017]):
+    def __init__(self, years=[2022]):
         """
         The constructor for the IC_AY survey
 
@@ -831,7 +831,7 @@ class EFD(object):
     Total entering class, retention rates, and student-to-faculty ratio
     """
 
-    def __init__(self, years=[2017]):
+    def __init__(self, years=[2022]):
         """
         The constructor for the IC_AY survey
 
@@ -878,7 +878,7 @@ class FF1(object):
     Private not-for-profit institutions or Public institutions using FASB:
     """
 
-    def __init__(self, years=[2020]):
+    def __init__(self, years=[2022]):
         """
         Public institutions - GASB
 
@@ -948,7 +948,7 @@ class FF2(object):
     Private not-for-profit institutions or Public institutions using FASB:
     """
 
-    def __init__(self, years=[2020]):
+    def __init__(self, years=[2022]):
         """
         Public institutions - GASB
 
@@ -1018,9 +1018,9 @@ class C_A(object):
     Awards/degrees conferred by program (6-digit CIP code), award level, race/ethnicity, and gender
     """
 
-    def __init__(self, years=[2020]):
+    def __init__(self, years=[2022]):
         """
-        Public institutions - GASB
+        Awards and degrees conferred
 
         Parameters:
           years (list): List of ints for the survey year
@@ -1136,7 +1136,7 @@ class C_DEP(object):
     based on survey year. The class maintains an internal DataFrame to store the extracted data.
     """
 
-    def __init__(self, years=[2020]):
+    def __init__(self, years=[2022]):
         """
         Initializes the C_DEP object with optional survey years.
         
@@ -1221,7 +1221,7 @@ class C_CIP(object):
     survey year. The class maintains an internal DataFrame to store the extracted data.
     """
 
-    def __init__(self, years=[2020]):
+    def __init__(self, years=[2022]):
         """
         Initializes the C_CIP object with optional survey years.
 
